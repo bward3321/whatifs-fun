@@ -72,32 +72,41 @@ function App() {
     if (flightData.time > 0 && !isLaunched) {
       setTotalFlightTime(flightData.time);
       setTimeRemaining(flightData.time);
+      timeRemainingRef.current = flightData.time;
     }
   }, [flightData.time, isLaunched]);
+
+  // Keep speed ref in sync
+  useEffect(() => {
+    speedRef.current = speedMultiplier;
+  }, [speedMultiplier]);
 
   // Launch animation
   useEffect(() => {
     if (!isLaunched || explosionActive || totalFlightTime <= 0) return;
 
+    // Initialize the time remaining ref when launching
+    timeRemainingRef.current = totalFlightTime;
     let lastUpdate = Date.now();
-    let currentTime = timeRemaining;
 
     const animate = () => {
       const now = Date.now();
       const delta = (now - lastUpdate) / 1000; // Convert to seconds
       lastUpdate = now;
 
-      currentTime = Math.max(0, currentTime - delta * speedMultiplier);
+      // Use ref for current speed
+      const currentSpeed = speedRef.current;
+      timeRemainingRef.current = Math.max(0, timeRemainingRef.current - delta * currentSpeed);
       
       // Calculate progress
-      const progress = 1 - (currentTime / totalFlightTime);
+      const progress = 1 - (timeRemainingRef.current / totalFlightTime);
       
       // Update states
-      setTimeRemaining(currentTime);
+      setTimeRemaining(timeRemainingRef.current);
       setFlightProgress(progress);
 
       // Check if missile has reached target
-      if (currentTime <= 0) {
+      if (timeRemainingRef.current <= 0) {
         setExplosionActive(true);
         return; // Stop animation
       }
@@ -112,7 +121,7 @@ function App() {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isLaunched, speedMultiplier, totalFlightTime, explosionActive]);
+  }, [isLaunched, totalFlightTime, explosionActive]);
 
   // Handle launch
   const handleLaunch = useCallback(() => {
