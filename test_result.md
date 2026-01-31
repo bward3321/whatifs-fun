@@ -202,10 +202,14 @@ metadata:
   run_ui: true
 
 test_plan:
-  current_focus: []
+  current_focus: 
+    - "Speed Controls in Top Bar"
+    - "Control Panel Scrolling"
+    - "Complete Launch Sequence"
+    - "RESET Functionality"
   stuck_tasks: []
-  test_all: true
-  test_priority: "completed"
+  test_all: false
+  test_priority: "review_request_completed"
 
 agent_communication:
   - agent: "testing"
