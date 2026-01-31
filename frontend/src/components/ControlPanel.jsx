@@ -568,27 +568,7 @@ export const ControlPanel = ({
         </ScrollArea>
 
         {/* Launch Controls - Fixed at bottom */}
-        <div className="p-4 border-t border-primary/20 space-y-4">
-          {/* Speed control */}
-          {isLaunched && (
-            <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground">Speed:</span>
-              <div className="flex gap-1">
-                {[1, 2, 5, 10].map(speed => (
-                  <Button
-                    key={speed}
-                    variant={speedMultiplier === speed ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => setSpeedMultiplier(speed)}
-                    className="w-10 h-8 font-mono text-xs"
-                  >
-                    {speed}x
-                  </Button>
-                ))}
-              </div>
-            </div>
-          )}
-
+        <div className="p-4 border-t border-primary/20 bg-card/95 flex-shrink-0">
           {/* Launch/Reset buttons */}
           <div className="flex gap-3">
             {!isLaunched ? (
@@ -616,7 +596,7 @@ export const ControlPanel = ({
           </div>
 
           {!canLaunch && !isLaunched && (
-            <p className="text-xs text-muted-foreground text-center">
+            <p className="text-xs text-muted-foreground text-center mt-2">
               {!launchOrigin && "Select launch origin • "}
               {!launchTarget && "Select target • "}
               {!selectedWarhead && "Select warhead"}
