@@ -230,6 +230,7 @@ function App() {
         targetCity={launchTarget}
         casualties={casualties}
         onComplete={handleExplosionComplete}
+        onReset={handleReset}
       />
 
       {/* Toast notifications */}
