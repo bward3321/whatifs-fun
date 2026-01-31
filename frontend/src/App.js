@@ -76,31 +76,30 @@ function App() {
 
   // Launch animation
   useEffect(() => {
-    if (!isLaunched || explosionActive) return;
+    if (!isLaunched || explosionActive || totalFlightTime <= 0) return;
 
-    const baseInterval = 50; // 50ms base update interval
     let lastUpdate = Date.now();
+    let currentTime = timeRemaining;
 
     const animate = () => {
       const now = Date.now();
       const delta = (now - lastUpdate) / 1000; // Convert to seconds
       lastUpdate = now;
 
-      setTimeRemaining(prev => {
-        const newTime = Math.max(0, prev - delta * speedMultiplier);
-        
-        // Calculate progress
-        const progress = 1 - (newTime / totalFlightTime);
-        setFlightProgress(progress);
+      currentTime = Math.max(0, currentTime - delta * speedMultiplier);
+      
+      // Calculate progress
+      const progress = 1 - (currentTime / totalFlightTime);
+      
+      // Update states
+      setTimeRemaining(currentTime);
+      setFlightProgress(progress);
 
-        // Check if missile has reached target
-        if (newTime <= 0) {
-          setExplosionActive(true);
-          return 0;
-        }
-
-        return newTime;
-      });
+      // Check if missile has reached target
+      if (currentTime <= 0) {
+        setExplosionActive(true);
+        return; // Stop animation
+      }
 
       animationRef.current = requestAnimationFrame(animate);
     };
