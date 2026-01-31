@@ -81,45 +81,35 @@ function App() {
     speedRef.current = speedMultiplier;
   }, [speedMultiplier]);
 
-  // Launch animation
+  // Launch animation using interval for reliability
   useEffect(() => {
-    if (!isLaunched || explosionActive || totalFlightTime <= 0) return;
+    if (!isLaunched || explosionActive) return;
+    
+    // Make sure we have valid flight time
+    if (timeRemainingRef.current <= 0) return;
 
-    // Initialize the time remaining ref when launching
-    timeRemainingRef.current = totalFlightTime;
-    let lastUpdate = Date.now();
-
-    const animate = () => {
-      const now = Date.now();
-      const delta = (now - lastUpdate) / 1000; // Convert to seconds
-      lastUpdate = now;
-
-      // Use ref for current speed
+    const intervalId = setInterval(() => {
       const currentSpeed = speedRef.current;
-      timeRemainingRef.current = Math.max(0, timeRemainingRef.current - delta * currentSpeed);
+      const delta = 0.05 * currentSpeed; // 50ms interval * speed
       
-      // Calculate progress
-      const progress = 1 - (timeRemainingRef.current / totalFlightTime);
+      timeRemainingRef.current = Math.max(0, timeRemainingRef.current - delta);
       
-      // Update states
+      const progress = timeRemainingRef.current > 0 
+        ? 1 - (timeRemainingRef.current / totalFlightTime)
+        : 1;
+      
       setTimeRemaining(timeRemainingRef.current);
       setFlightProgress(progress);
 
       // Check if missile has reached target
       if (timeRemainingRef.current <= 0) {
+        clearInterval(intervalId);
         setExplosionActive(true);
-        return; // Stop animation
       }
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animationRef.current = requestAnimationFrame(animate);
+    }, 50);
 
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      clearInterval(intervalId);
     };
   }, [isLaunched, totalFlightTime, explosionActive]);
 
