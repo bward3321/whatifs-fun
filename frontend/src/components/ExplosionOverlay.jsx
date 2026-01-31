@@ -286,27 +286,6 @@ export const ExplosionOverlay = ({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Screen shake effect during explosion */}
-        <style jsx global>{`
-          ${phase === 'fireball' || phase === 'shockwave' ? `
-            @keyframes screenShake {
-              0%, 100% { transform: translate(0, 0) rotate(0deg); }
-              10% { transform: translate(-5px, -5px) rotate(-0.5deg); }
-              20% { transform: translate(5px, 5px) rotate(0.5deg); }
-              30% { transform: translate(-5px, 3px) rotate(0deg); }
-              40% { transform: translate(3px, -5px) rotate(0.5deg); }
-              50% { transform: translate(-3px, 5px) rotate(-0.5deg); }
-              60% { transform: translate(5px, -3px) rotate(0deg); }
-              70% { transform: translate(-5px, -5px) rotate(-0.5deg); }
-              80% { transform: translate(3px, 5px) rotate(0.5deg); }
-              90% { transform: translate(-3px, -5px) rotate(0deg); }
-            }
-            body {
-              animation: screenShake 0.5s ease-in-out;
-            }
-          ` : ''}
-        `}</style>
       </div>
     </AnimatePresence>
   );
