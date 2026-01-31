@@ -54,7 +54,7 @@ function App() {
     }
   }, [selectionMode, launchOrigin, launchTarget]);
 
-  // Calculate flight time when origin/target changes using useMemo
+  // Calculate flight data for display (distance, estimated time)
   const flightData = React.useMemo(() => {
     if (launchOrigin && launchTarget) {
       const distance = calculateDistance(
@@ -67,15 +67,6 @@ function App() {
     return { distance: 0, time: 0 };
   }, [launchOrigin, launchTarget]);
 
-  // Set initial time when flight data changes
-  useEffect(() => {
-    if (flightData.time > 0 && !isLaunched) {
-      setTotalFlightTime(flightData.time);
-      setTimeRemaining(flightData.time);
-      timeRemainingRef.current = flightData.time;
-    }
-  }, [flightData.time, isLaunched]);
-
   // Keep speed ref in sync
   useEffect(() => {
     speedRef.current = speedMultiplier;
@@ -86,7 +77,7 @@ function App() {
     if (!isLaunched || explosionActive) return;
     
     // Make sure we have valid flight time
-    if (timeRemainingRef.current <= 0) return;
+    if (timeRemainingRef.current <= 0 || totalFlightTime <= 0) return;
 
     const intervalId = setInterval(() => {
       const currentSpeed = speedRef.current;
