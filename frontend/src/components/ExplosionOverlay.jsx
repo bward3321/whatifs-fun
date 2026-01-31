@@ -21,7 +21,9 @@ export const ExplosionOverlay = ({
         distance: 50 + Math.random() * 200,
         size: 2 + Math.random() * 6,
         delay: Math.random() * 0.3,
-        duration: 0.5 + Math.random() * 1
+        duration: 0.5 + Math.random() * 1,
+        hue: 30 + Math.random() * 30,
+        lightness: 50 + Math.random() * 30
       }));
       setParticles(newParticles);
       
@@ -37,7 +39,7 @@ export const ExplosionOverlay = ({
     } else {
       setPhase('initial');
     }
-  }, [isActive]);
+  }, [isActive, onComplete]);
 
   if (!isActive) return null;
 
@@ -135,7 +137,7 @@ export const ExplosionOverlay = ({
               style={{
                 width: particle.size,
                 height: particle.size,
-                background: `hsl(${30 + Math.random() * 30} 100% ${50 + Math.random() * 30}%)`
+                background: `hsl(${particle.hue} 100% ${particle.lightness}%)`
               }}
             />
           ))}
