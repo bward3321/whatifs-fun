@@ -162,6 +162,7 @@ function App() {
         selectedWarhead={selectedWarhead}
         explosionActive={explosionActive}
         speedMultiplier={speedMultiplier}
+        setSpeedMultiplier={setSpeedMultiplier}
       />
 
       {/* Main content */}
