@@ -53,18 +53,26 @@ function App() {
     }
   }, [selectionMode, launchOrigin, launchTarget]);
 
-  // Calculate flight time when origin/target changes
-  useEffect(() => {
+  // Calculate flight time when origin/target changes using useMemo
+  const flightData = React.useMemo(() => {
     if (launchOrigin && launchTarget) {
       const distance = calculateDistance(
         launchOrigin.lat, launchOrigin.lng,
         launchTarget.lat, launchTarget.lng
       );
       const time = calculateFlightTime(distance);
-      setTotalFlightTime(time);
-      setTimeRemaining(time);
+      return { distance, time };
     }
+    return { distance: 0, time: 0 };
   }, [launchOrigin, launchTarget]);
+
+  // Set initial time when flight data changes
+  useEffect(() => {
+    if (flightData.time > 0 && !isLaunched) {
+      setTotalFlightTime(flightData.time);
+      setTimeRemaining(flightData.time);
+    }
+  }, [flightData.time, isLaunched]);
 
   // Launch animation
   useEffect(() => {
