@@ -184,7 +184,7 @@ frontend:
     implemented: true
     working: false
     file: "/app/frontend/src/components/ExplosionOverlay.jsx"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
     needs_retesting: false
     status_history:
@@ -197,6 +197,9 @@ frontend:
       - working: false
         agent: "testing"
         comment: "❌ CRITICAL ISSUE - Explosion animation not triggering. Mission setup works perfectly (New York → Tehran, B83 warhead selected, 10x speed activated), LAUNCH button works, but explosion/Impact Analysis popup does not appear after mission completion. Waited 60+ seconds with 10x speed - no explosion detected. This breaks the core simulation experience and prevents testing of close button and reset functionality."
+      - working: false
+        agent: "testing"
+        comment: "❌ CONFIRMED CRITICAL BUG - Review request testing confirms explosion animation system is broken. Mission setup works perfectly (Denver → Tehran, B83 warhead, 10x speed), LAUNCH button functions, but explosion/Impact Analysis popup never appears. Waited 120+ seconds with 10x speed - no explosion detected. Code analysis shows ExplosionOverlay component exists and should trigger when explosionActive state becomes true, but the timer animation logic in App.js may not be properly setting this state when timeRemaining reaches 0. This completely breaks the core simulation experience."
 
   - task: "Speed Controls in Top Bar"
     implemented: true
