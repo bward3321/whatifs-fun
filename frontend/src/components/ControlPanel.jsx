@@ -321,7 +321,7 @@ export const ControlPanel = ({
           </TabsContent>
 
           {/* Warhead Tab */}
-          <TabsContent value="warhead" className="mt-4 space-y-4">
+          <TabsContent value="warhead" className="mt-4 space-y-4 pb-4">
             <Card className="bg-card/80 border-primary/20">
               <CardHeader className="py-3 px-4">
                 <CardTitle className="text-sm font-display tracking-wider text-warning flex items-center gap-2">
