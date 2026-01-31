@@ -300,13 +300,13 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Speed Controls in Top Bar"
-    - "Control Panel Scrolling"
-    - "Complete Launch Sequence"
-    - "RESET Functionality"
-  stuck_tasks: []
+    - "Explosion Animation and Impact Analysis"
+    - "Impact Analysis Close Button (Review Request Fix)"
+    - "Reset Flow After Impact Analysis (Review Request Fix)"
+  stuck_tasks: 
+    - "Explosion Animation and Impact Analysis"
   test_all: false
-  test_priority: "review_request_completed"
+  test_priority: "explosion_animation_critical"
 
 agent_communication:
   - agent: "testing"
