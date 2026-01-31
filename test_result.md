@@ -255,6 +255,41 @@ frontend:
     needs_retesting: false
     status_history:
       - working: true
+  - task: "More Cities on Map (Review Request Fix)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/data/cities.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "✅ CONFIRMED - More cities successfully added to map. Found 120+ city markers visible on world map. All 6 target cities from review request are available: Anchorage (Alaska), Honolulu (Hawaii), Montreal (Canada), Havana (Cuba), Karachi (Pakistan), Dhaka (Bangladesh). Cities can be found via search functionality and are properly integrated into the simulation."
+
+  - task: "Impact Analysis Close Button (Review Request Fix)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/ExplosionOverlay.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "❌ CANNOT TEST - Close button functionality cannot be tested because explosion animation is not triggering. The Impact Analysis popup does not appear after mission completion, so X button and NEW SIMULATION button functionality cannot be verified. This is dependent on fixing the explosion animation issue first."
+
+  - task: "Reset Flow After Impact Analysis (Review Request Fix)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "❌ CANNOT TEST - Reset flow cannot be tested because explosion animation and Impact Analysis popup are not working. Cannot verify if closing the Impact Analysis allows starting a new simulation. This is dependent on fixing the explosion animation issue first."
         agent: "testing"
         comment: "✅ PASSED - RESET functionality works correctly. After mission ends or during mission, clicking RESET returns app to initial state with LAUNCH button visible and mission timer cleared."
 metadata:
