@@ -71,16 +71,41 @@ export const WorldMap = ({
     };
   }, [launchOrigin, launchTarget]);
 
-  // Calculate missile current position along the path
+  // Calculate position along great circle arc
+  const interpolateGreatCircle = useCallback((start, end, fraction) => {
+    // Convert to radians
+    const lat1 = start.lat * Math.PI / 180;
+    const lng1 = start.lng * Math.PI / 180;
+    const lat2 = end.lat * Math.PI / 180;
+    const lng2 = end.lng * Math.PI / 180;
+
+    // Calculate angular distance
+    const d = 2 * Math.asin(Math.sqrt(
+      Math.pow(Math.sin((lat1 - lat2) / 2), 2) +
+      Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin((lng1 - lng2) / 2), 2)
+    ));
+
+    if (d === 0) return [start.lng, start.lat];
+
+    const A = Math.sin((1 - fraction) * d) / Math.sin(d);
+    const B = Math.sin(fraction * d) / Math.sin(d);
+
+    const x = A * Math.cos(lat1) * Math.cos(lng1) + B * Math.cos(lat2) * Math.cos(lng2);
+    const y = A * Math.cos(lat1) * Math.sin(lng1) + B * Math.cos(lat2) * Math.sin(lng2);
+    const z = A * Math.sin(lat1) + B * Math.sin(lat2);
+
+    const lat = Math.atan2(z, Math.sqrt(x * x + y * y)) * 180 / Math.PI;
+    const lng = Math.atan2(y, x) * 180 / Math.PI;
+
+    return [lng, lat];
+  }, []);
+
+  // Calculate missile current position along the great circle path
   const currentMissilePos = useMemo(() => {
     if (!missilePosition || !launchOrigin || !launchTarget) return null;
     
-    const progress = missilePosition;
-    const lat = launchOrigin.lat + (launchTarget.lat - launchOrigin.lat) * progress;
-    const lng = launchOrigin.lng + (launchTarget.lng - launchOrigin.lng) * progress;
-    
-    return [lng, lat];
-  }, [missilePosition, launchOrigin, launchTarget]);
+    return interpolateGreatCircle(launchOrigin, launchTarget, missilePosition);
+  }, [missilePosition, launchOrigin, launchTarget, interpolateGreatCircle]);
 
   return (
     <div className="relative w-full h-full overflow-hidden rounded-lg tactical-border">
