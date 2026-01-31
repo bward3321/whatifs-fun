@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Timer, AlertTriangle, Rocket, Target, Zap, CheckCircle2 } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
+import { AlertTriangle, Rocket, Target, Zap, Gauge } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const MissionTimer = ({
   isLaunched,
@@ -12,7 +12,8 @@ export const MissionTimer = ({
   launchTarget,
   selectedWarhead,
   explosionActive,
-  speedMultiplier
+  speedMultiplier,
+  setSpeedMultiplier
 }) => {
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -49,9 +50,9 @@ export const MissionTimer = ({
   const currentPhase = phaseInfo[phase];
 
   return (
-    <div className="absolute top-0 left-0 right-0 z-30 pointer-events-none">
+    <div className="absolute top-0 left-0 right-0 z-30">
       {/* Top status bar */}
-      <div className="bg-card/95 backdrop-blur-sm border-b border-primary/30">
+      <div className="bg-card/95 backdrop-blur-sm border-b border-primary/30 pointer-events-auto">
         <div className="max-w-screen-2xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Left - Mission info */}
@@ -130,15 +131,33 @@ export const MissionTimer = ({
               )}
             </div>
 
-            {/* Right - Warhead & speed */}
+            {/* Right - Speed controls & Warhead */}
             <div className="flex items-center gap-6">
-              {/* Speed indicator */}
-              {isLaunched && (
-                <div className="hidden md:flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">SPEED</span>
-                  <span className="font-mono text-lg text-primary">{speedMultiplier}x</span>
+              {/* Speed controls - Always visible */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 mr-2">
+                  <Gauge className="w-4 h-4 text-primary" />
+                  <span className="text-xs text-muted-foreground font-display">SPEED</span>
                 </div>
-              )}
+                <div className="flex gap-1">
+                  {[1, 2, 5, 10].map(speed => (
+                    <Button
+                      key={speed}
+                      variant={speedMultiplier === speed ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSpeedMultiplier(speed)}
+                      className={`w-10 h-7 font-mono text-xs ${
+                        speedMultiplier === speed 
+                          ? 'bg-primary text-primary-foreground' 
+                          : 'border-primary/30 hover:bg-primary/20'
+                      }`}
+                      disabled={!isLaunched}
+                    >
+                      {speed}x
+                    </Button>
+                  ))}
+                </div>
+              </div>
 
               {/* Warhead */}
               <div className="flex items-center gap-2">
