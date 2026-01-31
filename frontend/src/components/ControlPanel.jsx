@@ -460,7 +460,7 @@ export const ControlPanel = ({
           </TabsContent>
 
           {/* Intel Tab */}
-          <TabsContent value="intel" className="mt-4 space-y-4">
+          <TabsContent value="intel" className="mt-4 space-y-4 pb-4">
             {casualties ? (
               <>
                 <Card className="bg-destructive/10 border-destructive/30">
