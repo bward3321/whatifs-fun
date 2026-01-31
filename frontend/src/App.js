@@ -25,7 +25,8 @@ function App() {
 
   // Refs for animation
   const animationRef = useRef(null);
-  const startTimeRef = useRef(null);
+  const timeRemainingRef = useRef(0);
+  const speedRef = useRef(1);
 
   // Handle location selection from map
   const handleLocationSelect = useCallback((location) => {
