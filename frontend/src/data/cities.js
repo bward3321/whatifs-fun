@@ -115,6 +115,28 @@ export const worldCities = [
   { name: "Pyongyang", country: "North Korea", lat: 39.0392, lng: 125.7625, population: 3255388 },
   { name: "Vladivostok", country: "Russia", lat: 43.1332, lng: 131.9113, population: 605049 },
   { name: "Sevastopol", country: "Crimea", lat: 44.6166, lng: 33.5254, population: 509992 },
+  
+  // Additional Cities - Various Regions
+  { name: "Anchorage", country: "USA", lat: 61.2181, lng: -149.9003, population: 291247 },
+  { name: "Honolulu", country: "USA", lat: 21.3069, lng: -157.8583, population: 350395 },
+  { name: "San Diego", country: "USA", lat: 32.7157, lng: -117.1611, population: 1425976 },
+  { name: "Boston", country: "USA", lat: 42.3601, lng: -71.0589, population: 692600 },
+  { name: "Atlanta", country: "USA", lat: 33.749, lng: -84.388, population: 498715 },
+  { name: "Montreal", country: "Canada", lat: 45.5017, lng: -73.5673, population: 1762949 },
+  { name: "Havana", country: "Cuba", lat: 23.1136, lng: -82.3666, population: 2130081 },
+  { name: "Panama City", country: "Panama", lat: 8.9824, lng: -79.5199, population: 880691 },
+  { name: "Glasgow", country: "UK", lat: 55.8642, lng: -4.2518, population: 633120 },
+  { name: "Milan", country: "Italy", lat: 45.4642, lng: 9.19, population: 1396059 },
+  { name: "Frankfurt", country: "Germany", lat: 50.1109, lng: 8.6821, population: 753056 },
+  { name: "Minsk", country: "Belarus", lat: 53.9006, lng: 27.559, population: 2009786 },
+  { name: "Novosibirsk", country: "Russia", lat: 55.0084, lng: 82.9357, population: 1625631 },
+  { name: "Chengdu", country: "China", lat: 30.5728, lng: 104.0668, population: 16330000 },
+  { name: "Karachi", country: "Pakistan", lat: 24.8607, lng: 67.0011, population: 14916456 },
+  { name: "Islamabad", country: "Pakistan", lat: 33.6844, lng: 73.0479, population: 1015000 },
+  { name: "Kolkata", country: "India", lat: 22.5726, lng: 88.3639, population: 14850066 },
+  { name: "Chennai", country: "India", lat: 13.0827, lng: 80.2707, population: 10971108 },
+  { name: "Dhaka", country: "Bangladesh", lat: 23.8103, lng: 90.4125, population: 21741000 },
+  { name: "Yangon", country: "Myanmar", lat: 16.8661, lng: 96.1951, population: 5160000 },
 ];
 
 // Nuclear warhead options with historical and modern yields
