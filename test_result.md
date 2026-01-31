@@ -274,13 +274,16 @@ frontend:
     implemented: true
     working: "NA"
     file: "/app/frontend/src/components/ExplosionOverlay.jsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "testing"
         comment: "❌ CANNOT TEST - Close button functionality cannot be tested because explosion animation is not triggering. The Impact Analysis popup does not appear after mission completion, so X button and NEW SIMULATION button functionality cannot be verified. This is dependent on fixing the explosion animation issue first."
+      - working: "NA"
+        agent: "testing"
+        comment: "❌ STILL CANNOT TEST - Review request testing confirms close button cannot be tested because explosion animation system is broken. Code analysis shows ExplosionOverlay component has both X close button (line 325-332) and NEW SIMULATION button (lines 432-440) properly implemented with handleClose function, but since Impact Analysis popup never appears due to explosion animation bug, these buttons cannot be functionally tested. Testing is blocked until explosion animation is fixed."
 
   - task: "Reset Flow After Impact Analysis (Review Request Fix)"
     implemented: true
