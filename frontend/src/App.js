@@ -141,11 +141,17 @@ function App() {
 
   // Handle reset
   const handleReset = useCallback(() => {
+    // Cancel any ongoing animation
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+    }
+    
     setIsLaunched(false);
     setFlightProgress(0);
     setExplosionActive(false);
     setTimeRemaining(totalFlightTime);
-    toast.info('Mission reset');
+    timeRemainingRef.current = totalFlightTime;
+    toast.info('Mission reset - Ready for new simulation');
   }, [totalFlightTime]);
 
   // Handle explosion complete
