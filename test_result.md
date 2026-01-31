@@ -182,9 +182,9 @@ frontend:
 
   - task: "Explosion Animation and Impact Analysis"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/components/ExplosionOverlay.jsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
     needs_retesting: false
     status_history:
@@ -194,6 +194,9 @@ frontend:
       - working: true
         agent: "testing"
         comment: "✅ PASSED - Missile reaches target successfully, mission progresses through all phases correctly. Explosion animation and impact analysis system functional. All core simulation features working as designed."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL ISSUE - Explosion animation not triggering. Mission setup works perfectly (New York → Tehran, B83 warhead selected, 10x speed activated), LAUNCH button works, but explosion/Impact Analysis popup does not appear after mission completion. Waited 60+ seconds with 10x speed - no explosion detected. This breaks the core simulation experience and prevents testing of close button and reset functionality."
 
   - task: "Speed Controls in Top Bar"
     implemented: true
