@@ -130,13 +130,27 @@ function App() {
       return;
     }
 
+    // Calculate flight time for this mission
+    const distance = calculateDistance(
+      launchOrigin.lat, launchOrigin.lng,
+      launchTarget.lat, launchTarget.lng
+    );
+    const flightTime = calculateFlightTime(distance);
+    
+    // Set all state for launch
+    setTotalFlightTime(flightTime);
+    setTimeRemaining(flightTime);
+    timeRemainingRef.current = flightTime;
+    setFlightProgress(0);
+    setExplosionActive(false);
+    
     toast.success('🚀 MISSILE LAUNCHED', {
       description: `${selectedWarhead.name} en route to ${launchTarget.name}`,
       duration: 5000
     });
 
+    // Set launched AFTER setting up all the state
     setIsLaunched(true);
-    setFlightProgress(0);
   }, [launchOrigin, launchTarget, selectedWarhead]);
 
   // Handle reset
