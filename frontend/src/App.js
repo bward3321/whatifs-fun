@@ -13,7 +13,7 @@ function App() {
   const [launchOrigin, setLaunchOrigin] = useState(null);
   const [launchTarget, setLaunchTarget] = useState(null);
   const [selectedWarhead, setSelectedWarhead] = useState(null);
-  const [selectionMode, setSelectionMode] = useState(null); // 'origin' | 'target' | null
+  const [selectionMode, setSelectionMode] = useState(null);
 
   // Launch state
   const [isLaunched, setIsLaunched] = useState(false);
@@ -23,10 +23,8 @@ function App() {
   const [speedMultiplier, setSpeedMultiplier] = useState(1);
   const [explosionActive, setExplosionActive] = useState(false);
 
-  // Refs for animation
-  const animationRef = useRef(null);
-  const timeRemainingRef = useRef(0);
-  const speedRef = useRef(1);
+  // Refs
+  const intervalRef = useRef(null);
 
   // Handle location selection from map
   const handleLocationSelect = useCallback((location) => {
@@ -43,7 +41,6 @@ function App() {
         description: `${location.country} • Population: ${(location.population / 1000000).toFixed(2)}M`
       });
     } else {
-      // Default behavior - toggle between origin and target
       if (!launchOrigin) {
         setLaunchOrigin(location);
         toast.success(`Launch origin set: ${location.name}`);
@@ -54,7 +51,7 @@ function App() {
     }
   }, [selectionMode, launchOrigin, launchTarget]);
 
-  // Calculate flight data for display (distance, estimated time)
+  // Calculate flight data for display
   const flightData = React.useMemo(() => {
     if (launchOrigin && launchTarget) {
       const distance = calculateDistance(
@@ -67,42 +64,46 @@ function App() {
     return { distance: 0, time: 0 };
   }, [launchOrigin, launchTarget]);
 
-  // Keep speed ref in sync
+  // Timer countdown effect
   useEffect(() => {
-    speedRef.current = speedMultiplier;
-  }, [speedMultiplier]);
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
 
-  // Launch animation using interval for reliability
-  useEffect(() => {
-    if (!isLaunched || explosionActive) return;
-    
-    // Make sure we have valid flight time
-    if (timeRemainingRef.current <= 0 || totalFlightTime <= 0) return;
+    // Only run timer if launched and not exploded
+    if (!isLaunched || explosionActive || totalFlightTime <= 0) {
+      return;
+    }
 
-    const intervalId = setInterval(() => {
-      const currentSpeed = speedRef.current;
-      const delta = 0.05 * currentSpeed; // 50ms interval * speed
-      
-      timeRemainingRef.current = Math.max(0, timeRemainingRef.current - delta);
-      
-      const progress = timeRemainingRef.current > 0 
-        ? 1 - (timeRemainingRef.current / totalFlightTime)
-        : 1;
-      
-      setTimeRemaining(timeRemainingRef.current);
-      setFlightProgress(progress);
-
-      // Check if missile has reached target
-      if (timeRemainingRef.current <= 0) {
-        clearInterval(intervalId);
-        setExplosionActive(true);
-      }
+    intervalRef.current = setInterval(() => {
+      setTimeRemaining(prev => {
+        const delta = 0.05 * speedMultiplier; // 50ms * speed
+        const newTime = Math.max(0, prev - delta);
+        
+        // Update progress
+        const progress = totalFlightTime > 0 ? 1 - (newTime / totalFlightTime) : 0;
+        setFlightProgress(progress);
+        
+        // Check for impact
+        if (newTime <= 0) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+          setExplosionActive(true);
+        }
+        
+        return newTime;
+      });
     }, 50);
 
     return () => {
-      clearInterval(intervalId);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
-  }, [isLaunched, totalFlightTime, explosionActive]);
+  }, [isLaunched, explosionActive, totalFlightTime, speedMultiplier]);
 
   // Handle launch
   const handleLaunch = useCallback(() => {
@@ -111,43 +112,44 @@ function App() {
       return;
     }
 
-    // Calculate flight time for this mission
+    // Calculate flight time
     const distance = calculateDistance(
       launchOrigin.lat, launchOrigin.lng,
       launchTarget.lat, launchTarget.lng
     );
     const flightTime = calculateFlightTime(distance);
     
-    // Set all state for launch
+    // Reset and initialize
+    setExplosionActive(false);
+    setFlightProgress(0);
     setTotalFlightTime(flightTime);
     setTimeRemaining(flightTime);
-    timeRemainingRef.current = flightTime;
-    setFlightProgress(0);
-    setExplosionActive(false);
     
     toast.success('🚀 MISSILE LAUNCHED', {
       description: `${selectedWarhead.name} en route to ${launchTarget.name}`,
       duration: 5000
     });
 
-    // Set launched AFTER setting up all the state
-    setIsLaunched(true);
+    // Delay the launch flag slightly to ensure state is set
+    setTimeout(() => {
+      setIsLaunched(true);
+    }, 100);
   }, [launchOrigin, launchTarget, selectedWarhead]);
 
   // Handle reset
   const handleReset = useCallback(() => {
-    // Cancel any ongoing animation
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
     
     setIsLaunched(false);
     setFlightProgress(0);
     setExplosionActive(false);
-    setTimeRemaining(totalFlightTime);
-    timeRemainingRef.current = totalFlightTime;
+    setTimeRemaining(0);
+    setTotalFlightTime(0);
     toast.info('Mission reset - Ready for new simulation');
-  }, [totalFlightTime]);
+  }, []);
 
   // Handle explosion complete
   const handleExplosionComplete = useCallback(() => {
