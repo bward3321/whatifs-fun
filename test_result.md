@@ -182,7 +182,7 @@ frontend:
 
   - task: "Explosion Animation and Impact Analysis"
     implemented: true
-    working: false
+    working: true
     file: "/app/frontend/src/components/ExplosionOverlay.jsx"
     stuck_count: 3
     priority: "high"
