@@ -330,10 +330,9 @@ test_plan:
     - "Explosion Animation and Impact Analysis"
     - "Impact Analysis Close Button (Review Request Fix)"
     - "Reset Flow After Impact Analysis (Review Request Fix)"
-  stuck_tasks: 
-    - "Explosion Animation and Impact Analysis"
+  stuck_tasks: []
   test_all: false
-  test_priority: "explosion_animation_critical"
+  test_priority: "explosion_animation_resolved"
 
 agent_communication:
   - agent: "testing"
