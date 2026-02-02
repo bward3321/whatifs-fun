@@ -371,63 +371,190 @@ export const WorldMap = ({
   );
 };
 
-// Explosion effect component
+// Explosion effect component - Enhanced with mushroom cloud
 const ExplosionEffect = ({ blastRadius, zoom }) => {
   const scale = Math.max(0.5, zoom);
   const baseSize = blastRadius?.severe || 5;
   
   return (
     <motion.g>
-      {/* Fireball core */}
+      {/* Initial bright flash */}
       <motion.circle
         initial={{ r: 0, opacity: 1 }}
         animate={{ 
-          r: [0, baseSize * 2, baseSize * 1.5],
-          opacity: [1, 1, 0.8]
+          r: [0, baseSize * 8, baseSize * 6],
+          opacity: [1, 0.9, 0]
         }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        fill="hsl(50 100% 95%)"
+      />
+      
+      {/* Fireball core - bright center */}
+      <motion.circle
+        initial={{ r: 0, opacity: 1 }}
+        animate={{ 
+          r: [0, baseSize * 3, baseSize * 2.5, baseSize * 2],
+          opacity: [1, 1, 0.9, 0.8]
+        }}
+        transition={{ duration: 2, ease: "easeOut" }}
         fill="url(#fireballGradient)"
       />
       
-      {/* Shockwave rings */}
-      {[1, 2, 3].map((i) => (
+      {/* Inner hot core */}
+      <motion.circle
+        initial={{ r: 0, opacity: 1 }}
+        animate={{ 
+          r: [0, baseSize * 1.5, baseSize],
+          opacity: [1, 0.9, 0.7]
+        }}
+        transition={{ duration: 3, ease: "easeOut" }}
+        fill="url(#innerCoreGradient)"
+      />
+      
+      {/* Multiple shockwave rings */}
+      {[1, 2, 3, 4, 5].map((i) => (
         <motion.circle
           key={i}
-          initial={{ r: 0, opacity: 0.8, strokeWidth: 3 }}
+          initial={{ r: baseSize, opacity: 0.9, strokeWidth: 4 - i * 0.5 }}
           animate={{ 
-            r: baseSize * (i * 3),
+            r: baseSize * (i * 4 + 2),
             opacity: 0,
             strokeWidth: 0.5
           }}
           transition={{ 
-            duration: 1.5 + i * 0.3,
-            delay: i * 0.2,
+            duration: 2 + i * 0.4,
+            delay: i * 0.15,
             ease: "easeOut"
           }}
           fill="none"
-          stroke="hsl(var(--shockwave))"
+          stroke={`hsl(${40 - i * 8} 90% ${90 - i * 10}%)`}
         />
       ))}
       
-      {/* Blast zone indicator */}
+      {/* Mushroom cloud stem */}
+      <motion.ellipse
+        initial={{ rx: 0, ry: 0, opacity: 0 }}
+        animate={{ 
+          rx: [0, baseSize * 0.8, baseSize * 0.6],
+          ry: [0, baseSize * 2, baseSize * 1.8],
+          opacity: [0, 0.7, 0.5]
+        }}
+        transition={{ duration: 3, delay: 0.5 }}
+        cy={-baseSize * 1.5}
+        fill="url(#mushroomStemGradient)"
+      />
+      
+      {/* Mushroom cloud cap */}
+      <motion.ellipse
+        initial={{ rx: 0, ry: 0, opacity: 0 }}
+        animate={{ 
+          rx: [0, baseSize * 3, baseSize * 2.5],
+          ry: [0, baseSize * 1.5, baseSize * 1.2],
+          opacity: [0, 0.8, 0.6]
+        }}
+        transition={{ duration: 3.5, delay: 1 }}
+        cy={-baseSize * 3}
+        fill="url(#mushroomCapGradient)"
+      />
+      
+      {/* Debris ring */}
+      <motion.circle
+        initial={{ r: baseSize, opacity: 0 }}
+        animate={{ 
+          r: [baseSize, baseSize * 6, baseSize * 8],
+          opacity: [0, 0.4, 0]
+        }}
+        transition={{ duration: 4, delay: 0.3 }}
+        fill="none"
+        stroke="hsl(25 80% 40% / 0.5)"
+        strokeWidth={baseSize * 0.3}
+        strokeDasharray="2,3"
+      />
+      
+      {/* Blast zone indicators - concentric circles */}
+      {/* Fireball zone */}
       <motion.circle
         initial={{ r: 0, opacity: 0 }}
         animate={{ 
-          r: baseSize * 4,
+          r: blastRadius?.fireball * 2 || baseSize,
+          opacity: [0, 0.5, 0.4]
+        }}
+        transition={{ duration: 2, delay: 2 }}
+        fill="hsl(45 100% 50% / 0.3)"
+        stroke="hsl(45 100% 50% / 0.6)"
+        strokeWidth={1}
+      />
+      
+      {/* Severe damage zone */}
+      <motion.circle
+        initial={{ r: 0, opacity: 0 }}
+        animate={{ 
+          r: blastRadius?.severe * 2 || baseSize * 2,
+          opacity: [0, 0.4, 0.3]
+        }}
+        transition={{ duration: 2.5, delay: 2.5 }}
+        fill="hsl(0 70% 50% / 0.2)"
+        stroke="hsl(0 70% 50% / 0.5)"
+        strokeWidth={1}
+        strokeDasharray="4,2"
+      />
+      
+      {/* Moderate damage zone */}
+      <motion.circle
+        initial={{ r: 0, opacity: 0 }}
+        animate={{ 
+          r: blastRadius?.moderate * 2 || baseSize * 3,
           opacity: [0, 0.3, 0.2]
         }}
-        transition={{ duration: 2, delay: 0.5 }}
-        fill="hsl(var(--destructive) / 0.2)"
-        stroke="hsl(var(--destructive) / 0.5)"
+        transition={{ duration: 3, delay: 3 }}
+        fill="hsl(25 80% 50% / 0.15)"
+        stroke="hsl(25 80% 50% / 0.4)"
         strokeWidth={1}
-        strokeDasharray="4,4"
+        strokeDasharray="6,3"
+      />
+      
+      {/* Light damage zone */}
+      <motion.circle
+        initial={{ r: 0, opacity: 0 }}
+        animate={{ 
+          r: blastRadius?.light * 2 || baseSize * 4,
+          opacity: [0, 0.2, 0.15]
+        }}
+        transition={{ duration: 3.5, delay: 3.5 }}
+        fill="hsl(50 70% 50% / 0.1)"
+        stroke="hsl(50 70% 50% / 0.3)"
+        strokeWidth={1}
+        strokeDasharray="8,4"
       />
       
       {/* Gradient definitions */}
       <defs>
         <radialGradient id="fireballGradient" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="hsl(50 100% 90%)" />
-          <stop offset="30%" stopColor="hsl(40 100% 60%)" />
+          <stop offset="0%" stopColor="hsl(50 100% 95%)" />
+          <stop offset="20%" stopColor="hsl(45 100% 70%)" />
+          <stop offset="40%" stopColor="hsl(35 100% 55%)" />
+          <stop offset="70%" stopColor="hsl(20 100% 45%)" />
+          <stop offset="100%" stopColor="hsl(0 80% 35%)" />
+        </radialGradient>
+        <radialGradient id="innerCoreGradient" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="hsl(60 100% 98%)" />
+          <stop offset="50%" stopColor="hsl(50 100% 80%)" />
+          <stop offset="100%" stopColor="hsl(40 100% 60%)" />
+        </radialGradient>
+        <radialGradient id="mushroomStemGradient" cx="50%" cy="100%" r="100%">
+          <stop offset="0%" stopColor="hsl(30 60% 50% / 0.8)" />
+          <stop offset="50%" stopColor="hsl(20 50% 40% / 0.6)" />
+          <stop offset="100%" stopColor="hsl(10 40% 30% / 0.3)" />
+        </radialGradient>
+        <radialGradient id="mushroomCapGradient" cx="50%" cy="80%" r="80%">
+          <stop offset="0%" stopColor="hsl(35 70% 55% / 0.9)" />
+          <stop offset="40%" stopColor="hsl(25 60% 45% / 0.7)" />
+          <stop offset="100%" stopColor="hsl(15 50% 35% / 0.3)" />
+        </radialGradient>
+      </defs>
+    </motion.g>
+  );
+};
           <stop offset="60%" stopColor="hsl(25 100% 50%)" />
           <stop offset="100%" stopColor="hsl(0 80% 40%)" />
         </radialGradient>
