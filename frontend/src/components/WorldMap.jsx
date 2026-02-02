@@ -555,12 +555,5 @@ const ExplosionEffect = ({ blastRadius, zoom }) => {
     </motion.g>
   );
 };
-          <stop offset="60%" stopColor="hsl(25 100% 50%)" />
-          <stop offset="100%" stopColor="hsl(0 80% 40%)" />
-        </radialGradient>
-      </defs>
-    </motion.g>
-  );
-};
 
 export default WorldMap;
