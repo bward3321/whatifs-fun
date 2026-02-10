@@ -443,23 +443,38 @@ export const CircleGame = () => {
       </div>
       
       {/* Main game area */}
-      <div className="relative z-10 flex flex-col items-center justify-center gap-8">
+      <div className="relative z-10 flex flex-col items-center justify-center gap-4">
         {/* Current score (during drawing or result) */}
         {(gameState === 'drawing' || gameState === 'result' || gameState === 'failed') && (
-          <div 
-            data-testid="current-score"
-            className={`font-pixel text-5xl md:text-7xl animate-score-pop ${getScoreClass(currentScore)}`}
-          >
-            {currentScore.toFixed(1)}%
+          <div className="text-center">
+            <div 
+              data-testid="current-score"
+              className={`font-pixel text-5xl md:text-7xl animate-score-pop ${getScoreClass(currentScore)}`}
+            >
+              {currentScore.toFixed(1)}%
+            </div>
+            {/* Best score shown below current score */}
+            {(gameState === 'result' || gameState === 'failed') && (
+              <div className="mt-4 font-body text-sm text-zinc-500 tracking-wider">
+                BEST: <span className="font-pixel text-lg text-[#00FFFF] glow-cyan">{bestScore.toFixed(1)}%</span>
+              </div>
+            )}
           </div>
         )}
         
-        {/* Canvas container */}
-        <div className="relative">
+        {/* Canvas container - full screen drawing area */}
+        <div className="relative w-[90vw] h-[60vh] max-w-[800px] max-h-[600px]">
+          {/* Center reference dot */}
+          <div 
+            data-testid="center-dot"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full z-0"
+            style={{ boxShadow: '0 0 20px rgba(255, 255, 255, 0.6)' }}
+          />
+          
           <canvas
             ref={canvasRef}
             data-testid="game-canvas"
-            className="game-canvas bg-transparent"
+            className="game-canvas bg-transparent absolute inset-0 w-full h-full z-10"
             onMouseDown={handleStart}
             onMouseMove={handleMove}
             onMouseUp={handleEnd}
@@ -471,7 +486,7 @@ export const CircleGame = () => {
           
           {/* Start screen overlay */}
           {gameState === 'start' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 animate-fade-in">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-8 animate-fade-in z-20">
               <div className="text-center">
                 <h1 className="font-body text-2xl md:text-3xl font-bold tracking-wider text-white mb-2">
                   Can you draw a
@@ -497,7 +512,7 @@ export const CircleGame = () => {
           
           {/* Drawing instruction */}
           {gameState === 'drawing' && points.length === 0 && (
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none animate-pulse-glow">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none animate-pulse-glow z-20">
               <p className="font-body text-lg text-zinc-400 text-center">
                 Start drawing your circle!
               </p>
@@ -506,27 +521,22 @@ export const CircleGame = () => {
           
           {/* Failed screen */}
           {gameState === 'failed' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 animate-fade-in bg-black/80">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-20 pointer-events-none">
               <div className="font-pixel text-xl md:text-2xl text-[#FF3B30] glow-red animate-shake">
                 FAILED!
               </div>
               <p className="font-body text-sm text-zinc-400 text-center max-w-xs">
                 Complete the circle without releasing!
               </p>
-              <button
-                data-testid="try-again-button"
-                onClick={startGame}
-                className="btn-glow bg-zinc-800 text-white font-body font-bold uppercase tracking-wider rounded-full px-8 py-3 hover:bg-zinc-700 flex items-center gap-2"
-              >
-                <RotateCcw size={18} />
-                Try Again
-              </button>
+              <p className="font-body text-xs text-zinc-600 text-center">
+                Draw again to retry
+              </p>
             </div>
           )}
           
           {/* Result screen */}
           {gameState === 'result' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 animate-fade-in pointer-events-none">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-20 pointer-events-none">
               {isNewBest && (
                 <div 
                   data-testid="new-best-indicator"
@@ -535,40 +545,32 @@ export const CircleGame = () => {
                   New Best Score!
                 </div>
               )}
+              <p className="font-body text-xs text-zinc-500 text-center mt-4">
+                Draw again to play
+              </p>
             </div>
           )}
         </div>
         
-        {/* Result actions */}
+        {/* Share buttons - only on result */}
         {gameState === 'result' && (
-          <div className="flex flex-col items-center gap-6 animate-slide-up">
-            <div className="flex gap-4">
-              <button
-                data-testid="tweet-button"
-                onClick={shareOnTwitter}
-                className="bg-[#1DA1F2] text-white font-body font-bold uppercase tracking-wider rounded-full px-6 py-3 flex items-center gap-2 hover:bg-[#1a91da] hover:shadow-[0_0_20px_rgba(29,161,242,0.5)] transition-shadow duration-300"
-              >
-                <Twitter size={18} />
-                Tweet
-              </button>
-              
-              <button
-                data-testid="copy-button"
-                onClick={copyScore}
-                className="bg-zinc-800 text-white font-body font-bold uppercase tracking-wider rounded-full px-6 py-3 flex items-center gap-2 hover:bg-zinc-700 hover:text-[#FF00FF] border border-transparent hover:border-[#FF00FF] hover:shadow-[0_0_20px_rgba(255,0,255,0.4)] transition-all duration-300"
-              >
-                <Copy size={18} />
-                {copied ? 'Copied!' : 'Copy'}
-              </button>
-            </div>
+          <div className="flex gap-4 animate-slide-up mt-4">
+            <button
+              data-testid="tweet-button"
+              onClick={shareOnTwitter}
+              className="bg-[#1DA1F2] text-white font-body font-bold uppercase tracking-wider rounded-full px-6 py-3 flex items-center gap-2 hover:bg-[#1a91da] hover:shadow-[0_0_20px_rgba(29,161,242,0.5)] transition-shadow duration-300"
+            >
+              <Twitter size={18} />
+              Tweet
+            </button>
             
             <button
-              data-testid="play-again-button"
-              onClick={startGame}
-              className="btn-glow bg-white text-black font-body font-bold uppercase tracking-wider rounded-full px-8 py-3 hover:bg-[#39FF14] flex items-center gap-2"
+              data-testid="copy-button"
+              onClick={copyScore}
+              className="bg-zinc-800 text-white font-body font-bold uppercase tracking-wider rounded-full px-6 py-3 flex items-center gap-2 hover:bg-zinc-700 hover:text-[#FF00FF] border border-transparent hover:border-[#FF00FF] hover:shadow-[0_0_20px_rgba(255,0,255,0.4)] transition-all duration-300"
             >
-              <RotateCcw size={18} />
-              Play Again
+              <Copy size={18} />
+              {copied ? 'Copied!' : 'Copy'}
             </button>
           </div>
         )}
