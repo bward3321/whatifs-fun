@@ -366,12 +366,38 @@ export const CircleGame = () => {
     );
   };
   
-  const copyScore = () => {
+  const copyScore = async () => {
     const text = `I drew a circle with ${currentScore.toFixed(1)}% accuracy on Perfect Shape! Can you beat me? ${window.location.href}`;
-    navigator.clipboard.writeText(text).then(() => {
+    
+    try {
+      // Try modern clipboard API first
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      }
+    } catch (e) {
+      // Fallback for permission issues
+    }
+    
+    // Fallback: Create temporary textarea
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      textarea.style.top = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
   };
   
   return (
