@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Twitter, Copy, RotateCcw } from 'lucide-react';
+import { Twitter, Copy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 // Sound manager using Web Audio API
