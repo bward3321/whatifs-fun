@@ -227,6 +227,22 @@ export const CircleGame = () => {
   
   // Start drawing
   const handleStart = (e) => {
+    // Allow starting from result or failed states too
+    if (gameState === 'result' || gameState === 'failed') {
+      startGame();
+      // Small delay to ensure state is updated
+      setTimeout(() => {
+        const pos = getPosition(e);
+        if (pos) {
+          isDrawingRef.current = true;
+          setPoints([pos]);
+          setCurrentScore(0);
+          soundManager.tick();
+        }
+      }, 10);
+      return;
+    }
+    
     if (gameState !== 'drawing') return;
     e.preventDefault();
     
@@ -337,7 +353,7 @@ export const CircleGame = () => {
     }
   };
   
-  // Start game
+  // Start game - now triggered by starting to draw
   const startGame = () => {
     soundManager.start();
     setPoints([]);
@@ -345,6 +361,14 @@ export const CircleGame = () => {
     setIsNewBest(false);
     setGameState('drawing');
     setCopied(false);
+  };
+  
+  // Allow drawing to start a new game from result/failed states
+  const handleStartFromAnyState = (e) => {
+    if (gameState === 'result' || gameState === 'failed') {
+      startGame();
+    }
+    handleStart(e);
   };
   
   // Reset to start
@@ -550,12 +574,6 @@ export const CircleGame = () => {
         )}
       </div>
       
-      {/* Background decorative circles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full border border-[#39FF14]" />
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full border border-[#00FFFF]" />
-        <div className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full border border-[#FF00FF]" />
-      </div>
     </div>
   );
 };
