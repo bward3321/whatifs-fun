@@ -144,9 +144,12 @@ export const CircleGame = () => {
     if (!canvas) return;
     
     const updateCanvasSize = () => {
-      const size = Math.min(window.innerWidth * 0.9, window.innerHeight * 0.7, 500);
-      canvas.width = size;
-      canvas.height = size;
+      const container = canvas.parentElement;
+      if (!container) return;
+      
+      const rect = container.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
       
       // Redraw if we have points
       if (points.length > 0) {
@@ -157,7 +160,7 @@ export const CircleGame = () => {
     updateCanvasSize();
     window.addEventListener('resize', updateCanvasSize);
     return () => window.removeEventListener('resize', updateCanvasSize);
-  }, []);
+  }, [gameState]);
   
   // Draw canvas
   const drawCanvas = useCallback(() => {
