@@ -486,9 +486,9 @@ export const CircleGame = () => {
               {currentScore.toFixed(1)}%
             </div>
             {/* Best score and new best indicator */}
-            {(gameState === 'result' || gameState === 'failed') && (
+            {gameState === 'result' && (
               <div className="mt-2 flex flex-col items-center gap-1">
-                {isNewBest && gameState === 'result' && (
+                {isNewBest && (
                   <div 
                     data-testid="new-best-indicator"
                     className="font-body text-base text-[#39FF14] tracking-wider uppercase animate-pulse-glow"
@@ -497,6 +497,20 @@ export const CircleGame = () => {
                   </div>
                 )}
                 <div className="font-body text-sm text-zinc-500 tracking-wider">
+                  BEST: <span className="font-pixel text-lg text-[#00FFFF] glow-cyan">{bestScore.toFixed(1)}%</span>
+                </div>
+              </div>
+            )}
+            {/* Failed state message */}
+            {gameState === 'failed' && (
+              <div className="mt-2 flex flex-col items-center gap-1">
+                <div className="font-pixel text-lg text-[#FF3B30] glow-red animate-shake">
+                  FAILED!
+                </div>
+                <p className="font-body text-sm text-zinc-400">
+                  Complete the circle without releasing!
+                </p>
+                <div className="font-body text-sm text-zinc-500 tracking-wider mt-1">
                   BEST: <span className="font-pixel text-lg text-[#00FFFF] glow-cyan">{bestScore.toFixed(1)}%</span>
                 </div>
               </div>
