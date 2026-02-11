@@ -551,13 +551,13 @@ export const CircleGame = () => {
             </div>
           )}
           
-          {/* Failed screen */}
+          {/* Failed message - above canvas */}
           {gameState === 'failed' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-20 pointer-events-none">
+            <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center">
               <div className="font-pixel text-xl md:text-2xl text-[#FF3B30] glow-red animate-shake">
                 FAILED!
               </div>
-              <p className="font-body text-sm text-zinc-400 text-center max-w-xs">
+              <p className="font-body text-sm text-zinc-400 mt-2">
                 Complete the circle without releasing!
               </p>
             </div>
