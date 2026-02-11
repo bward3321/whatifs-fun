@@ -563,25 +563,13 @@ export const CircleGame = () => {
           
           {/* Failed message - above canvas */}
           {gameState === 'failed' && (
-            <div className="absolute -top-16 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center">
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-20 pointer-events-none text-center">
               <div className="font-pixel text-xl md:text-2xl text-[#FF3B30] glow-red animate-shake">
                 FAILED!
               </div>
-              <p className="font-body text-sm text-zinc-400 mt-2">
+              <p className="font-body text-sm text-zinc-400 mt-1">
                 Complete the circle without releasing!
               </p>
-            </div>
-          )}
-          
-          {/* Result screen - just show new best indicator above canvas if achieved */}
-          {gameState === 'result' && isNewBest && (
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-              <div 
-                data-testid="new-best-indicator"
-                className="font-body text-lg text-[#39FF14] tracking-wider uppercase animate-pulse-glow whitespace-nowrap"
-              >
-                New Best Score!
-              </div>
             </div>
           )}
         </div>
