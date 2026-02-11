@@ -55,11 +55,11 @@ const createSoundManager = () => {
 
 const soundManager = createSoundManager();
 
-// Calculate circularity score
+// Calculate circularity score - measures how perfectly circular the drawn shape is
 const calculateCircleScore = (points) => {
   if (points.length < 20) return 0;
   
-  // Find centroid
+  // Find centroid of the drawn shape
   let sumX = 0, sumY = 0;
   points.forEach(p => {
     sumX += p.x;
@@ -68,44 +68,73 @@ const calculateCircleScore = (points) => {
   const centerX = sumX / points.length;
   const centerY = sumY / points.length;
   
-  // Calculate distances from center
+  // Calculate distances from centroid to each point
   const distances = points.map(p => 
     Math.sqrt(Math.pow(p.x - centerX, 2) + Math.pow(p.y - centerY, 2))
   );
   
-  // Average radius
+  // Average radius (what a perfect circle would have)
   const avgRadius = distances.reduce((a, b) => a + b, 0) / distances.length;
   
-  if (avgRadius < 30) return 0; // Too small
+  if (avgRadius < 30) return 0; // Too small to evaluate
   
-  // Calculate standard deviation of distances
-  const variance = distances.reduce((sum, d) => sum + Math.pow(d - avgRadius, 2), 0) / distances.length;
-  const stdDev = Math.sqrt(variance);
+  // 1. RADIUS CONSISTENCY: How consistent is the distance from center?
+  // Perfect circle = all points equidistant from center
+  const maxDeviation = Math.max(...distances.map(d => Math.abs(d - avgRadius)));
+  const avgDeviation = distances.reduce((sum, d) => sum + Math.abs(d - avgRadius), 0) / distances.length;
+  const radiusConsistency = Math.max(0, 1 - (avgDeviation / avgRadius) * 3);
   
-  // Coefficient of variation (normalized)
-  const cv = stdDev / avgRadius;
+  // 2. SMOOTHNESS: Check for jagged edges by measuring angle changes
+  let smoothnessScore = 1;
+  if (points.length > 10) {
+    let totalAngleChange = 0;
+    for (let i = 2; i < points.length; i++) {
+      const v1 = { x: points[i-1].x - points[i-2].x, y: points[i-1].y - points[i-2].y };
+      const v2 = { x: points[i].x - points[i-1].x, y: points[i].y - points[i-1].y };
+      
+      const dot = v1.x * v2.x + v1.y * v2.y;
+      const mag1 = Math.sqrt(v1.x * v1.x + v1.y * v1.y);
+      const mag2 = Math.sqrt(v2.x * v2.x + v2.y * v2.y);
+      
+      if (mag1 > 0.1 && mag2 > 0.1) {
+        const cosAngle = Math.max(-1, Math.min(1, dot / (mag1 * mag2)));
+        const angle = Math.acos(cosAngle);
+        totalAngleChange += angle;
+      }
+    }
+    // A perfect circle has smooth, consistent angle changes
+    const expectedAngleChange = 2 * Math.PI; // 360 degrees total
+    const angleDeviation = Math.abs(totalAngleChange - expectedAngleChange) / expectedAngleChange;
+    smoothnessScore = Math.max(0, 1 - angleDeviation * 0.5);
+  }
   
-  // Check if the shape is closed (start and end points are near)
+  // 3. CLOSURE: Does the circle close properly?
   const startPoint = points[0];
   const endPoint = points[points.length - 1];
   const closureDistance = Math.sqrt(
     Math.pow(endPoint.x - startPoint.x, 2) + Math.pow(endPoint.y - startPoint.y, 2)
   );
-  const closurePenalty = Math.min(closureDistance / avgRadius, 0.5);
+  const closureScore = Math.max(0, 1 - (closureDistance / avgRadius) * 2);
   
-  // Convert to percentage (lower cv = better circle)
-  // Map cv from 0-0.3 to 100%-50%
-  let score = Math.max(0, Math.min(100, (1 - cv * 2) * 100));
+  // 4. ROUNDNESS: Check if shape is elongated (ellipse vs circle)
+  // Sample points at different angles and compare distances
+  let minRadius = Infinity, maxRadius = 0;
+  distances.forEach(d => {
+    if (d < minRadius) minRadius = d;
+    if (d > maxRadius) maxRadius = d;
+  });
+  const aspectRatio = minRadius / maxRadius;
+  const roundnessScore = aspectRatio; // 1 = perfect circle, lower = more elliptical
   
-  // Apply closure penalty
-  score = score * (1 - closurePenalty * 0.3);
+  // Combine all factors with weights
+  const finalScore = (
+    radiusConsistency * 0.45 +  // Most important - are all points same distance from center?
+    roundnessScore * 0.30 +     // Is it round, not elliptical?
+    smoothnessScore * 0.15 +    // Is it smooth, not jagged?
+    closureScore * 0.10         // Does it close properly?
+  ) * 100;
   
-  // Bonus for good closure
-  if (closureDistance < avgRadius * 0.15) {
-    score = Math.min(100, score * 1.05);
-  }
-  
-  return Math.max(0, Math.min(99.9, score));
+  return Math.max(0, Math.min(99.9, finalScore));
 };
 
 // Get color based on score
