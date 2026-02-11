@@ -563,17 +563,15 @@ export const CircleGame = () => {
             </div>
           )}
           
-          {/* Result screen */}
-          {gameState === 'result' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-20 pointer-events-none">
-              {isNewBest && (
-                <div 
-                  data-testid="new-best-indicator"
-                  className="font-body text-lg text-[#39FF14] tracking-wider uppercase animate-pulse-glow"
-                >
-                  New Best Score!
-                </div>
-              )}
+          {/* Result screen - just show new best indicator above canvas if achieved */}
+          {gameState === 'result' && isNewBest && (
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+              <div 
+                data-testid="new-best-indicator"
+                className="font-body text-lg text-[#39FF14] tracking-wider uppercase animate-pulse-glow whitespace-nowrap"
+              >
+                New Best Score!
+              </div>
             </div>
           )}
         </div>
