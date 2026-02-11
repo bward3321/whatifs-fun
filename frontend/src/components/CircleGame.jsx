@@ -553,15 +553,12 @@ export const CircleGame = () => {
           
           {/* Failed screen */}
           {gameState === 'failed' && (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 z-20 pointer-events-none">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-20 pointer-events-none">
               <div className="font-pixel text-xl md:text-2xl text-[#FF3B30] glow-red animate-shake">
                 FAILED!
               </div>
               <p className="font-body text-sm text-zinc-400 text-center max-w-xs">
                 Complete the circle without releasing!
-              </p>
-              <p className="font-body text-xs text-zinc-600 text-center">
-                Draw again to retry
               </p>
             </div>
           )}
