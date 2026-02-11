@@ -577,12 +577,16 @@ export const CircleGame = () => {
                   New Best Score!
                 </div>
               )}
-              <p className="font-body text-xs text-zinc-500 text-center mt-4">
-                Draw again to play
-              </p>
             </div>
           )}
         </div>
+        
+        {/* Draw again hint - OUTSIDE canvas, below it */}
+        {(gameState === 'result' || gameState === 'failed') && (
+          <p className="font-body text-sm text-zinc-500 text-center mt-2 animate-pulse-glow">
+            Draw again to play
+          </p>
+        )}
         
         {/* Share buttons - only on result */}
         {gameState === 'result' && (
