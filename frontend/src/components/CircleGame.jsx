@@ -478,17 +478,27 @@ export const CircleGame = () => {
       <div className="relative z-10 flex flex-col items-center justify-center gap-4">
         {/* Current score (during drawing or result) */}
         {(gameState === 'drawing' || gameState === 'result' || gameState === 'failed') && (
-          <div className="text-center">
+          <div className="text-center mb-2">
             <div 
               data-testid="current-score"
               className={`font-pixel text-5xl md:text-7xl animate-score-pop ${getScoreClass(currentScore)}`}
             >
               {currentScore.toFixed(1)}%
             </div>
-            {/* Best score shown below current score */}
+            {/* Best score and new best indicator */}
             {(gameState === 'result' || gameState === 'failed') && (
-              <div className="mt-4 font-body text-sm text-zinc-500 tracking-wider">
-                BEST: <span className="font-pixel text-lg text-[#00FFFF] glow-cyan">{bestScore.toFixed(1)}%</span>
+              <div className="mt-2 flex flex-col items-center gap-1">
+                {isNewBest && gameState === 'result' && (
+                  <div 
+                    data-testid="new-best-indicator"
+                    className="font-body text-base text-[#39FF14] tracking-wider uppercase animate-pulse-glow"
+                  >
+                    New Best!
+                  </div>
+                )}
+                <div className="font-body text-sm text-zinc-500 tracking-wider">
+                  BEST: <span className="font-pixel text-lg text-[#00FFFF] glow-cyan">{bestScore.toFixed(1)}%</span>
+                </div>
               </div>
             )}
           </div>
