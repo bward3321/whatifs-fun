@@ -435,7 +435,7 @@ function App() {
           </motion.div>
         )}
 
-        {/* WAITING State - Red Screen */}
+        {/* WAITING State - Dynamic Color Screen */}
         {gameState === STATES.WAITING && (
           <motion.div
             className="text-center"
@@ -449,7 +449,7 @@ function App() {
               animate={{ scale: 1 }}
             >
               <h2 className="font-heading text-4xl md:text-6xl font-bold text-white mb-4 uppercase tracking-wider">
-                Wait for green...
+                Wait for it...
               </h2>
             </motion.div>
             <p className="text-white/80 text-lg">Don't click yet!</p>
