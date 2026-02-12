@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/perfectcircle",
+      "destination": "/perfectcircle/index.html"
+    },
+    {
+      "source": "/perfectcircle/(.*)",
+      "destination": "/perfectcircle/$1"
+    }
+  ],
+  "trailingSlash": false
+}
