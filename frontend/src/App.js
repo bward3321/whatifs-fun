@@ -401,10 +401,10 @@ function App() {
             >
               <p className="text-slate-300 text-left space-y-2">
                 <span className="block">
-                  <span className="text-emerald-400 font-semibold">1.</span> When the screen turns <span className="text-emerald-400 font-bold">green</span>, click as fast as you can!
+                  <span style={{ color: colorPair.ready }} className="font-semibold">1.</span> When the screen changes color, click as fast as you can!
                 </span>
                 <span className="block">
-                  <span className="text-rose-400 font-semibold">2.</span> Don't click while it's <span className="text-rose-400 font-bold">red</span> — wait for green!
+                  <span style={{ color: colorPair.wait }} className="font-semibold">2.</span> Don't click too early — wait for the color to change!
                 </span>
               </p>
             </motion.div>
