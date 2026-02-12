@@ -80,12 +80,18 @@ const ComparisonBar = ({ item, maxSpeed, isUser, delay }) => {
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: delay * 0.08, duration: 0.4 }}
     >
-      <img 
-        src={item.url} 
-        alt={item.name}
-        className={`comparison-avatar ${isUser ? 'user-marker' : ''}`}
-        onError={(e) => { e.target.style.display = 'none'; }}
-      />
+      {item.url ? (
+        <img 
+          src={item.url} 
+          alt={item.name}
+          className={`comparison-avatar ${isUser ? 'user-marker' : ''}`}
+          onError={(e) => { e.target.style.display = 'none'; }}
+        />
+      ) : (
+        <div className={`comparison-avatar ${isUser ? 'user-marker' : ''} flex items-center justify-center bg-gradient-to-br from-cyan-500 to-purple-600 text-2xl`}>
+          {item.emoji}
+        </div>
+      )}
       <div className="flex-1">
         <div className="flex justify-between items-center mb-1">
           <span className={`text-sm font-medium ${isUser ? 'text-cyan-400' : 'text-slate-300'}`}>
