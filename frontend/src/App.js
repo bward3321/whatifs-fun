@@ -324,7 +324,21 @@ function App() {
     sounds.click();
   }, []);
 
-  // Get state-specific styling
+  // Get dynamic background style based on state
+  const getBackgroundStyle = () => {
+    switch (gameState) {
+      case STATES.WAITING: 
+        return { backgroundColor: colorPair.wait };
+      case STATES.READY: 
+        return { backgroundColor: colorPair.ready };
+      case STATES.EARLY_CLICK: 
+        return { backgroundColor: '#f59e0b' };
+      default: 
+        return { backgroundColor: '#020617' };
+    }
+  };
+
+  // Get state-specific class for animations
   const getStateClass = () => {
     switch (gameState) {
       case STATES.WAITING: return 'state-waiting';
@@ -335,7 +349,11 @@ function App() {
   };
 
   return (
-    <div className={`game-container ${getStateClass()}`} data-testid="game-container">
+    <div 
+      className={`game-container ${getStateClass()}`} 
+      style={getBackgroundStyle()}
+      data-testid="game-container"
+    >
       {/* Main game area */}
       <div 
         className="click-area"
