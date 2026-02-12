@@ -8,23 +8,23 @@
   overflow: hidden;
 }
 
-/* State backgrounds */
+/* State backgrounds - now handled dynamically in JS */
 .state-idle {
-  background: #020617;
+  /* background set via inline style */
 }
 
 .state-waiting {
-  background: #e11d48;
   cursor: not-allowed;
+  /* background set via inline style */
 }
 
 .state-ready {
-  background: #10b981;
   cursor: pointer;
+  /* background set via inline style */
 }
 
 .state-early {
-  background: #f59e0b;
+  /* background set via inline style */
 }
 
 .state-finished {
