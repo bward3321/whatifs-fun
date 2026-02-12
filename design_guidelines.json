@@ -1,0 +1,196 @@
+{
+  "identity": {
+    "persona": "E1",
+    "tone": "Vibrant Play / Cyber-Sport",
+    "principles": [
+      "Fusion over Imitation: Arcade aesthetics mixed with precise analytics.",
+      "Emotion First: Tension (Red) -> Release (Green) -> Triumph/Failure (Results).",
+      "Content is King: The 'Time' is the hero. Make numbers massive."
+    ]
+  },
+  "typography": {
+    "primary_font": "Chakra Petch",
+    "secondary_font": "Outfit",
+    "monospace_font": "JetBrains Mono",
+    "scale": {
+      "hero_title": "text-5xl md:text-7xl font-bold uppercase tracking-tighter",
+      "timer_display": "text-8xl md:text-9xl font-mono tracking-widest font-black",
+      "card_title": "text-xl font-bold uppercase tracking-wide",
+      "body": "text-base md:text-lg leading-relaxed text-slate-300"
+    }
+  },
+  "colors": {
+    "theme": "dark",
+    "palette": {
+      "background": {
+        "default": "#020617",
+        "card": "#0f172a",
+        "overlay": "rgba(2, 6, 23, 0.9)"
+      },
+      "states": {
+        "idle": "#3b82f6",
+        "waiting": "#e11d48",
+        "ready": "#10b981",
+        "early_click": "#f59e0b"
+      },
+      "accents": {
+        "neon_blue": "#06b6d4",
+        "neon_purple": "#8b5cf6",
+        "neon_pink": "#ec4899"
+      }
+    },
+    "gradients": {
+      "hero_glow": "radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(2, 6, 23, 0) 70%)",
+      "waiting_pulse": "radial-gradient(circle at center, rgba(225, 29, 72, 0.2) 0%, rgba(2, 6, 23, 0) 70%)"
+    }
+  },
+  "layout": {
+    "structure": "Single Page Application (SPA) with full-screen interactive states.",
+    "grid_system": "Bento Grid for results section (Mobile: 1 col, Desktop: 3-4 cols).",
+    "spacing": "Tailwind 'generous' scale (p-8, gap-8).",
+    "z_index": {
+      "base": 0,
+      "interactive_layer": 10,
+      "results_modal": 50,
+      "toast": 100
+    }
+  },
+  "components": {
+    "InstructionScreen": {
+      "type": "Hero Section",
+      "style": "Centered content, massive 'START' CTA, floating playful elements.",
+      "animation": "Float animation on decorative icons."
+    },
+    "TestArea": {
+      "type": "Full-Screen Button",
+      "style": "100vh height, cursor-pointer, changes background color instantly.",
+      "interaction": "Must use 'onMouseDown' instead of 'onClick' for better latency accuracy."
+    },
+    "ResultModal": {
+      "type": "Overlay",
+      "style": "Glassmorphism backdrop (blur-xl), neon borders, dark card background.",
+      "content": "Big Ms display, percentile text, comparison chart."
+    },
+    "ComparisonChart": {
+      "type": "Custom Bar Chart",
+      "style": "Horizontal bars. User's time is highlighted. Animated growth on reveal.",
+      "library": "Framer Motion (custom bars) or Recharts (simplified)."
+    }
+  },
+  "motion": {
+    "transitions": {
+      "page_state": "duration-200 ease-in-out",
+      "hover": "duration-150 ease-out",
+      "chart_grow": "duration-1000 type-spring bounce-0"
+    },
+    "micro_interactions": {
+      "wait_pulse": "animate-pulse (fast)",
+      "click_feedback": "scale-95 (instant)",
+      "shake": "translateX keyframes for early click error"
+    }
+  },
+  "assets": {
+    "image_urls": {
+      "comparisons": [
+        {
+          "name": "Housefly",
+          "speed": "20ms",
+          "url": "https://images.unsplash.com/photo-1644987768994-d9f56eb93498?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzZ8MHwxfHNlYXJjaHwyfHxob3VzZWZseSUyMG1hY3JvfGVufDB8fHx8MTc3MDg2MjA4Nnww&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Robot",
+          "speed": "1ms",
+          "url": "https://images.unsplash.com/photo-1750096319146-6310519b5af2?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxmdXR1cmlzdGljJTIwcm9ib3QlMjBwb3J0cmFpdHxlbnwwfHx8fDE3NzA4NjIxMDB8MA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Hummingbird",
+          "speed": "60ms",
+          "url": "https://images.unsplash.com/photo-1695036178611-8e6c20d2573f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwyfHxodW1taW5nYmlyZCUyMGZseWluZ3xlbnwwfHx8fDE3NzA4NjIxMDB8MA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Cat",
+          "speed": "70ms",
+          "url": "https://images.unsplash.com/photo-1690335466266-ae8e5a470ada?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwxfHxjYXQlMjBwbGF5ZnVsfGVufDB8fHx8MTc3MDg2MjA4N3ww&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Cheetah",
+          "speed": "100ms",
+          "url": "https://images.unsplash.com/photo-1559303970-6d3f3a61b1b4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHw0fHxjaGVldGFoJTIwcnVubmluZ3xlbnwwfHx8fDE3NzA4NjIwODd8MA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Fighter Pilot",
+          "speed": "150ms",
+          "url": "https://images.unsplash.com/photo-1632813934009-9f3f78896717?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwyfHxmaWdodGVyJTIwcGlsb3QlMjBoZWxtZXQlMjBjb2NrcGl0fGVufDB8fHx8MTc3MDg2MjA4NHww&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Gamer",
+          "speed": "180ms",
+          "url": "https://images.unsplash.com/photo-1758410473619-c204b1bcf13a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjh8MHwxfHNlYXJjaHwxfHxnYW1lciUyMGUtc3BvcnRzJTIwaGVhZHNldCUyMG5lb258ZW58MHx8fHwxNzcwODYyMDg1fDA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "F1 Driver",
+          "speed": "200ms",
+          "url": "https://images.unsplash.com/photo-1761751237853-7489598b7498?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1MDZ8MHwxfHNlYXJjaHw0fHxmMSUyMGRyaXZlciUyMHJhY2luZyUyMGhlbG1ldHxlbnwwfHx8fDE3NzA4NjIwOTh8MA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Average Human",
+          "speed": "250ms",
+          "url": "https://images.unsplash.com/photo-1758272134196-1ab895629bce?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTZ8MHwxfHNlYXJjaHw0fHxkaXZlcnNlJTIwZ3JvdXAlMjBvZiUyMHBlb3BsZSUyMGNhc3VhbHxlbnwwfHx8fDE3NzA4NjIxMDJ8MA&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        },
+        {
+          "name": "Sloth",
+          "speed": "500ms",
+          "url": "https://images.unsplash.com/photo-1693174758533-8470a48cf49c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA6ODl8MHwxfHNlYXJjaHwxfHxzbG90aCUyMGhhbmdpbmclMjB0cmVlfGVufDB8fHx8MTc3MDg2MjA5OXww&ixlib=rb-4.1.0&q=85",
+          "category": "comparison"
+        }
+      ]
+    },
+    "icons": {
+      "library": "lucide-react",
+      "required": ["Zap", "RefreshCcw", "Trophy", "Play", "AlertTriangle"]
+    },
+    "audio": {
+      "strategy": "Use Native AudioContext Oscillator for zero-latency beeps.",
+      "effects": {
+        "wait": "Low frequency hum (optional) or silence.",
+        "go": "High pitch beep (1000Hz) - Instant attack.",
+        "fail": "Low pitch buzz (150Hz).",
+        "success": "Ascending major triad."
+      }
+    }
+  },
+  "technical_constraints": {
+    "framework": "React + Vite",
+    "styling": "Tailwind CSS + Framer Motion",
+    "state_management": "React useState/useReducer (No complex store needed)",
+    "audio_latency": "CRITICAL: Preload audio or use OscillatorNode. Do not stream audio files on click."
+  },
+  "instructions_to_main_agent": [
+    "1. Setup: Install 'framer-motion' and 'lucide-react' if not present.",
+    "2. State Machine: Implement a robust state machine (IDLE -> WAITING -> READY -> FINISHED -> EARLY_CLICK).",
+    "3. Latency: Ensure the 'Green' timestamp is captured immediately before the DOM update to account for render lag, or use performance.now() correctly.",
+    "4. Mobile: Ensure the 'touch-action: manipulation' CSS property is set to prevent double-tap zoom delay.",
+    "5. Result Logic: Sort the comparisons. Insert the user's score into the list dynamically.",
+    "6. Visuals: Use the provided image URLs in circular avatars next to the bar charts.",
+    "7. Accessibility: Ensure keyboard (Spacebar) can also trigger the reaction.",
+    "8. Fun Factor: Add a random 'quip' message based on the score (e.g. 'Are you a robot?', 'Wake up!')."
+  ],
+  "universal_guidelines": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
+    "Every interaction needs micro-animations - hover states, transitions.",
+    "Use 2-3x more spacing than feels comfortable."
+  ]
+}
