@@ -272,6 +272,8 @@ function App() {
 
   const startGame = useCallback(() => {
     sounds.click();
+    // Pick new random color pair each game
+    setColorPair(getRandomColorPair());
     setGameState(STATES.WAITING);
     setReactionTime(null);
     setShowResults(false);
