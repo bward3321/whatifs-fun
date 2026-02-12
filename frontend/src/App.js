@@ -239,6 +239,7 @@ function App() {
   const [gameState, setGameState] = useState(STATES.IDLE);
   const [reactionTime, setReactionTime] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const [colorPair, setColorPair] = useState(getRandomColorPair);
   const greenTimestamp = useRef(null);
   const timeoutRef = useRef(null);
 
