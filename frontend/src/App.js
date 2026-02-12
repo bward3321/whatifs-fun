@@ -14,6 +14,23 @@ const STATES = {
   EARLY_CLICK: 'early_click'
 };
 
+// Color pairs for randomization [waitColor, readyColor, waitName, readyName]
+const COLOR_PAIRS = [
+  { wait: '#e11d48', ready: '#10b981', waitName: 'red', readyName: 'green' },
+  { wait: '#7c3aed', ready: '#f59e0b', waitName: 'purple', readyName: 'yellow' },
+  { wait: '#0891b2', ready: '#f43f5e', waitName: 'cyan', readyName: 'pink' },
+  { wait: '#ea580c', ready: '#06b6d4', waitName: 'orange', readyName: 'cyan' },
+  { wait: '#4f46e5', ready: '#84cc16', waitName: 'indigo', readyName: 'lime' },
+  { wait: '#be185d', ready: '#22d3ee', waitName: 'pink', readyName: 'sky' },
+  { wait: '#0d9488', ready: '#fbbf24', waitName: 'teal', readyName: 'amber' },
+  { wait: '#6366f1', ready: '#34d399', waitName: 'violet', readyName: 'emerald' },
+];
+
+// Get random color pair
+const getRandomColorPair = () => {
+  return COLOR_PAIRS[Math.floor(Math.random() * COLOR_PAIRS.length)];
+};
+
 // Comparison data with images from design guidelines
 const COMPARISONS = [
   { name: "Robot", speed: 1, emoji: "🤖", url: "https://images.unsplash.com/photo-1750096319146-6310519b5af2?w=100&h=100&fit=crop" },
