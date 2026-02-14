@@ -55,7 +55,7 @@ export function GameTile({ index, isActive, isFailed, isCorrect, onClick, disabl
     <motion.button
       data-testid={`game-tile-${index}`}
       onClick={() => !disabled && onClick(index)}
-      className="aspect-square rounded-2xl cursor-pointer border-2 backdrop-blur-sm select-none touch-manipulation outline-none focus:outline-none relative overflow-hidden"
+      className="w-full aspect-square rounded-2xl cursor-pointer border-2 backdrop-blur-sm select-none touch-manipulation outline-none focus:outline-none relative overflow-hidden"
       style={getStyles()}
       animate={{ scale: highlighted ? 1.06 : 1 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
