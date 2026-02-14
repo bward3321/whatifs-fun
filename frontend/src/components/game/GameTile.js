@@ -1,56 +1,78 @@
 import { motion } from 'framer-motion';
 
 const TILE_COLORS = [
-  { idle: 'rgba(34, 211, 238, 0.12)', active: '#22d3ee', glow: 'rgba(34, 211, 238, 0.5)', border: 'rgba(34, 211, 238, 0.35)', idleGlow: '0 0 20px rgba(34, 211, 238, 0.1)' },
-  { idle: 'rgba(167, 139, 250, 0.12)', active: '#a78bfa', glow: 'rgba(167, 139, 250, 0.5)', border: 'rgba(167, 139, 250, 0.35)', idleGlow: '0 0 20px rgba(167, 139, 250, 0.1)' },
-  { idle: 'rgba(251, 113, 133, 0.12)', active: '#fb7185', glow: 'rgba(251, 113, 133, 0.5)', border: 'rgba(251, 113, 133, 0.35)', idleGlow: '0 0 20px rgba(251, 113, 133, 0.1)' },
-  { idle: 'rgba(251, 191, 36, 0.12)', active: '#fbbf24', glow: 'rgba(251, 191, 36, 0.5)', border: 'rgba(251, 191, 36, 0.35)', idleGlow: '0 0 20px rgba(251, 191, 36, 0.1)' },
-  { idle: 'rgba(52, 211, 153, 0.12)', active: '#34d399', glow: 'rgba(52, 211, 153, 0.5)', border: 'rgba(52, 211, 153, 0.35)', idleGlow: '0 0 20px rgba(52, 211, 153, 0.1)' },
-  { idle: 'rgba(96, 165, 250, 0.12)', active: '#60a5fa', glow: 'rgba(96, 165, 250, 0.5)', border: 'rgba(96, 165, 250, 0.35)', idleGlow: '0 0 20px rgba(96, 165, 250, 0.1)' },
-  { idle: 'rgba(251, 146, 60, 0.12)', active: '#fb923c', glow: 'rgba(251, 146, 60, 0.5)', border: 'rgba(251, 146, 60, 0.35)', idleGlow: '0 0 20px rgba(251, 146, 60, 0.1)' },
-  { idle: 'rgba(244, 114, 182, 0.12)', active: '#f472b6', glow: 'rgba(244, 114, 182, 0.5)', border: 'rgba(244, 114, 182, 0.35)', idleGlow: '0 0 20px rgba(244, 114, 182, 0.1)' },
-  { idle: 'rgba(163, 230, 53, 0.12)', active: '#a3e635', glow: 'rgba(163, 230, 53, 0.5)', border: 'rgba(163, 230, 53, 0.35)', idleGlow: '0 0 20px rgba(163, 230, 53, 0.1)' },
-  { idle: 'rgba(129, 140, 248, 0.12)', active: '#818cf8', glow: 'rgba(129, 140, 248, 0.5)', border: 'rgba(129, 140, 248, 0.35)', idleGlow: '0 0 20px rgba(129, 140, 248, 0.1)' },
-  { idle: 'rgba(45, 212, 191, 0.12)', active: '#2dd4bf', glow: 'rgba(45, 212, 191, 0.5)', border: 'rgba(45, 212, 191, 0.35)', idleGlow: '0 0 20px rgba(45, 212, 191, 0.1)' },
-  { idle: 'rgba(248, 113, 113, 0.12)', active: '#f87171', glow: 'rgba(248, 113, 113, 0.5)', border: 'rgba(248, 113, 113, 0.35)', idleGlow: '0 0 20px rgba(248, 113, 113, 0.1)' },
+  { color: '#22d3ee', rgb: '34, 211, 238' },   // Cyan
+  { color: '#a78bfa', rgb: '167, 139, 250' },   // Violet
+  { color: '#fb7185', rgb: '251, 113, 133' },   // Rose
+  { color: '#fbbf24', rgb: '251, 191, 36' },    // Amber
+  { color: '#34d399', rgb: '52, 211, 153' },    // Emerald
+  { color: '#60a5fa', rgb: '96, 165, 250' },    // Blue
+  { color: '#fb923c', rgb: '251, 146, 60' },    // Orange
+  { color: '#f472b6', rgb: '244, 114, 182' },   // Pink
+  { color: '#a3e635', rgb: '163, 230, 53' },    // Lime
+  { color: '#818cf8', rgb: '129, 140, 248' },   // Indigo
+  { color: '#2dd4bf', rgb: '45, 212, 191' },    // Teal
+  { color: '#f87171', rgb: '248, 113, 113' },   // Red
 ];
 
 export { TILE_COLORS };
 
 export function GameTile({ index, isActive, isFailed, isCorrect, onClick, disabled }) {
-  const color = TILE_COLORS[index % TILE_COLORS.length];
+  const { color, rgb } = TILE_COLORS[index % TILE_COLORS.length];
   const highlighted = isActive || isFailed || isCorrect;
 
-  let bg = color.idle;
-  let shadow = color.idleGlow;
-  let border = color.border;
-
-  if (isActive) {
-    bg = color.active;
-    shadow = `0 0 25px ${color.glow}, 0 0 50px ${color.glow}`;
-    border = color.active;
-  } else if (isFailed) {
-    bg = '#f43f5e';
-    shadow = '0 0 30px rgba(244, 63, 94, 0.6)';
-    border = '#f43f5e';
-  } else if (isCorrect) {
-    bg = '#10b981';
-    shadow = '0 0 30px rgba(16, 185, 129, 0.6)';
-    border = '#10b981';
-  }
+  const getStyles = () => {
+    if (isActive) {
+      return {
+        backgroundColor: `rgba(${rgb}, 0.35)`,
+        borderColor: color,
+        boxShadow: `0 0 30px rgba(${rgb}, 0.5), 0 0 60px rgba(${rgb}, 0.25), inset 0 0 30px rgba(${rgb}, 0.15)`,
+      };
+    }
+    if (isFailed) {
+      return {
+        backgroundColor: 'rgba(244, 63, 94, 0.35)',
+        borderColor: '#f43f5e',
+        boxShadow: '0 0 30px rgba(244, 63, 94, 0.5), inset 0 0 20px rgba(244, 63, 94, 0.15)',
+      };
+    }
+    if (isCorrect) {
+      return {
+        backgroundColor: 'rgba(16, 185, 129, 0.35)',
+        borderColor: '#10b981',
+        boxShadow: '0 0 30px rgba(16, 185, 129, 0.5), inset 0 0 20px rgba(16, 185, 129, 0.15)',
+      };
+    }
+    // Idle state - visible glass effect
+    return {
+      backgroundColor: `rgba(${rgb}, 0.08)`,
+      borderColor: `rgba(${rgb}, 0.3)`,
+      boxShadow: `0 0 15px rgba(${rgb}, 0.05), inset 0 1px 0 rgba(255,255,255,0.05)`,
+    };
+  };
 
   return (
     <motion.button
       data-testid={`game-tile-${index}`}
       onClick={() => !disabled && onClick(index)}
-      className="aspect-square rounded-2xl cursor-pointer border-2 backdrop-blur-sm select-none touch-manipulation outline-none focus:outline-none"
-      style={{ backgroundColor: bg, borderColor: border, boxShadow: shadow }}
+      className="aspect-square rounded-2xl cursor-pointer border-2 backdrop-blur-sm select-none touch-manipulation outline-none focus:outline-none relative overflow-hidden"
+      style={getStyles()}
       animate={{ scale: highlighted ? 1.06 : 1 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-      whileHover={!disabled ? { scale: 1.04, borderColor: 'rgba(255,255,255,0.2)' } : undefined}
+      whileHover={!disabled ? { scale: 1.04, borderColor: `rgba(${rgb}, 0.5)` } : undefined}
       whileTap={!disabled ? { scale: 0.95 } : undefined}
       disabled={disabled}
       aria-label={`Tile ${index + 1}`}
-    />
+    >
+      {/* Inner glow gradient for visibility */}
+      <div
+        className="absolute inset-0 rounded-2xl pointer-events-none"
+        style={{
+          background: highlighted
+            ? `radial-gradient(circle at 40% 40%, rgba(255,255,255,0.15), transparent 60%)`
+            : `radial-gradient(circle at 40% 40%, rgba(${rgb}, 0.08), transparent 70%)`,
+        }}
+      />
+    </motion.button>
   );
 }
