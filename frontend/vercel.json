@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/perfectcircle",
-      "destination": "/perfectcircle/index.html"
+      "source": "/perfect-circle",
+      "destination": "/perfect-circle/index.html"
     },
     {
-      "source": "/perfectcircle/(.*)",
-      "destination": "/perfectcircle/$1"
+      "source": "/perfect-circle/(.*)",
+      "destination": "/perfect-circle/$1"
     }
   ],
   "trailingSlash": false
