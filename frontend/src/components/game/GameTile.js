@@ -22,7 +22,7 @@ export function GameTile({ index, isActive, isFailed, isCorrect, onClick, disabl
   const highlighted = isActive || isFailed || isCorrect;
 
   let bg = color.idle;
-  let shadow = 'none';
+  let shadow = color.idleGlow;
   let border = color.border;
 
   if (isActive) {
