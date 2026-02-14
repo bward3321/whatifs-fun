@@ -139,8 +139,24 @@ export function GameOverModal({ score, bestScore, stats, mode, onReplay, isNewBe
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ delay: 0.1, type: 'spring', stiffness: 300, damping: 25 }}
-          className="bg-slate-900/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 max-w-sm w-full shadow-2xl"
+          className="bg-slate-900/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl p-8 max-w-sm w-full shadow-2xl max-h-[90vh] overflow-y-auto"
         >
+          <AnimatePresence mode="wait">
+            {showShare ? (
+              <SharePanel
+                key="share"
+                score={score}
+                stats={stats}
+                mode={mode}
+                onClose={() => setShowShare(false)}
+              />
+            ) : (
+              <motion.div
+                key="results"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0, x: -20 }}
+              >
           {/* Score */}
           <div className="text-center space-y-2 mb-8">
             {isNewBest && (
