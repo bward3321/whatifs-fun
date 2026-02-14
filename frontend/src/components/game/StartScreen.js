@@ -82,7 +82,7 @@ export function StartScreen({ onStart, selectedMode, onModeChange, bestScores })
         Start Game
       </motion.button>
 
-      <p className="text-slate-500 text-sm max-w-[300px] leading-relaxed">
+      <p className="text-slate-500 text-base max-w-[320px] leading-relaxed font-body">
         Watch the sequence, then tap the tiles in the same order
       </p>
     </motion.div>
