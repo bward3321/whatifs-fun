@@ -74,10 +74,10 @@ export function GameScreen({
       {/* Tile Grid */}
       <div
         data-testid="tile-grid"
-        className="grid gap-3 sm:gap-4 w-full mx-auto"
+        className="grid gap-4 sm:gap-5 w-full mx-auto"
         style={{
           gridTemplateColumns: `repeat(${gridCols}, minmax(0, 1fr))`,
-          maxWidth: gridCols <= 2 ? '260px' : gridCols <= 3 ? '340px' : '380px',
+          maxWidth: gridCols <= 2 ? '320px' : gridCols <= 3 ? '420px' : '480px',
         }}
       >
         <AnimatePresence mode="popLayout">
