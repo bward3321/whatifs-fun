@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { RotateCcw, Trophy, Target, Crosshair } from 'lucide-react';
-import { useEffect } from 'react';
+import { RotateCcw, Trophy, Target, Crosshair, Share2, Download, Twitter, Copy, Check, X } from 'lucide-react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import confetti from 'canvas-confetti';
+import { useShareScore } from '@/hooks/useShareScore';
 
 const getScoreLabel = (s) => {
   if (s >= 14) return { label: 'Genius Tier', color: 'text-amber-400' };
@@ -10,8 +11,109 @@ const getScoreLabel = (s) => {
   return { label: 'Keep Practicing', color: 'text-slate-400' };
 };
 
+function SharePanel({ score, stats, mode, onClose }) {
+  const { shareScore, downloadCard, shareToTwitter, copyLink, generateCard } = useShareScore();
+  const [copied, setCopied] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const previewRef = useRef(null);
+
+  // Generate preview on mount
+  useEffect(() => {
+    const canvas = generateCard(score, stats, mode);
+    setPreviewUrl(canvas.toDataURL('image/png'));
+  }, [score, stats, mode, generateCard]);
+
+  const handleNativeShare = useCallback(async () => {
+    const result = await shareScore(score, stats, mode);
+    if (result.method === 'fallback' && result.canvas) {
+      // Native share not available, download instead
+      downloadCard(score, stats, mode);
+    }
+  }, [score, stats, mode, shareScore, downloadCard]);
+
+  const handleCopy = useCallback(async () => {
+    const ok = await copyLink(score);
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  }, [score, copyLink]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 10 }}
+      className="space-y-4"
+    >
+      {/* Card Preview */}
+      {previewUrl && (
+        <div className="rounded-xl overflow-hidden border border-white/[0.06] shadow-lg">
+          <img
+            ref={previewRef}
+            src={previewUrl}
+            alt="Score card preview"
+            className="w-full h-auto"
+            data-testid="share-card-preview"
+          />
+        </div>
+      )}
+
+      {/* Share buttons */}
+      <div className="grid grid-cols-2 gap-2">
+        <button
+          data-testid="share-native-btn"
+          onClick={handleNativeShare}
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-semibold hover:bg-cyan-500/20 transition-all"
+        >
+          <Share2 className="w-4 h-4" />
+          Share
+        </button>
+        <button
+          data-testid="share-twitter-btn"
+          onClick={() => shareToTwitter(score)}
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 text-sm font-semibold hover:bg-white/[0.08] transition-all"
+        >
+          <Twitter className="w-4 h-4" />
+          Post on X
+        </button>
+        <button
+          data-testid="share-download-btn"
+          onClick={() => downloadCard(score, stats, mode)}
+          className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300 text-sm font-semibold hover:bg-white/[0.08] transition-all"
+        >
+          <Download className="w-4 h-4" />
+          Save Image
+        </button>
+        <button
+          data-testid="share-copy-btn"
+          onClick={handleCopy}
+          className={`flex items-center justify-center gap-2 py-2.5 rounded-xl border text-sm font-semibold transition-all ${
+            copied
+              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+              : 'bg-white/[0.04] border-white/[0.08] text-slate-300 hover:bg-white/[0.08]'
+          }`}
+        >
+          {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          {copied ? 'Copied!' : 'Copy Link'}
+        </button>
+      </div>
+
+      {/* Back button */}
+      <button
+        data-testid="share-back-btn"
+        onClick={onClose}
+        className="w-full text-center text-xs text-slate-500 hover:text-slate-300 transition-colors py-1"
+      >
+        Back to results
+      </button>
+    </motion.div>
+  );
+}
+
 export function GameOverModal({ score, bestScore, stats, mode, onReplay, isNewBest }) {
   const label = getScoreLabel(score);
+  const [showShare, setShowShare] = useState(false);
 
   useEffect(() => {
     if (isNewBest && score >= 4) {
