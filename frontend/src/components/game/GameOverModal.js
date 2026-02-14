@@ -32,12 +32,26 @@ function SharePanel({ score, stats, mode, onClose }) {
   }, [score, stats, mode, shareScore, downloadCard]);
 
   const handleCopy = useCallback(async () => {
-    const ok = await copyLink(score);
-    if (ok) {
+    const tier = getScoreTier(score);
+    const text = `I scored ${score} on Remember the Order! (${tier.label}) Can you beat me? ${window.location.href}`;
+    try {
+      await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Fallback for browsers that don't support clipboard API
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
     }
-  }, [score, copyLink]);
+  }, [score]);
 
   return (
     <motion.div
