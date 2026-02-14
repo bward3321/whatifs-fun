@@ -41,7 +41,10 @@ export function StartScreen({ onStart, selectedMode, onModeChange, bestScores })
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-3 w-full max-w-xs">
+      <div className="w-full max-w-xs space-y-3">
+        <p className="text-[11px] text-slate-500 uppercase tracking-[0.2em] font-semibold font-body">Select Game Mode</p>
+      </div>
+      <div className="grid grid-cols-3 gap-3 w-full max-w-xs -mt-6">
         {MODES.map(m => {
           const Icon = m.icon;
           const best = bestScores?.[m.id] || 0;
