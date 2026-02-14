@@ -1,0 +1,98 @@
+{
+  "project_name": "Remember the Order",
+  "design_philosophy": {
+    "theme": "Soft Neon Glass",
+    "mode": "dark",
+    "core_principles": [
+      "Tactile Feedback: Every interaction must feel physical through sound and motion",
+      "Focus First: UI elements should fade away when playing",
+      "Neon Elegance: Glows should be soft and diffuse, not harsh",
+      "Glassmorphism: Use backdrop-blur heavily to create depth"
+    ]
+  },
+  "typography": {
+    "font_family_headings": "Syne, sans-serif",
+    "font_family_body": "Manrope, sans-serif",
+    "scale": {
+      "h1": "text-5xl md:text-7xl font-bold tracking-tight",
+      "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+      "body": "text-base md:text-lg font-medium leading-relaxed",
+      "caption": "text-sm text-muted-foreground uppercase tracking-widest"
+    }
+  },
+  "colors": {
+    "background": {
+      "base": "bg-slate-950",
+      "glass": "bg-slate-900/40 backdrop-blur-xl border border-white/10 shadow-2xl"
+    },
+    "text": {
+      "primary": "text-slate-50",
+      "secondary": "text-slate-400",
+      "accent": "text-cyan-400"
+    },
+    "interactive": {
+      "primary": "bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-[0_0_20px_rgba(6,182,212,0.5)]",
+      "secondary": "bg-white/5 hover:bg-white/10 text-white border border-white/10",
+      "tile_idle": "bg-white/5 border-white/5 hover:border-white/20 transition-all duration-300",
+      "tile_active": "bg-cyan-400 border-cyan-300 shadow-[0_0_30px_rgba(34,211,238,0.6)] scale-105 z-10",
+      "tile_success": "bg-emerald-400 border-emerald-300 shadow-[0_0_30px_rgba(52,211,153,0.6)] scale-105 z-10",
+      "tile_error": "bg-rose-500 border-rose-400 shadow-[0_0_30px_rgba(244,63,94,0.6)] scale-95 z-10 shake"
+    }
+  },
+  "layout": {
+    "container": "max-w-md mx-auto min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden",
+    "grid": "grid grid-cols-2 md:grid-cols-3 gap-4 w-full aspect-square p-4",
+    "spacing": {
+      "section_gap": "gap-8",
+      "internal_padding": "p-6"
+    }
+  },
+  "components": {
+    "GameTile": {
+      "path": "/app/frontend/src/components/game/GameTile.js",
+      "specs": "Rounded-2xl or 3xl. Must handle 'idle', 'highlight', 'success', 'error' states. Use Framer Motion for 'pop' effect on highlight.",
+      "styles": "aspect-square rounded-2xl cursor-pointer relative overflow-hidden transition-all duration-200"
+    },
+    "ScoreBoard": {
+      "path": "/app/frontend/src/components/game/ScoreBoard.js",
+      "specs": "Floating glass pill at top center. Shows current round/score.",
+      "styles": "fixed top-6 left-1/2 -translate-x-1/2 px-6 py-2 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex gap-4 items-center z-50"
+    },
+    "ModeSelector": {
+      "path": "/app/frontend/src/components/game/ModeSelector.js",
+      "specs": "Tabs or Cards to select Classic, Speed, Random modes.",
+      "styles": "grid grid-cols-1 md:grid-cols-3 gap-4 w-full"
+    },
+    "GameOverModal": {
+      "path": "/app/frontend/src/components/game/GameOverModal.js",
+      "specs": "Overlay with blur. Shows score, best score, stats. Restart button prominent.",
+      "styles": "fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-50"
+    }
+  },
+  "assets": {
+    "background_image": "https://images.unsplash.com/photo-1762281429401-81a7bfe66585?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "icons": "Use lucide-react (Play, RotateCcw, Trophy, Brain, Zap, Settings, Volume2, VolumeX)"
+  },
+  "libraries": {
+    "animation": "framer-motion (Crucial for sequence playback)",
+    "sound": "use-sound (Install: npm install use-sound)",
+    "confetti": "canvas-confetti (For high score celebration)",
+    "icons": "lucide-react"
+  },
+  "instructions_to_main_agent": [
+    "Install dependencies: npm install framer-motion use-sound canvas-confetti lucide-react",
+    "Setup 'use-sound' with simple free MP3s from a reliable CDN or local assets if available. If not, use a simple synthesizer function or placeholder.",
+    "Implement the 'Game Logic' in a custom hook 'useMemoryGame.js' to separate logic from UI.",
+    "Ensure the sequence playback blocks user input (isInputLocked state).",
+    "Use localStorage for 'Personal Best'.",
+    "The background image should be used as a subtle overlay with low opacity (10-20%) on the body or main container.",
+    "Add a 'Sound' toggle in the UI.",
+    "Ensure 'Speed Mode' has a visible progress bar timer using Shadcn Progress component customized to be thin and neon."
+  ],
+  "universal_guidelines": [
+    "Do not use generic gradients. Use the defined glassmorphism styles.",
+    "Ensure tap targets are at least 44px for mobile.",
+    "Use 'AnimatePresence' from framer-motion for smooth mode transitions.",
+    "Add a subtle 'noise' texture to the background if possible for extra polish."
+  ]
+}
