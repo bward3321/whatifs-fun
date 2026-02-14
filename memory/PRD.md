@@ -62,3 +62,15 @@ Build a browser game called "Remember the Order" - a clean, addictive memory cha
 2. Implement daily challenge with seed-based sequences
 3. Add more visual polish (particle effects on correct sequences)
 4. Accessibility improvements (screen reader support)
+
+## Update - Share Score Feature (Feb 2026)
+- [x] Share Score button on game over modal (icon next to Play Again)
+- [x] Canvas-generated score card image with dark neon theme
+- [x] Share panel with 4 options: Native Share, Post on X/Twitter, Save Image, Copy Link
+- [x] Score card shows: game title, score, tier label, stats, CTA, decorative tiles
+- [x] Web Share API (with image file) for mobile native sharing
+- [x] Twitter intent URL for direct X posting
+- [x] PNG download of score card
+- [x] Clipboard copy with visual feedback ("Copied!")
+- [x] Back to results navigation
+- [x] Mobile responsive share panel
