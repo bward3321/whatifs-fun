@@ -211,17 +211,31 @@ export function GameOverModal({ score, bestScore, stats, mode, onReplay, isNewBe
             </div>
           </div>
 
-          {/* Replay */}
-          <motion.button
-            data-testid="replay-btn"
-            onClick={onReplay}
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all duration-200 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)]"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <RotateCcw className="w-4 h-4" />
-            Play Again
-          </motion.button>
+          {/* Action buttons */}
+          <div className="flex gap-2">
+            <motion.button
+              data-testid="replay-btn"
+              onClick={onReplay}
+              className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold transition-all duration-200 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_35px_rgba(6,182,212,0.5)]"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <RotateCcw className="w-4 h-4" />
+              Play Again
+            </motion.button>
+            <motion.button
+              data-testid="share-score-btn"
+              onClick={() => setShowShare(true)}
+              className="px-5 py-3.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-slate-300 font-semibold hover:bg-white/[0.1] transition-all duration-200"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Share2 className="w-4 h-4" />
+            </motion.button>
+          </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       </motion.div>
     </AnimatePresence>
