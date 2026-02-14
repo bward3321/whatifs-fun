@@ -1,56 +1,50 @@
-# Perfect Circle Game - PRD
+# Reflex Test Game - PRD
 
 ## Original Problem Statement
-Build an interactive "Perfect Circle" drawing game where users try to draw a perfect circle with real-time % score calculation. Features include best score tracking, one continuous click-and-hold drawing, and social sharing.
+Need a web app which is a reaction time test type game for users (no login needed, just one page). The homepage should be simple:
+"Test your reaction time and see how you compare to the average human, a gamer, a fighter pilot… and a housefly."
 
 ## User Personas
-- **Casual Gamers**: Looking for quick, fun challenges
-- **Viral Game Enthusiasts**: Want to share scores on social media
-- **Competitive Players**: Trying to beat their best score
+- Casual users wanting to test their reflexes
+- Gamers comparing their reaction times
+- Friends competing against each other
 
-## Core Requirements
-- [x] Interactive canvas for circle drawing
-- [x] Real-time score calculation as user draws
-- [x] Continuous click-and-hold drawing (releasing fails)
-- [x] Best score stored in localStorage
-- [x] Tweet and Copy sharing buttons
-- [x] Sound effects (drawing, completion, new best)
-- [x] Desktop and mobile/touch support
-- [x] Black background with neon glow aesthetic
-- [x] "PERFECT SHAPE" logo on top left
+## Core Requirements (Static)
+- Single page game with no authentication
+- 4 game states: Idle, Waiting (Red), Ready (Green), Results
+- Random delay 1-4 seconds before green screen
+- Accurate millisecond reaction time measurement
+- Percentile comparison
+- Visual comparison chart with 10 entities
+- Playful/fun theme with vibrant colors
+- Sound effects on interactions
+- Keyboard (Space) and touch support
 
-## What's Been Implemented (Jan 2026)
-1. **CircleGame Component** - Full game logic with three states (start, drawing, result, failed)
-2. **Canvas Drawing** - Mouse and touch support with smooth tracking
-3. **Scoring Algorithm** - Standard deviation-based circularity calculation
-4. **Sound Manager** - Web Audio API synthesized sounds
-5. **Confetti Celebration** - canvas-confetti for new best scores
-6. **Sharing** - Twitter intent and clipboard copy with fallback
+## What's Been Implemented (Feb 2026)
+- [x] Full game state machine (IDLE → WAITING → READY → FINISHED → EARLY_CLICK)
+- [x] 10 comparison entities: Robot (1ms), Housefly (20ms), Hummingbird (60ms), Cat (70ms), Cheetah (100ms), Fighter Pilot (150ms), Gamer (180ms), F1 Driver (200ms), Average Human (250ms), Sloth (500ms)
+- [x] Playful dark theme with Chakra Petch font, neon accents
+- [x] AudioContext-based sound effects (zero latency)
+- [x] Animated comparison chart with framer-motion
+- [x] Percentile calculation and fun quips
+- [x] Early click detection with shake animation
+- [x] Mobile responsive with touch-action optimization
+- [x] Keyboard spacebar support
 
-## Architecture
-- Frontend: React with Tailwind CSS
-- Canvas: HTML5 Canvas for drawing
-- Sound: Web Audio API (no external files)
-- Storage: localStorage for best score
-- Fonts: Press Start 2P (scores) + Rajdhani (UI)
+## Prioritized Backlog
+### P0 (Critical) - COMPLETED
+- Game flow working end-to-end ✓
 
-## P0 Features (Completed)
-- Game flow: Start → Drawing → Result/Failed
-- Real-time score updates
-- Best score persistence
-- Social sharing
+### P1 (High)
+- Add social sharing (share score to Twitter/X)
+- Track best score in localStorage
 
-## P1 Features (Backlog)
-- Leaderboard (global high scores)
-- Daily challenges
-- Different shape modes (square, triangle)
-
-## P2 Features (Backlog)
-- Custom themes/colors
-- Achievement system
-- Multiplayer mode
+### P2 (Medium)
+- Add multiple attempts average mode
+- Add difficulty modes (shorter/longer delays)
+- Leaderboard with anonymous scores
 
 ## Next Tasks
-- Consider adding leaderboard feature
-- Add more sharing options (WhatsApp, Facebook)
-- Add replay animation of best circle
+1. Add social share button to results modal
+2. Track and display personal best score
+3. Add "Best of 5" mode
