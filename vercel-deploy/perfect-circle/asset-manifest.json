@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/perfect-circle/static/css/main.c85bcf89.css",
+    "main.js": "/perfect-circle/static/js/main.72f87773.js",
+    "index.html": "/perfect-circle/index.html",
+    "main.c85bcf89.css.map": "/perfect-circle/static/css/main.c85bcf89.css.map",
+    "main.72f87773.js.map": "/perfect-circle/static/js/main.72f87773.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c85bcf89.css",
+    "static/js/main.72f87773.js"
+  ]
+}
