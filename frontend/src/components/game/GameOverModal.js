@@ -32,14 +32,13 @@ function SharePanel({ score, stats, mode, onClose }) {
   }, [score, stats, mode, shareScore, downloadCard]);
 
   const handleCopy = useCallback(async () => {
-    const tier = getScoreTier(score);
-    const text = `I scored ${score} on Remember the Order! (${tier.label}) Can you beat me? ${window.location.href}`;
+    const tierLabel = score >= 14 ? 'Genius Tier' : score >= 10 ? 'Elite Memory' : score >= 6 ? 'Above Average' : 'Keep Practicing';
+    const text = `I scored ${score} on Remember the Order! (${tierLabel}) Can you beat me? ${window.location.href}`;
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback for browsers that don't support clipboard API
       const textArea = document.createElement('textarea');
       textArea.value = text;
       textArea.style.position = 'fixed';
