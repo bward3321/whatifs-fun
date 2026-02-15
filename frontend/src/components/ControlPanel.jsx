@@ -215,11 +215,11 @@ export const ControlPanel = ({
 
             {/* Target Selection */}
             <Card className="bg-card/80 border-primary/20">
-              <CardHeader className="py-3 px-4">
+              <CardHeader className="py-2 sm:py-3 px-3 sm:px-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Target className="w-4 h-4 text-destructive" />
-                    <CardTitle className="text-sm font-display tracking-wider text-destructive">
+                    <CardTitle className="text-xs sm:text-sm font-display tracking-wider text-destructive">
                       TARGET DESTINATION
                     </CardTitle>
                   </div>
@@ -227,21 +227,21 @@ export const ControlPanel = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectionMode(selectionMode === 'target' ? null : 'target')}
-                    className={selectionMode === 'target' ? 'text-destructive' : ''}
+                    className={`min-h-[44px] min-w-[44px] ${selectionMode === 'target' ? 'text-destructive' : ''}`}
                   >
-                    <MapPin className="w-4 h-4" />
+                    <MapPin className="w-5 h-5" />
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="px-4 pb-4">
-                <div className="space-y-3">
+              <CardContent className="px-3 sm:px-4 pb-3 sm:pb-4">
+                <div className="space-y-2 sm:space-y-3">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       placeholder="Search city..."
                       value={searchTarget}
                       onChange={(e) => setSearchTarget(e.target.value)}
-                      className="pl-9 bg-secondary/50 border-primary/20"
+                      className="pl-9 bg-secondary/50 border-primary/20 min-h-[44px]"
                     />
                   </div>
                   
@@ -254,7 +254,7 @@ export const ControlPanel = ({
                             setLaunchTarget(city);
                             setSearchTarget('');
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded bg-secondary/30 hover:bg-primary/20 transition-colors"
+                          className="w-full text-left px-3 py-3 text-sm rounded bg-secondary/30 hover:bg-primary/20 transition-colors min-h-[44px]"
                         >
                           <span className="text-foreground">{city.name}</span>
                           <span className="text-muted-foreground ml-2 text-xs">{city.country}</span>
