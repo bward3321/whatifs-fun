@@ -258,7 +258,7 @@
 .creatures-container {
   position: relative;
   width: 100%;
-  min-height: 52vh;
+  min-height: 60vh;
 }
 
 .marine-creature {
@@ -275,7 +275,7 @@
   display: block;
   text-align: center;
   font-family: 'Manrope', sans-serif;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -295,11 +295,11 @@
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-family: 'Outfit', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.88);
   line-height: 1.55;
-  max-width: 250px;
+  max-width: 280px;
   text-align: center;
   white-space: normal;
   pointer-events: none;
@@ -368,8 +368,8 @@
 .section-subtitle {
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-size: clamp(0.95rem, 2.2vw, 1.35rem);
-  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -377,16 +377,16 @@
 .stat-text {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  font-size: clamp(0.88rem, 1.6vw, 1.05rem);
-  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(1.15rem, 2.4vw, 1.55rem);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.65;
 }
 
 .comparison-text {
   font-family: 'Outfit', sans-serif;
   font-weight: 400;
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.5;
   font-style: italic;
 }
@@ -394,8 +394,8 @@
 .note-text {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  font-size: clamp(0.82rem, 1.4vw, 0.95rem);
-  color: rgba(255, 255, 255, 0.48);
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  color: rgba(255, 255, 255, 0.52);
   letter-spacing: 0.04em;
 }
 
@@ -407,8 +407,8 @@
 .floating-stat {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  font-size: clamp(0.82rem, 1.4vw, 0.95rem);
-  color: rgba(255, 255, 255, 0.42);
+  font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.48);
   letter-spacing: 0.03em;
   text-align: center;
   padding: 0 5vw;
@@ -428,16 +428,16 @@
 .ending-text {
   font-family: 'Outfit', sans-serif;
   font-weight: 300;
-  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
-  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1.35rem, 2.8vw, 1.85rem);
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.55;
-  max-width: 560px;
+  max-width: 640px;
 }
 
 .ending-final {
   font-family: 'Manrope', sans-serif;
   font-weight: 700;
-  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+  font-size: clamp(1.55rem, 3.5vw, 2.5rem);
   color: white;
   letter-spacing: 0.02em;
 }
@@ -502,7 +502,7 @@
   }
 
   .creature-label {
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .creature-fact {
