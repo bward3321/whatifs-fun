@@ -321,20 +321,20 @@ export const ControlPanel = ({
           </TabsContent>
 
           {/* Warhead Tab */}
-          <TabsContent value="warhead" className="mt-4 space-y-4 pb-4">
+          <TabsContent value="warhead" className="mt-2 sm:mt-4 space-y-3 sm:space-y-4 pb-4">
             <Card className="bg-card/80 border-primary/20">
-              <CardHeader className="py-3 px-4">
-                <CardTitle className="text-sm font-display tracking-wider text-warning flex items-center gap-2">
+              <CardHeader className="py-2 sm:py-3 px-3 sm:px-4">
+                <CardTitle className="text-xs sm:text-sm font-display tracking-wider text-warning flex items-center gap-2">
                   <Zap className="w-4 h-4" />
                   SELECT WARHEAD
                 </CardTitle>
               </CardHeader>
-              <CardContent className="px-4 pb-4 space-y-3">
+              <CardContent className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2 sm:space-y-3">
                 {nuclearWarheads.map(warhead => (
                   <button
                     key={warhead.id}
                     onClick={() => setSelectedWarhead(warhead)}
-                    className={`w-full text-left p-3 rounded border transition-all ${
+                    className={`w-full text-left p-3 rounded border transition-all min-h-[52px] ${
                       selectedWarhead?.id === warhead.id
                         ? 'bg-warning/20 border-warning/50'
                         : 'bg-secondary/30 border-primary/20 hover:border-primary/40'
@@ -360,7 +360,7 @@ export const ControlPanel = ({
                 {/* Custom warhead toggle */}
                 <Button
                   variant="outline"
-                  className="w-full mt-4"
+                  className="w-full mt-2 sm:mt-4 min-h-[48px]"
                   onClick={() => setShowCustomWarhead(!showCustomWarhead)}
                 >
                   <Plus className="w-4 h-4 mr-2" />
