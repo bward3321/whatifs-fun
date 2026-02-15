@@ -180,7 +180,7 @@ async def get_categories():
 
 @api_router.post("/questions/generate", response_model=Question)
 async def generate_question(request: QuestionRequest):
-    """Generate a new question using LLM - prioritizes NEW questions for variety"""
+    """Generate a new question using LLM - prioritizes NEW unique questions"""
     if request.category not in CATEGORIES and request.category != "mix":
         raise HTTPException(status_code=400, detail="Invalid category")
     
@@ -191,6 +191,23 @@ async def generate_question(request: QuestionRequest):
     
     difficulty_range = DIFFICULTY_MAP.get(request.difficulty, [2, 3])
     
+    # Get recent question topics to avoid repetition
+    recent_questions = await db.questions.find(
+        {"category": category},
+        {"_id": 0, "statement": 1}
+    ).sort("created_at", -1).limit(100).to_list(100)
+    
+    # Extract key topics from recent statements
+    avoid_topics = []
+    for q in recent_questions:
+        stmt = q.get("statement", "").lower()
+        # Extract key nouns/topics from statement
+        words = stmt.replace('"', '').replace("'", '').split()
+        for word in words:
+            if len(word) > 4 and word not in ['about', 'their', 'there', 'which', 'would', 'could', 'should', 'being', 'called', 'three', 'have', 'with']:
+                avoid_topics.append(word)
+    avoid_topics = list(set(avoid_topics))[:50]  # Unique topics, max 50
+    
     # Count available cached questions NOT in exclude list
     available_count = await db.questions.count_documents({
         "category": category,
@@ -198,13 +215,19 @@ async def generate_question(request: QuestionRequest):
         "id": {"$nin": request.exclude_ids}
     })
     
-    # ALWAYS generate new question if:
-    # 1. Less than 50 unique questions available for this category
-    # 2. 70% chance to generate new even if cache exists (for variety)
-    should_generate_new = available_count < 50 or random.random() < 0.7
+    # ALWAYS generate new question (100% of time for true variety)
+    # Only use cache as fallback when generation fails
+    question = await generate_question_with_llm(category, difficulty_range, avoid_topics)
     
-    if not should_generate_new and available_count > 0:
-        # Get random question from cache using aggregation for true randomness
+    if question:
+        # Cache the question
+        doc = question.model_dump()
+        doc['created_at'] = doc['created_at'].isoformat()
+        await db.questions.insert_one(doc)
+        return question
+    
+    # Fallback to cache if generation fails
+    if available_count > 0:
         pipeline = [
             {"$match": {
                 "category": category,
@@ -214,43 +237,14 @@ async def generate_question(request: QuestionRequest):
             {"$sample": {"size": 1}}
         ]
         cached_list = await db.questions.aggregate(pipeline).to_list(1)
-        
         if cached_list:
             cached = cached_list[0]
-            del cached['_id']  # Remove MongoDB _id
+            del cached['_id']
             if isinstance(cached.get('created_at'), str):
                 cached['created_at'] = datetime.fromisoformat(cached['created_at'])
             return Question(**cached)
     
-    # Generate new question
-    question = await generate_question_with_llm(category, difficulty_range)
-    
-    if not question:
-        # Fallback to cache if generation fails
-        if available_count > 0:
-            pipeline = [
-                {"$match": {
-                    "category": category,
-                    "difficulty": {"$in": difficulty_range},
-                    "id": {"$nin": request.exclude_ids}
-                }},
-                {"$sample": {"size": 1}}
-            ]
-            cached_list = await db.questions.aggregate(pipeline).to_list(1)
-            if cached_list:
-                cached = cached_list[0]
-                del cached['_id']
-                if isinstance(cached.get('created_at'), str):
-                    cached['created_at'] = datetime.fromisoformat(cached['created_at'])
-                return Question(**cached)
-        raise HTTPException(status_code=500, detail="Failed to generate question")
-    
-    # Cache the question
-    doc = question.model_dump()
-    doc['created_at'] = doc['created_at'].isoformat()
-    await db.questions.insert_one(doc)
-    
-    return question
+    raise HTTPException(status_code=500, detail="Failed to generate question")
 
 @api_router.get("/questions/batch")
 async def get_question_batch(category: str = "mix", difficulty: str = "spicy", count: int = 5):
