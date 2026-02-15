@@ -1,0 +1,184 @@
+{
+  "project_name": "Deep Ocean Scroll Experience",
+  "design_philosophy": {
+    "identity": "Museum-Quality Interactive Storytelling",
+    "core_principles": [
+      "Immersion through Depth: Use darkening gradients and parallax to simulate physical descent.",
+      "Minimalism: Content is king. No UI clutter. The UI is the ocean.",
+      "Cinematic Pacing: Slow down the deeper you go. Allow negative space to build tension.",
+      "Atmosphere: Audio and particles are as important as visual elements."
+    ],
+    "user_feeling": "Small, Curious, Uneasy, Amazed",
+    "target_audience": "Curious minds, Science enthusiasts"
+  },
+  "typography": {
+    "font_family_primary": "Manrope, sans-serif",
+    "font_family_secondary": "Inter, sans-serif",
+    "usage": {
+      "headings": "Manrope - Bold/ExtraBold - Uppercase - Tracking Widest",
+      "body": "Inter - Regular/Light - Readable but minimal",
+      "depth_markers": "Manrope - Mono-like styling - Tabular nums"
+    },
+    "scale": {
+      "depth_huge": "text-6xl md:text-9xl opacity-20 font-black",
+      "creature_label": "text-xs md:text-sm tracking-[0.2em] uppercase font-medium text-white/80",
+      "fact_text": "text-sm md:text-base leading-relaxed text-white/90 max-w-md"
+    }
+  },
+  "colors": {
+    "palette": {
+      "surface": {
+        "start": "#4facfe",
+        "end": "#00f2fe"
+      },
+      "twilight": {
+        "start": "#0575E6",
+        "end": "#021B79"
+      },
+      "midnight": {
+        "start": "#021B79",
+        "end": "#000000"
+      },
+      "abyss": {
+        "bg": "#000000",
+        "accent": "#030f14"
+      },
+      "text": {
+        "primary": "#FFFFFF",
+        "secondary": "rgba(255, 255, 255, 0.7)",
+        "muted": "rgba(255, 255, 255, 0.4)"
+      }
+    },
+    "gradients": {
+      "master_gradient": "linear-gradient(to bottom, #4facfe 0%, #00f2fe 5%, #0575E6 15%, #021B79 30%, #000000 60%, #000000 100%)"
+    }
+  },
+  "layout_strategy": {
+    "type": "Single Page Scroll",
+    "scroll_behavior": "Lenis Smooth Scroll (Mandatory)",
+    "structure": [
+      "Fixed UI Layer: Depth Gauge, Mute Toggle, Explore Button (Hidden initially)",
+      "Background Layer: CSS Gradient + TSParticles (Marine Snow)",
+      "Content Layer: Sections with Parallax Elements"
+    ],
+    "spacing": {
+      "section_gap": "gap-32 md:gap-64",
+      "element_gap": "gap-8"
+    }
+  },
+  "components": {
+    "DepthGauge": {
+      "position": "Fixed right center or bottom right",
+      "style": "Minimal vertical line with current depth indicator",
+      "behavior": "Updates dynamically with scroll position"
+    },
+    "Section": {
+      "props": ["depth", "title", "color_theme"],
+      "layout": "Flex column, centered or offset. High usage of negative space."
+    },
+    "MarineLife": {
+      "type": "Parallax Element",
+      "visuals": "Simple white/transparent SVGs or CSS shapes. Subtle floating animation.",
+      "interaction": "Hover reveals facts"
+    },
+    "Particles": {
+      "library": "tsparticles",
+      "config": "Direction: top to bottom (slow), color: #fff, opacity: 0.2, size: random small"
+    }
+  },
+  "assets": {
+    "audio": {
+      "ambient": "Deep underwater drone sound (low frequency loop)",
+      "interaction": "Subtle bubble pop or sonar ping on hover"
+    },
+    "visuals_instructions": "Use 'image_selector_tool' to find simple, high-contrast, black-and-white or transparent background marine life images if SVGs are not available. Search terms: 'jellyfish silhouette', 'whale silhouette', 'anglerfish illustration minimal'. Prefer converting these to white via CSS filters (brightness(0) invert(1)) if they are black."
+  },
+  "sections_data": [
+    {
+      "depth": 0,
+      "title": "The Surface",
+      "fact": "The beginning of the descent.",
+      "visual_query": "ocean surface waves minimal"
+    },
+    {
+      "depth": 40,
+      "title": "Recreational Limit",
+      "fact": "The maximum depth for recreational scuba diving.",
+      "visual_query": "scuba diver silhouette"
+    },
+    {
+      "depth": 200,
+      "title": "Twilight Zone",
+      "fact": "Sunlight fades. Photosynthesis stops here.",
+      "visual_query": "jellyfish bioluminescent"
+    },
+    {
+      "depth": 500,
+      "title": "Blue Whale Dive",
+      "fact": "The largest animal on Earth hunts at these depths.",
+      "visual_query": "blue whale silhouette side view"
+    },
+    {
+      "depth": 1000,
+      "title": "The Midnight Zone",
+      "fact": "Total darkness. The only light comes from bioluminescence.",
+      "visual_query": "anglerfish illustration"
+    },
+    {
+      "depth": 3800,
+      "title": "Titanic Wreck",
+      "fact": "Resting place of the RMS Titanic.",
+      "visual_query": "titanic wreck silhouette simple"
+    },
+    {
+      "depth": 6000,
+      "title": "The Hadal Zone",
+      "fact": "Named after Hades, the underworld. The trenches begin.",
+      "visual_query": "deep sea trench contours"
+    },
+    {
+      "depth": 8848,
+      "title": "Mt. Everest Inverted",
+      "fact": "If you flipped Everest upside down, its peak would be here.",
+      "visual_query": "mountain peak outline simple"
+    },
+    {
+      "depth": 10898,
+      "title": "James Cameron's Dive",
+      "fact": "The depth reached by the Deepsea Challenger.",
+      "visual_query": "submarine silhouette simple"
+    },
+    {
+      "depth": 10935,
+      "title": "The Challenger Deep",
+      "fact": "The deepest known point in the Earth's seabed.",
+      "visual_query": "trieste bathyscaphe silhouette"
+    }
+  ],
+  "instructions_to_main_agent": [
+    "1. Setup 'lenis' for smooth scrolling immediately. Standard scroll will feel cheap.",
+    "2. Implement a global 'scroll progress' state to drive the background gradient.",
+    "3. Use 'framer-motion' for all entrances. Elements should fade in and float up slowly.",
+    "4. For marine life images: Use the 'image_selector_tool' with the provided queries. Apply CSS 'filter: brightness(0) invert(1)' to make them white silhouettes if they are dark.",
+    "5. Ensure the 'DepthGauge' is always visible and readable.",
+    "6. The background MUST be a fixed container with a gradient that changes based on scroll percentage, OR a very tall div with a CSS gradient background.",
+    "7. Audio is key: Add a mute toggle. Auto-play might be blocked, so start audio on first interaction (scroll/click).",
+    "8. Mobile responsiveness: Ensure text doesn't overlap illustrations. Stack them vertically on mobile."
+  ],
+  "universal_guidelines": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy",
+    "Use glass-morphism effects with backdrop filters (12-24px blur)",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; }",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠 for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Component Reuse: Prioritize using pre-existing components from src/components/ui.",
+    "Export Conventions: Components MUST use named exports. Pages MUST use default exports.",
+    "Toasts: Use 'sonner' for toasts.",
+    "All interactive and key informational elements MUST include a 'data-testid' attribute."
+  ]
+}
