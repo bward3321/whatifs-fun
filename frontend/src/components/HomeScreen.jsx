@@ -159,10 +159,10 @@ export default function HomeScreen({ onStartGame, personalBests }) {
                   whileTap={{ scale: 0.95 }}
                 >
                   <Icon 
-                    className="w-5 h-5" 
+                    className="w-4 h-4 sm:w-5 sm:h-5" 
                     style={{ color: isSelected ? diff.color : "currentColor" }}
                   />
-                  <span>{diff.name}</span>
+                  <span className="text-sm sm:text-base">{diff.name}</span>
                 </motion.button>
               );
             })}
@@ -173,19 +173,19 @@ export default function HomeScreen({ onStartGame, personalBests }) {
         <motion.button
           data-testid="start-game-btn"
           onClick={handleStart}
-          className="btn-3d w-full py-5 text-xl font-black uppercase tracking-wider bg-gray-900 text-white rounded-2xl shadow-[0_6px_0_rgba(0,0,0,0.3)] hover:shadow-[0_8px_0_rgba(0,0,0,0.3)] active:shadow-none active:translate-y-1.5 transition-all"
+          className="btn-3d w-full py-4 sm:py-5 text-lg sm:text-xl font-black uppercase tracking-wider bg-gray-900 text-white rounded-xl sm:rounded-2xl shadow-[0_5px_0_rgba(0,0,0,0.3)] sm:shadow-[0_6px_0_rgba(0,0,0,0.3)] hover:shadow-[0_6px_0_rgba(0,0,0,0.3)] sm:hover:shadow-[0_8px_0_rgba(0,0,0,0.3)] active:shadow-none active:translate-y-1 sm:active:translate-y-1.5 transition-all select-none"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
           whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileTap={{ scale: 0.95 }}
         >
           Let's Play!
         </motion.button>
 
         {/* Footer */}
         <motion.p
-          className="text-center text-gray-400 text-sm mt-6"
+          className="text-center text-gray-400 text-xs sm:text-sm mt-4 sm:mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
