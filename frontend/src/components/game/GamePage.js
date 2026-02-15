@@ -39,7 +39,26 @@ export default function GamePage() {
     prevRound.current = game.round;
   }, [game.round, sound]);
 
-  const handleRestart = () => game.startGame(game.mode);
+  // Unlock audio on any user tap (needed for iOS/Android)
+  const handleUserInteraction = useCallback(() => {
+    sound.unlock();
+  }, [sound]);
+
+  const handleStart = useCallback((mode) => {
+    sound.unlock();
+    game.startGame(mode);
+  }, [sound, game]);
+
+  const handleRestart = useCallback(() => {
+    sound.unlock();
+    game.startGame(game.mode);
+  }, [sound, game]);
+
+  const handleTileClick = useCallback((index) => {
+    sound.unlock();
+    game.handleTileClick(index);
+  }, [sound, game]);
+
   const bestForMode = game.bestScores?.[game.mode] || 0;
 
   return (
