@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { SECTIONS, interpolateDepth, getBackgroundColor } from '@/data/oceanData';
 import { OceanSection } from '@/components/ocean/OceanSection';
 import { DepthGauge } from '@/components/ocean/DepthGauge';
+import { LiveDepthCounter } from '@/components/ocean/LiveDepthCounter';
 import { ParticleCanvas } from '@/components/ocean/ParticleCanvas';
 import { AudioController } from '@/components/ocean/AudioController';
 
@@ -44,6 +45,7 @@ export default function OceanDescent() {
       />
       <ParticleCanvas depth={depth} />
       <DepthGauge depth={depth} progress={scrollPct} />
+      <LiveDepthCounter depth={depth} />
       <AudioController />
       <main className="ocean-content" data-testid="ocean-content">
         {SECTIONS.map(section => (
