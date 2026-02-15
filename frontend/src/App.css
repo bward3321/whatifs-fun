@@ -21,26 +21,26 @@
   z-index: 2;
 }
 
-/* ── DEPTH GAUGE ── */
+/* ── DEPTH GAUGE (Desktop) ── */
 .depth-gauge {
   position: fixed;
-  right: 22px;
+  right: 36px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 50;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 38vh;
-  max-height: 280px;
+  height: 55vh;
+  max-height: 440px;
 }
 
 .gauge-track {
   position: relative;
-  width: 2px;
+  width: 3px;
   height: 100%;
   background: rgba(255, 255, 255, 0.12);
-  border-radius: 1px;
+  border-radius: 2px;
 }
 
 .gauge-fill {
@@ -48,8 +48,8 @@
   top: 0;
   left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.28);
-  border-radius: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
 }
 
 .gauge-indicator {
@@ -58,46 +58,75 @@
   transform: translate(-50%, -50%);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .gauge-dot {
-  width: 8px;
-  height: 8px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.5), 0 0 32px rgba(255, 255, 255, 0.2);
   flex-shrink: 0;
 }
 
 .gauge-label {
   font-family: 'Manrope', sans-serif;
-  font-size: 8px;
-  letter-spacing: 0.14em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.6);
   white-space: nowrap;
   position: absolute;
-  right: calc(100% + 14px);
+  right: calc(100% + 18px);
 }
 
-.gauge-depth {
+/* ── LIVE DEPTH COUNTER ── */
+.live-depth-counter {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 28px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+}
+
+.live-depth-label {
   font-family: 'Manrope', sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 10px;
-  letter-spacing: 0.05em;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.live-depth-value {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── AUDIO TOGGLE ── */
 .audio-toggle {
   position: fixed;
-  bottom: 22px;
-  left: 22px;
+  bottom: 28px;
+  left: 28px;
   z-index: 50;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px);
@@ -265,10 +294,6 @@
   position: absolute;
   cursor: pointer;
   z-index: 5;
-}
-
-.creature-swim {
-  /* animation set inline */
 }
 
 .creature-label {
@@ -465,48 +490,231 @@
   transform: scale(1.02);
 }
 
-/* ── MOBILE ── */
-@media (max-width: 768px) {
+/* ══════════════════════════════════════════════
+   TABLET (max-width: 1024px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
   .depth-gauge {
-    right: 10px;
-    height: 22vh;
-    max-height: 180px;
+    right: 24px;
+    height: 45vh;
+    max-height: 350px;
+  }
+
+  .gauge-dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .gauge-label {
+    font-size: 10px;
+  }
+
+  .live-depth-value {
+    font-size: 24px;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE (max-width: 768px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Gauge — compact right rail */
+  .depth-gauge {
+    right: 12px;
+    height: 28vh;
+    max-height: 200px;
+  }
+
+  .gauge-track {
+    width: 2px;
+  }
+
+  .gauge-dot {
+    width: 10px;
+    height: 10px;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
   }
 
   .gauge-label {
     display: none;
   }
 
-  .gauge-depth {
-    font-size: 10px;
+  /* Live counter — smaller, bottom center */
+  .live-depth-counter {
+    bottom: 16px;
+    padding: 8px 20px;
+    border-radius: 12px;
+    gap: 2px;
   }
 
+  .live-depth-label {
+    font-size: 7px;
+    letter-spacing: 0.18em;
+  }
+
+  .live-depth-value {
+    font-size: 20px;
+  }
+
+  /* Audio toggle */
   .audio-toggle {
-    bottom: 14px;
+    bottom: 16px;
     left: 14px;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
   }
 
-  .creatures-container {
-    min-height: 38vh;
-  }
-
+  /* Sections — tighter spacing */
   .standard-section {
-    padding: 12vh 4vw 16vh;
-    gap: 6vh;
+    padding: 12vh 5vw 14vh;
+    gap: 5vh;
   }
 
   .title-section {
-    padding-top: 20vh;
+    padding-top: 22vh;
+  }
+
+  /* Creatures — reduce container, scale down */
+  .creatures-container {
+    min-height: 42vh;
   }
 
   .creature-label {
-    font-size: 9px;
+    font-size: 8px;
+    letter-spacing: 0.14em;
   }
 
   .creature-fact {
-    max-width: 200px;
+    max-width: 220px;
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+
+  /* Text content */
+  .text-content {
+    gap: 2.5vh;
+    padding: 0 6vw;
+    max-width: 100%;
+  }
+
+  .title-text {
+    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    margin-bottom: 1rem;
+  }
+
+  .subtitle-text {
+    font-size: clamp(0.85rem, 3.5vw, 1.05rem);
+  }
+
+  .depth-marker-text {
+    font-size: clamp(1.2rem, 6vw, 2rem);
+  }
+
+  .section-subtitle {
+    font-size: clamp(1rem, 4.5vw, 1.4rem);
+  }
+
+  .stat-text {
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+  }
+
+  .comparison-text {
+    font-size: clamp(1.05rem, 4.5vw, 1.3rem);
+  }
+
+  .note-text {
+    font-size: clamp(0.88rem, 3.5vw, 1.05rem);
+  }
+
+  .floating-stat {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    padding: 0 6vw;
+  }
+
+  /* Ending */
+  .ending-section {
+    padding: 16vh 6vw;
+    gap: 5vh;
+  }
+
+  .ending-text {
+    font-size: clamp(1.1rem, 4.5vw, 1.45rem);
+  }
+
+  .ending-final {
+    font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+  }
+
+  .restart-button {
+    padding: 12px 28px;
+    font-size: 12px;
+  }
+
+  .scroll-indicator span {
+    font-size: 9px;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   SMALL MOBILE (max-width: 480px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .depth-gauge {
+    right: 8px;
+    height: 22vh;
+    max-height: 160px;
+  }
+
+  .gauge-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .live-depth-counter {
+    bottom: 12px;
+    padding: 6px 16px;
+    border-radius: 10px;
+  }
+
+  .live-depth-label {
+    font-size: 6px;
+  }
+
+  .live-depth-value {
+    font-size: 16px;
+  }
+
+  .audio-toggle {
+    bottom: 12px;
+    left: 10px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .creatures-container {
+    min-height: 35vh;
+  }
+
+  .creature-label {
+    font-size: 7px;
+  }
+
+  .creature-fact {
+    max-width: 180px;
     font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .title-section {
+    padding-top: 18vh;
+  }
+
+  .standard-section {
+    padding: 10vh 4vw 12vh;
+    gap: 4vh;
+  }
+
+  .title-text {
+    font-size: clamp(1.6rem, 9vw, 2.4rem);
   }
 }
