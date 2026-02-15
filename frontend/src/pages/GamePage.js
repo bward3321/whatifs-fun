@@ -9,6 +9,7 @@ import GameOverScreen from "../components/GameOverScreen";
 import FAQSection from "../components/FAQSection";
 import CountUp from "react-countup";
 import { ArrowUp, ArrowDown } from "lucide-react";
+import { playClick, playCorrect, playWrong, playReveal, playGameOver } from "../utils/sounds";
 
 // States: idle -> guessing -> revealing -> transitioning -> gameOver
 const STATES = { IDLE: "idle", GUESSING: "guessing", REVEALING: "revealing", TRANSITIONING: "transitioning", GAME_OVER: "gameOver" };
@@ -128,7 +129,9 @@ export default function GamePage() {
   const handleGuess = (guess) => {
     if (inputLocked.current || gameState !== STATES.GUESSING) return;
     inputLocked.current = true;
+    playClick();
     setGameState(STATES.REVEALING);
+    playReveal();
 
     const correct =
       guess === "higher"
@@ -143,6 +146,7 @@ export default function GamePage() {
     setTimeout(() => {
       setIsCorrect(correct);
       if (correct) {
+        playCorrect();
         fireConfetti();
         const newScore = score + 1;
         setScore(newScore);
@@ -174,7 +178,9 @@ export default function GamePage() {
         }, 1200);
       } else {
         // Wrong — game over
+        playWrong();
         setTimeout(() => {
+          playGameOver();
           setGameState(STATES.GAME_OVER);
           inputLocked.current = false;
         }, 1500);
