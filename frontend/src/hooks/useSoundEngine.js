@@ -7,13 +7,46 @@ const FREQS = [
 
 export function useSoundEngine() {
   const ctxRef = useRef(null);
+  const unlockedRef = useRef(false);
   const [enabled, setEnabled] = useState(true);
+
+  // Only called from user interaction (click/tap handler)
+  const unlock = useCallback(() => {
+    if (unlockedRef.current && ctxRef.current?.state === 'running') return;
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return;
+
+    if (!ctxRef.current || ctxRef.current.state === 'closed') {
+      ctxRef.current = new AudioCtx();
+    }
+
+    const ctx = ctxRef.current;
+
+    // Resume if suspended (required on iOS Safari)
+    if (ctx.state === 'suspended') {
+      ctx.resume();
+    }
+
+    // Play a silent buffer to fully unlock on iOS/Android
+    try {
+      const buffer = ctx.createBuffer(1, 1, 22050);
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.connect(ctx.destination);
+      source.start(0);
+    } catch (e) { /* silent fail */ }
+
+    unlockedRef.current = true;
+  }, []);
 
   const getCtx = useCallback(() => {
     if (!ctxRef.current || ctxRef.current.state === 'closed') {
-      ctxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      return null; // Don't create outside user interaction
     }
-    if (ctxRef.current.state === 'suspended') ctxRef.current.resume();
+    if (ctxRef.current.state === 'suspended') {
+      ctxRef.current.resume();
+    }
     return ctxRef.current;
   }, []);
 
@@ -21,6 +54,7 @@ export function useSoundEngine() {
     if (!enabled) return;
     try {
       const ctx = getCtx();
+      if (!ctx) return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
@@ -43,6 +77,7 @@ export function useSoundEngine() {
     if (!enabled) return;
     try {
       const ctx = getCtx();
+      if (!ctx) return;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sawtooth';
@@ -56,5 +91,5 @@ export function useSoundEngine() {
     } catch (e) { /* silent fail */ }
   }, [enabled, getCtx]);
 
-  return { playTone, playSuccess, playFail, soundEnabled: enabled, setSoundEnabled: setEnabled };
+  return { playTone, playSuccess, playFail, soundEnabled: enabled, setSoundEnabled: setEnabled, unlock };
 }
