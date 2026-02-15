@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-red:#ff3c3c;--accent-cyan:#00f0ff;--accent-green:#39ff7f;--accent-orange:#ff8c2e;--accent-purple:#b44cff;--accent-yellow:#ffe03c;--accent-blue:#3b82f6;--accent-pink:#f472b6}
+        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-red:#ff3c3c;--accent-cyan:#00f0ff;--accent-green:#39ff7f;--accent-orange:#ff8c2e;--accent-purple:#b44cff;--accent-yellow:#ffe03c;--accent-blue:#3b82f6;--accent-pink:#f472b6;--accent-lime:#a3e635}
         body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
         body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
         .header{text-align:center;padding:60px 24px 20px;position:relative}
@@ -54,9 +54,11 @@
         .card--ocean:hover{border-color:var(--accent-blue)}.card--ocean .card-title{color:var(--accent-blue)}
         .card--trivia{background:radial-gradient(ellipse at 60% 80%,rgba(244,114,182,0.15),transparent 60%),radial-gradient(ellipse at 30% 20%,rgba(244,114,182,0.08),transparent 50%),var(--card-bg)}
         .card--trivia:hover{border-color:var(--accent-pink)}.card--trivia .card-title{color:var(--accent-pink)}
+        .card--speed{background:radial-gradient(ellipse at 40% 60%,rgba(163,230,53,0.15),transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(163,230,53,0.08),transparent 50%),var(--card-bg)}
+        .card--speed:hover{border-color:var(--accent-lime)}.card--speed .card-title{color:var(--accent-lime)}
         .badge-new{position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--bg);background:var(--accent-green);padding:3px 10px;border-radius:100px;z-index:3;font-weight:700}
         .card{opacity:0;transform:translateY(30px);animation:fadeUp 0.6s cubic-bezier(0.19,1,0.22,1) forwards}
-        .card:nth-child(1){animation-delay:0.1s}.card:nth-child(2){animation-delay:0.18s}.card:nth-child(3){animation-delay:0.26s}.card:nth-child(4){animation-delay:0.34s}.card:nth-child(5){animation-delay:0.42s}.card:nth-child(6){animation-delay:0.50s}.card:nth-child(7){animation-delay:0.58s}
+        .card:nth-child(1){animation-delay:0.1s}.card:nth-child(2){animation-delay:0.18s}.card:nth-child(3){animation-delay:0.26s}.card:nth-child(4){animation-delay:0.34s}.card:nth-child(5){animation-delay:0.42s}.card:nth-child(6){animation-delay:0.50s}.card:nth-child(7){animation-delay:0.58s}.card:nth-child(8){animation-delay:0.66s}
         @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
         .header{opacity:0;animation:fadeIn 0.8s ease forwards}
         .counter{opacity:0;animation:fadeIn 0.8s ease 0.3s forwards}
@@ -73,7 +75,7 @@
         <div class="logo"><span class="what">what</span><span class="ifs">ifs</span><span class="dot">.</span><span class="fun">fun</span></div>
         <p class="tagline">games, experiments & simulations</p>
     </header>
-    <div class="counter"><span>7 EXPERIENCES LIVE — MORE COMING</span></div>
+    <div class="counter"><span>8 EXPERIENCES LIVE — MORE COMING</span></div>
     <main class="grid-container">
         <div class="grid">
             <a href="./perfect-circle/" class="card card--circle"><div class="ring"></div><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">⭕</div><div class="card-title">Perfect Circle</div><div class="card-subtitle">Can you draw a perfect circle?</div></div></a>
@@ -83,6 +85,7 @@
             <a href="./higher-or-lower/" class="card card--higher"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">📊</div><div class="card-title">Higher or Lower</div><div class="card-subtitle">Guess which stat is higher</div></div></a>
             <a href="./ocean-depth/" class="card card--ocean"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🌊</div><div class="card-title">Ocean Depth</div><div class="card-subtitle">How deep is the ocean really?</div></div></a>
             <a href="./true-or-false/" class="card card--trivia"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🤔</div><div class="card-title">True or False</div><div class="card-subtitle">Can you spot the fake facts?</div></div></a>
+            <a href="./speed-click-test/" class="card card--speed"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🎯</div><div class="card-title">Speed Click Test</div><div class="card-subtitle">Click the target before time runs out</div></div></a>
         </div>
     </main>
     <footer class="footer">whatifs.fun — built for fun, not profit</footer>
