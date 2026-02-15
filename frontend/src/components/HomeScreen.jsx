@@ -99,7 +99,7 @@ export default function HomeScreen({ onStartGame, personalBests }) {
                   key={cat.id}
                   data-testid={`category-${cat.id}`}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`category-tile relative aspect-square flex flex-col items-center justify-center gap-2 rounded-2xl border-b-4 p-4 ${
+                  className={`category-tile relative aspect-square flex flex-col items-center justify-center gap-1.5 sm:gap-2 rounded-xl sm:rounded-2xl border-b-4 p-3 sm:p-4 select-none ${
                     isSelected 
                       ? "ring-4 ring-offset-2 scale-[1.02]" 
                       : ""
@@ -115,14 +115,14 @@ export default function HomeScreen({ onStartGame, personalBests }) {
                   transition={{ delay: 0.1 + index * 0.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Icon className="w-10 h-10" strokeWidth={2.5} />
-                  <span className="font-bold text-sm text-center leading-tight">
+                  <Icon className="w-8 h-8 sm:w-10 sm:h-10" strokeWidth={2.5} />
+                  <span className="font-bold text-xs sm:text-sm text-center leading-tight">
                     {cat.name}
                   </span>
                   {bestScore > 0 && (
-                    <div className="absolute top-2 right-2 flex items-center gap-1 bg-white/80 rounded-full px-2 py-0.5">
-                      <Trophy className="w-3 h-3" />
-                      <span className="text-xs font-bold">{bestScore}</span>
+                    <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 flex items-center gap-0.5 sm:gap-1 bg-white/80 rounded-full px-1.5 sm:px-2 py-0.5">
+                      <Trophy className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                      <span className="text-[10px] sm:text-xs font-bold">{bestScore}</span>
                     </div>
                   )}
                 </motion.button>
@@ -133,15 +133,15 @@ export default function HomeScreen({ onStartGame, personalBests }) {
 
         {/* Difficulty Selector */}
         <motion.div
-          className="mb-8"
+          className="mb-6 sm:mb-8"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 text-center">
+          <p className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 sm:mb-3 text-center">
             Difficulty
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3">
             {DIFFICULTIES.map((diff) => {
               const Icon = diff.icon;
               const isSelected = selectedDifficulty === diff.id;
@@ -151,7 +151,7 @@ export default function HomeScreen({ onStartGame, personalBests }) {
                   key={diff.id}
                   data-testid={`difficulty-${diff.id}`}
                   onClick={() => setSelectedDifficulty(diff.id)}
-                  className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold transition-all border-b-4 ${
+                  className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-bold transition-all border-b-4 select-none ${
                     isSelected
                       ? "bg-gray-800 border-gray-900 text-white"
                       : "bg-white border-gray-200 text-gray-600 hover:bg-gray-50"
