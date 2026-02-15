@@ -52,7 +52,7 @@ function App() {
       {game.gameState === 'menu' && (
         <LandingScreen onSelectMode={game.startGame} />
       )}
-      {(game.gameState === 'playing' || game.gameState === 'paused') && (
+      {(game.gameState === 'playing' || game.gameState === 'paused' || game.gameState === 'countdown') && (
         <GameScreen game={game} sounds={sounds} />
       )}
       {game.gameState === 'gameOver' && (
