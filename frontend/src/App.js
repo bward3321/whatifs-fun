@@ -4,7 +4,7 @@ import GamePage from "@/components/game/GamePage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/memory-test">
       <Routes>
         <Route path="/" element={<GamePage />} />
       </Routes>
