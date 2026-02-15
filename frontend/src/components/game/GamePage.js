@@ -89,7 +89,7 @@ export default function GamePage() {
               failedTile={game.failedTile}
               correctTile={game.correctTile}
               gameState={game.gameState}
-              onTileClick={game.handleTileClick}
+              onTileClick={handleTileClick}
               mode={game.mode}
               timeLeft={game.timeLeft}
               onRestart={handleRestart}
