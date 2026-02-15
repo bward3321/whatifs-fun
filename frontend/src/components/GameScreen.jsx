@@ -42,6 +42,7 @@ export default function GameScreen({
   const [answerState, setAnswerState] = useState(null); // null, 'correct', 'wrong'
   const [showExplanation, setShowExplanation] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [sessionQuestionIds, setSessionQuestionIds] = useState([]); // Track this session's questions
 
   // Fetch a new question
   const fetchQuestion = useCallback(async () => {
@@ -50,13 +51,16 @@ export default function GameScreen({
     setShowExplanation(false);
     
     try {
+      // Combine session questions with recent questions for maximum exclusion
+      const allExcludeIds = [...new Set([...recentQuestionIds, ...sessionQuestionIds])];
+      
       const response = await fetch(`${API}/questions/generate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           category,
           difficulty,
-          exclude_ids: recentQuestionIds
+          exclude_ids: allExcludeIds
         })
       });
       
@@ -64,6 +68,9 @@ export default function GameScreen({
       
       const question = await response.json();
       setCurrentQuestion(question);
+      
+      // Track in both session and global recent
+      setSessionQuestionIds(prev => [...prev, question.id]);
       addRecentQuestion(question.id);
     } catch (error) {
       console.error("Error fetching question:", error);
@@ -72,7 +79,7 @@ export default function GameScreen({
     } finally {
       setLoading(false);
     }
-  }, [category, difficulty, recentQuestionIds, addRecentQuestion]);
+  }, [category, difficulty, recentQuestionIds, sessionQuestionIds, addRecentQuestion]);
 
   useEffect(() => {
     fetchQuestion();
