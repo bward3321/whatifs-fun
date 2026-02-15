@@ -50,10 +50,10 @@ function App() {
     }
   }, [personalBests]);
 
-  // Add question to recent list
+  // Add question to recent list - keep last 500 to ensure no repeats
   const addRecentQuestion = useCallback((questionId) => {
     setRecentQuestionIds(prev => {
-      const updated = [...prev, questionId].slice(-200); // Keep last 200
+      const updated = [...prev, questionId].slice(-500); // Keep last 500
       localStorage.setItem("trivia_recent_questions", JSON.stringify(updated));
       return updated;
     });
