@@ -12,6 +12,7 @@ export default function GameCard({
   isWrong,
   side,
   hardMode,
+  children,
 }) {
   if (!entity) return null;
 
@@ -76,6 +77,8 @@ export default function GameCard({
           {category === "animals" && "Average Weight"}
           {category === "gdp" && "GDP (Nominal)"}
         </span>
+
+        {children}
       </div>
     </motion.div>
   );
