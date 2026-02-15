@@ -10,6 +10,9 @@ export default function GameScreen({ game, sounds }) {
     rule,
     objects,
     ruleFlash,
+    countdown,
+    screenShake,
+    effects,
     handleClick,
     pauseGame,
     resumeGame,
@@ -17,9 +20,13 @@ export default function GameScreen({ game, sounds }) {
   } = game;
 
   const isPaused = gameState === 'paused';
+  const isCountdown = gameState === 'countdown';
 
   return (
-    <div className="game-screen" data-testid="game-screen">
+    <div
+      className={`game-screen${screenShake ? ' screen-shake' : ''}`}
+      data-testid="game-screen"
+    >
       {/* HUD */}
       <div className="hud" data-testid="game-hud">
         <div className="hud-left">
@@ -107,6 +114,19 @@ export default function GameScreen({ game, sounds }) {
             </div>
           </div>
         ))}
+
+        {/* Particle burst effects */}
+        {effects.map((e) => (
+          <div
+            key={e.id}
+            className="particle-burst"
+            style={{ left: `${e.x}%`, top: `${e.y}%` }}
+          >
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className="burst-particle" />
+            ))}
+          </div>
+        ))}
       </div>
 
       {/* Bottom Controls */}
@@ -147,6 +167,19 @@ export default function GameScreen({ game, sounds }) {
       {streak >= 3 && (
         <div className="streak-indicator" data-testid="streak-display">
           {streak} STREAK
+        </div>
+      )}
+
+      {/* Countdown Overlay */}
+      {isCountdown && countdown !== null && (
+        <div className="countdown-overlay" data-testid="countdown-overlay">
+          {countdown > 0 ? (
+            <div key={countdown} className="countdown-number">
+              {countdown}
+            </div>
+          ) : (
+            <div className="countdown-go">GO!</div>
+          )}
         </div>
       )}
     </div>
