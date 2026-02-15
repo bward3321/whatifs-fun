@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useMemoryGame } from '@/hooks/useMemoryGame';
 import { useSoundEngine } from '@/hooks/useSoundEngine';
