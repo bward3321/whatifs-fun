@@ -79,7 +79,7 @@ DIFFICULTY_MAP = {
 
 # ============ LLM Integration ============
 
-async def generate_question_with_llm(category: str, difficulty_range: List[int]) -> Optional[Question]:
+async def generate_question_with_llm(category: str, difficulty_range: List[int], avoid_topics: List[str] = None) -> Optional[Question]:
     """Generate a trivia question using OpenAI GPT-5.2 via emergentintegrations"""
     try:
         from emergentintegrations.llm.chat import LlmChat, UserMessage
@@ -92,35 +92,39 @@ async def generate_question_with_llm(category: str, difficulty_range: List[int])
         difficulty = random.choice(difficulty_range)
         category_name = CATEGORIES.get(category, category)
         
-        system_prompt = """You are a trivia question generator for a game called "True or Totally Fake?"
+        # Build avoid topics string to prevent repetitive content
+        avoid_str = ""
+        if avoid_topics and len(avoid_topics) > 0:
+            avoid_str = f"\n\nCRITICAL - DO NOT use these topics (already used): {', '.join(avoid_topics[:50])}"
+        
+        system_prompt = """You are a trivia question generator for "True or Totally Fake?"
 
 RULES:
-- Generate surprising, fun, slightly mind-bending facts
-- NO obvious statements like "The sky is blue"
+- Generate SURPRISING, FUN facts that most people don't know
+- AVOID common trivia topics like: octopuses, flamingos, honey, Eiffel Tower, bananas being radioactive
+- Be CREATIVE - pick unusual subjects within the category
+- NO obvious statements
 - NO trivial textbook facts
-- NO trick wording or ambiguous claims
-- NO niche obscure trivia
-- NO controversial modern politics
-- NO harmful content
-- Statements should be clear and decisive
-- Mix of TRUE and FALSE statements (roughly 50/50)
+- Mix TRUE and FALSE statements (50/50)
+- Keep statements clear and decisive
 
-For FALSE statements:
-- Make them sound plausible but be clearly false
-- Don't make them too obviously wrong
+For FALSE statements: Make plausible but clearly false
 
 OUTPUT FORMAT (JSON only, no markdown):
 {
     "statement": "short punchy statement",
     "is_true": true or false,
-    "explanation": "1-2 concise sentences explaining why",
-    "confidence": 0.85 to 1.0
+    "explanation": "1-2 sentences explaining why",
+    "confidence": 0.85 to 1.0,
+    "topic": "main subject in 1-2 words"
 }"""
 
-        user_prompt = f"""Generate a trivia statement for the category: {category_name}
-Difficulty level: {difficulty}/4 (1=easy, 4=very hard)
+        user_prompt = f"""Generate a UNIQUE trivia statement for: {category_name}
+Difficulty: {difficulty}/4
 
-Remember: Output ONLY valid JSON, no markdown code blocks or extra text."""
+Pick something unusual that players wouldn't expect!{avoid_str}
+
+Output ONLY valid JSON."""
 
         chat = LlmChat(
             api_key=api_key,
@@ -132,7 +136,6 @@ Remember: Output ONLY valid JSON, no markdown code blocks or extra text."""
         
         # Parse the response
         response_text = response.strip()
-        # Remove markdown code blocks if present
         if response_text.startswith("```"):
             response_text = response_text.split("```")[1]
             if response_text.startswith("json"):
@@ -141,7 +144,6 @@ Remember: Output ONLY valid JSON, no markdown code blocks or extra text."""
         
         data = json.loads(response_text)
         
-        # Validate confidence threshold
         if data.get("confidence", 0) < 0.85:
             logger.warning("Low confidence question, regenerating...")
             return None
