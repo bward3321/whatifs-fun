@@ -21,22 +21,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c}
+        :root{--bg:#ffffff;--card-bg:#ffffff;--card-border:#e0e0e0;--text:#1a1a1a;--text-dim:#6b6b6b;--accent-green:#00c853;--accent-cyan:#0097a7;--accent-red:#e53935}
         body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
-        body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
         .header{text-align:center;padding:60px 24px 20px;position:relative}
         .logo{font-family:'Space Mono',monospace;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;letter-spacing:-2px;margin-bottom:8px}
         .logo .what{color:var(--text)}.logo .ifs{color:var(--accent-cyan)}.logo .dot{color:var(--accent-red)}.logo .fun{color:var(--accent-green)}
         .tagline{font-size:clamp(0.85rem,2vw,1.05rem);color:var(--text-dim);font-weight:400;letter-spacing:0.5px}
         .counter{text-align:center;padding:24px 24px 0}
-        .counter span{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--text-dim);background:rgba(255,255,255,0.04);border:1px solid var(--card-border);padding:6px 16px;border-radius:100px;letter-spacing:1px}
+        .counter span{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--text-dim);background:rgba(0,0,0,0.04);border:1px solid var(--card-border);padding:6px 16px;border-radius:100px;letter-spacing:1px}
         .grid-container{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
         .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-        .card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-bg);cursor:pointer;transition:transform 0.3s cubic-bezier(0.19,1,0.22,1),border-color 0.3s ease,box-shadow 0.3s ease;text-decoration:none;display:block;aspect-ratio:16/9}
-        .card:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(255,255,255,0.18);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+        .card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-bg);cursor:pointer;transition:transform 0.3s cubic-bezier(0.19,1,0.22,1),border-color 0.3s ease,box-shadow 0.3s ease;text-decoration:none;display:block;aspect-ratio:16/9;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .card:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(0,0,0,0.15);box-shadow:0 20px 60px rgba(0,0,0,0.15)}
         .card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s cubic-bezier(0.19,1,0.22,1)}
         .card:hover img{transform:scale(1.03)}
-        .badge-new{position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--bg);background:var(--accent-green);padding:3px 10px;border-radius:100px;z-index:3;font-weight:700}
+        .badge-new{position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:#ffffff;background:var(--accent-green);padding:3px 10px;border-radius:100px;z-index:3;font-weight:700}
         .card{opacity:0;transform:translateY(30px);animation:fadeUp 0.6s cubic-bezier(0.19,1,0.22,1) forwards}
         .card:nth-child(1){animation-delay:0.1s}.card:nth-child(2){animation-delay:0.18s}.card:nth-child(3){animation-delay:0.26s}.card:nth-child(4){animation-delay:0.34s}.card:nth-child(5){animation-delay:0.42s}.card:nth-child(6){animation-delay:0.50s}.card:nth-child(7){animation-delay:0.58s}.card:nth-child(8){animation-delay:0.66s}
         @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
