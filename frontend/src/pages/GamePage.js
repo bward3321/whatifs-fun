@@ -232,47 +232,47 @@ export default function GamePage() {
               isWrong={isCorrect === false}
               side="b"
               hardMode={hardMode}
-            />
-
-            {/* Action Buttons */}
-            {gameState === STATES.GUESSING && (
-              <motion.div
-                className="action-buttons"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                data-testid="action-buttons"
-              >
-                <button
-                  className="guess-btn guess-btn--higher"
-                  onClick={() => handleGuess("higher")}
-                  data-testid="higher-btn"
+            >
+              {/* Action Buttons */}
+              {gameState === STATES.GUESSING && (
+                <motion.div
+                  className="action-buttons"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  data-testid="action-buttons"
                 >
-                  <ArrowUp size={22} strokeWidth={3} />
-                  <span>Higher</span>
-                </button>
-                <button
-                  className="guess-btn guess-btn--lower"
-                  onClick={() => handleGuess("lower")}
-                  data-testid="lower-btn"
-                >
-                  <ArrowDown size={22} strokeWidth={3} />
-                  <span>Lower</span>
-                </button>
-              </motion.div>
-            )}
+                  <button
+                    className="guess-btn guess-btn--higher"
+                    onClick={() => handleGuess("higher")}
+                    data-testid="higher-btn"
+                  >
+                    <ArrowUp size={22} strokeWidth={3} />
+                    <span>Higher</span>
+                  </button>
+                  <button
+                    className="guess-btn guess-btn--lower"
+                    onClick={() => handleGuess("lower")}
+                    data-testid="lower-btn"
+                  >
+                    <ArrowDown size={22} strokeWidth={3} />
+                    <span>Lower</span>
+                  </button>
+                </motion.div>
+              )}
 
-            {/* Reveal feedback */}
-            {gameState === STATES.REVEALING && isCorrect !== null && (
-              <motion.div
-                className={`reveal-feedback ${isCorrect ? "reveal-feedback--correct" : "reveal-feedback--wrong"}`}
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                data-testid="reveal-feedback"
-              >
-                <span>{isCorrect ? "CORRECT!" : "WRONG!"}</span>
-              </motion.div>
-            )}
+              {/* Reveal feedback */}
+              {gameState === STATES.REVEALING && isCorrect !== null && (
+                <motion.div
+                  className={`reveal-feedback ${isCorrect ? "reveal-feedback--correct" : "reveal-feedback--wrong"}`}
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  data-testid="reveal-feedback"
+                >
+                  <span>{isCorrect ? "CORRECT!" : "WRONG!"}</span>
+                </motion.div>
+              )}
+            </GameCard>
           </div>
         </div>
       </main>
