@@ -78,6 +78,7 @@ export default function GamePage() {
   const [closestCall, setClosestCall] = useState(null);
   const [usedRecently, setUsedRecently] = useState([]);
   const [roundKey, setRoundKey] = useState(0);
+  const [swapped, setSwapped] = useState(false);
   const inputLocked = useRef(false);
 
   // Load best score
@@ -100,6 +101,7 @@ export default function GamePage() {
     setUsedRecently([]);
     setGameState(STATES.GUESSING);
     setRoundKey((k) => k + 1);
+    setSwapped(Math.random() > 0.5);
     inputLocked.current = false;
   }, [data]);
 
@@ -170,6 +172,7 @@ export default function GamePage() {
           setCardB(newB);
           setIsCorrect(null);
           setRoundKey((k) => k + 1);
+          setSwapped(Math.random() > 0.5);
 
           setTimeout(() => {
             setGameState(STATES.GUESSING);
