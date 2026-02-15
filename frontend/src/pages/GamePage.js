@@ -214,8 +214,8 @@ export default function GamePage() {
 
       <main className="game-arena" data-testid="game-arena">
         <div className="cards-container" key={roundKey}>
-          {/* Card A — always shown */}
-          <div className="card-panel card-panel--a">
+          {/* First panel: known card */}
+          <div className={`card-panel ${swapped ? "card-panel--b" : "card-panel--a"}`} style={{ order: 0 }}>
             <GameCard
               entity={cardA}
               category={slug}
@@ -226,12 +226,12 @@ export default function GamePage() {
           </div>
 
           {/* VS Badge */}
-          <div className="vs-badge" data-testid="vs-badge">
+          <div className="vs-badge" data-testid="vs-badge" style={{ order: 1 }}>
             <span>VS</span>
           </div>
 
-          {/* Card B — hidden until reveal */}
-          <div className="card-panel card-panel--b">
+          {/* Second panel: mystery card */}
+          <div className={`card-panel ${swapped ? "card-panel--a" : "card-panel--b"}`} style={{ order: swapped ? -1 : 2 }}>
             <GameCard
               entity={cardB}
               category={slug}
