@@ -39,9 +39,9 @@ export const MissionTimer = ({
   const phase = getMissionPhase();
   const phaseInfo = {
     standby: { label: 'STANDBY', color: 'text-muted-foreground', bgColor: 'bg-muted' },
-    launch: { label: 'LAUNCH PHASE', color: 'text-success', bgColor: 'bg-success/20' },
-    boost: { label: 'BOOST PHASE', color: 'text-primary', bgColor: 'bg-primary/20' },
-    cruise: { label: 'CRUISE PHASE', color: 'text-primary', bgColor: 'bg-primary/20' },
+    launch: { label: 'LAUNCH', color: 'text-success', bgColor: 'bg-success/20' },
+    boost: { label: 'BOOST', color: 'text-primary', bgColor: 'bg-primary/20' },
+    cruise: { label: 'CRUISE', color: 'text-primary', bgColor: 'bg-primary/20' },
     descent: { label: 'RE-ENTRY', color: 'text-warning', bgColor: 'bg-warning/20' },
     terminal: { label: 'TERMINAL', color: 'text-destructive', bgColor: 'bg-destructive/20' },
     impact: { label: 'IMPACT', color: 'text-destructive', bgColor: 'bg-destructive/30' }
@@ -53,10 +53,95 @@ export const MissionTimer = ({
     <div className="absolute top-0 left-0 right-0 z-30">
       {/* Top status bar */}
       <div className="bg-card/95 backdrop-blur-sm border-b border-primary/30 pointer-events-auto">
-        <div className="max-w-screen-2xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+        <div className="max-w-screen-2xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
+          {/* Mobile Layout (stacked) */}
+          <div className="flex flex-col gap-2 sm:hidden">
+            {/* Row 1: Origin -> Target */}
+            <div className="flex items-center justify-between gap-2">
+              {/* Origin */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <div className="w-8 h-8 rounded bg-success/20 flex items-center justify-center flex-shrink-0">
+                  <Rocket className="w-4 h-4 text-success" />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[10px] text-muted-foreground">FROM</div>
+                  <div className="font-display text-xs text-success truncate">
+                    {launchOrigin?.name || '---'}
+                  </div>
+                </div>
+              </div>
+
+              {/* Arrow */}
+              <Zap className="w-4 h-4 text-primary flex-shrink-0" />
+
+              {/* Target */}
+              <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
+                <div className="min-w-0 text-right">
+                  <div className="text-[10px] text-muted-foreground">TO</div>
+                  <div className="font-display text-xs text-destructive truncate">
+                    {launchTarget?.name || '---'}
+                  </div>
+                </div>
+                <div className="w-8 h-8 rounded bg-destructive/20 flex items-center justify-center flex-shrink-0">
+                  <Target className="w-4 h-4 text-destructive" />
+                </div>
+              </div>
+            </div>
+
+            {/* Row 2: Phase, Timer, Speed */}
+            <div className="flex items-center justify-between gap-2">
+              {/* Phase */}
+              <motion.div
+                className={`px-2 py-1 rounded-full ${currentPhase.bgColor}`}
+                animate={{ scale: isLaunched ? [1, 1.02, 1] : 1 }}
+                transition={{ repeat: isLaunched ? Infinity : 0, duration: 1 }}
+              >
+                <span className={`font-display text-[10px] tracking-wider ${currentPhase.color}`}>
+                  {currentPhase.label}
+                </span>
+              </motion.div>
+
+              {/* Timer */}
+              {isLaunched && !explosionActive ? (
+                <div className="flex items-baseline gap-0.5 font-mono">
+                  <span className="text-lg font-bold text-foreground tabular-nums">
+                    {String(time.mins).padStart(2, '0')}
+                  </span>
+                  <span className="text-sm text-primary animate-blink">:</span>
+                  <span className="text-lg font-bold text-foreground tabular-nums">
+                    {String(time.secs).padStart(2, '0')}
+                  </span>
+                </div>
+              ) : explosionActive ? (
+                <span className="font-display text-sm text-destructive">IMPACT</span>
+              ) : null}
+
+              {/* Speed controls */}
+              <div className="flex gap-1">
+                {[1, 2, 5, 10].map(speed => (
+                  <Button
+                    key={speed}
+                    variant={speedMultiplier === speed ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setSpeedMultiplier(speed)}
+                    className={`w-9 h-8 font-mono text-xs min-h-[44px] ${
+                      speedMultiplier === speed 
+                        ? 'bg-primary text-primary-foreground' 
+                        : 'border-primary/30 hover:bg-primary/20'
+                    }`}
+                    disabled={!isLaunched}
+                  >
+                    {speed}x
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout (horizontal) */}
+          <div className="hidden sm:flex items-center justify-between">
             {/* Left - Mission info */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 lg:gap-6">
               {/* Origin */}
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded bg-success/20 flex items-center justify-center">
@@ -132,10 +217,10 @@ export const MissionTimer = ({
             </div>
 
             {/* Right - Speed controls & Warhead */}
-            <div className="flex items-center gap-6">
-              {/* Speed controls - Always visible */}
+            <div className="flex items-center gap-4 lg:gap-6">
+              {/* Speed controls */}
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1 mr-2">
+                <div className="hidden lg:flex items-center gap-1 mr-2">
                   <Gauge className="w-4 h-4 text-primary" />
                   <span className="text-xs text-muted-foreground font-display">SPEED</span>
                 </div>
@@ -146,7 +231,7 @@ export const MissionTimer = ({
                       variant={speedMultiplier === speed ? "default" : "outline"}
                       size="sm"
                       onClick={() => setSpeedMultiplier(speed)}
-                      className={`w-10 h-7 font-mono text-xs ${
+                      className={`w-10 h-8 font-mono text-xs min-h-[44px] ${
                         speedMultiplier === speed 
                           ? 'bg-primary text-primary-foreground' 
                           : 'border-primary/30 hover:bg-primary/20'
@@ -160,7 +245,7 @@ export const MissionTimer = ({
               </div>
 
               {/* Warhead */}
-              <div className="flex items-center gap-2">
+              <div className="hidden lg:flex items-center gap-2">
                 <div>
                   <div className="text-xs text-muted-foreground text-right">WARHEAD</div>
                   <div className="font-display text-sm text-warning text-right">
@@ -174,10 +259,10 @@ export const MissionTimer = ({
             </div>
           </div>
 
-          {/* Progress bar */}
+          {/* Progress bar - show on all sizes when launched */}
           {isLaunched && (
-            <div className="mt-3">
-              <div className="relative h-2 bg-secondary/50 rounded-full overflow-hidden">
+            <div className="mt-2 sm:mt-3">
+              <div className="relative h-1.5 sm:h-2 bg-secondary/50 rounded-full overflow-hidden">
                 {/* Background glow */}
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-r from-success via-primary to-destructive opacity-20"
@@ -194,15 +279,15 @@ export const MissionTimer = ({
                 
                 {/* Missile indicator */}
                 <motion.div
-                  className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-foreground shadow-glow"
-                  style={{ left: `calc(${progressPercent}% - 6px)` }}
+                  className="absolute top-1/2 -translate-y-1/2 w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-foreground shadow-glow"
+                  style={{ left: `calc(${progressPercent}% - 4px)` }}
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ repeat: Infinity, duration: 0.5 }}
                 />
               </div>
 
-              {/* Phase markers */}
-              <div className="flex justify-between mt-1 text-xs text-muted-foreground font-mono">
+              {/* Phase markers - hidden on mobile */}
+              <div className="hidden sm:flex justify-between mt-1 text-xs text-muted-foreground font-mono">
                 <span>LAUNCH</span>
                 <span>BOOST</span>
                 <span>CRUISE</span>
@@ -221,17 +306,17 @@ export const MissionTimer = ({
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -50, opacity: 0 }}
-            className="bg-destructive/90 backdrop-blur-sm py-2 pointer-events-auto"
+            className="bg-destructive/90 backdrop-blur-sm py-1.5 sm:py-2 pointer-events-auto"
           >
-            <div className="flex items-center justify-center gap-3 text-destructive-foreground">
-              <AlertTriangle className="w-5 h-5 animate-pulse" />
-              <span className="font-display tracking-wider">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 text-destructive-foreground">
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
+              <span className="font-display text-xs sm:text-sm tracking-wider">
                 {phase === 'impact' 
-                  ? 'DETONATION CONFIRMED - ASSESSING DAMAGE'
-                  : 'WARNING: TERMINAL PHASE - IMPACT IMMINENT'
+                  ? 'DETONATION CONFIRMED'
+                  : 'IMPACT IMMINENT'
                 }
               </span>
-              <AlertTriangle className="w-5 h-5 animate-pulse" />
+              <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
             </div>
           </motion.div>
         )}
