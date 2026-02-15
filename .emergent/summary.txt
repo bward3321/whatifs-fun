@@ -1,0 +1,153 @@
+<analysis>**original_problem_statement:**
+The user wants to build a sophisticated nuclear simulation website.
+
+PRODUCT REQUIREMENTS:
+- A sleek, interactive global map as the main interface.
+- Users can select a launch location and a target destination by either clicking on the map or selecting from a list of ~120 pinned popular cities.
+- Users can choose from various nuclear warheads (e.g., historical, modern) with different yields.
+- After launching, a timer shows the missile's travel time, with options to speed up the simulation.
+- High-quality, CIA/NSA briefing style animations are crucial:
+    - A rocket trail animation that follows the missile's curved (great-circle) path across the globe.
+    - A detailed explosion animation over the target city, with effects corresponding to the selected warhead's yield. This includes a mushroom cloud and visualizations of different blast radii.
+- An Impact Analysis screen must appear after the explosion, showing casualty estimates, blast zone details, and an option to close it or start a new simulation.
+- The UI should have a dark, tactical theme with cyan/teal accents.
+- The site must be fully mobile-responsive.
+- Google Analytics must be integrated for traffic tracking.
+- The final production build files should be prepared for deployment on Vercel, with relative asset paths and a specific GA4 Measurement ID.
+
+**User's preferred language**: English
+
+**what currently exists?**
+A functional frontend prototype of the nuclear simulation website built with React, Tailwind CSS, and . The application features an interactive world map, a control panel for setting up the simulation, a top bar with a mission timer and speed controls, and detailed animations for the missile flight and explosion. An impact analysis modal with casualty data and blast radius visualization is also implemented. The Made with Emergent badge has been removed, and Google Analytics is integrated.
+
+**Last working item**:
+-   **Last item agent was working**: The agent was implementing mobile responsiveness fixes based on user feedback. The user reported that the map was hidden, the layout was cramped, and controls were not touch-friendly on mobile devices. The agent started modifying the layout to be vertical on mobile (), adjusting the header (), and increasing the size of touch targets in the control panel ().
+-   **Status**: IN PROGRESS
+-   **Agent Testing Done**: N
+-   **Which testing method agent to use?**: screenshot tool (to test on mobile viewports like 375px and 390px).
+-   **User Testing Done**: N
+
+**All Pending/In progress Issue list**:
+-   **Issue 1**: Mobile responsiveness is broken (P0)
+
+**Issues Detail**:
+-   **Issue 1**: The application is not usable on mobile devices. The map is hidden, the layout is cramped and overlaps, and buttons are too small to be touch-friendly.
+    -   **Attempted fixes**: The agent started making CSS changes to , , and  to introduce a stacked layout and larger touch targets for mobile screens. The work is partially complete.
+    -   **Next debug checklist**:
+        1.  Review  to ensure the main layout correctly stacks the map and control panel vertically on mobile ( for  and below).
+        2.  Verify  is fully scrollable on mobile and does not overlap the map.
+        3.  Inspect all buttons, inputs, and selectors within  to ensure they have a minimum touch target size (e.g., ).
+        4.  Check  to ensure the top bar elements (origin, target, timer) are not cramped and wrap gracefully on small screens.
+        5.  Use the screenshot tool with viewports  and  to test the UI visually.
+    -   **Why fix this issue and what will be achieved with the fix?**: To make the application fully functional and accessible on mobile devices, as requested by the user.
+    -   **Status**: IN PROGRESS
+    -   **Is recurring issue?**: N
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on other issue**: None
+
+**In progress Task List**:
+-   **Task 1**: Complete mobile responsiveness overhaul (P0)
+    -   **Where to resume**: Continue editing  to ensure all interactive elements are touch-friendly. Then, perform a holistic review of all components for mobile usability.
+    -   **What will be achieved with this?**: A fully functional and user-friendly mobile experience.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: frontend
+    -   **Blocked on something**: None
+
+**Upcoming and Future Tasks**
+- **Upcoming Tasks**:
+    - **Task 1: Rebuild for Vercel Deployment (P1)**
+        - After the mobile responsiveness is fixed and verified, the agent must create a new production build.
+        - **File path**: The build output must be placed in .
+        - **Requirements**:
+            - Asset paths must be relative (e.g., ).
+            - Replace the current Google Analytics ID with  in .
+            - Ensure all Emergent-specific scripts (like PostHog) and the badge are removed.
+            - The  file with  should remain at .
+
+**Completed work in this session**
+- Initial application build with a dark tactical theme, interactive map, and control panel.
+- Implemented missile launch logic with a timer and speed controls.
+- Fixed the missile trajectory to follow a curved great-circle arc ().
+- Added over 15 new cities to the map ().
+- Improved the explosion animation to appear over the target city on the map ().
+- Created a detailed Impact Analysis modal with a close button, reset functionality, and blast radius visuals ().
+- Integrated Google Analytics by adding the script to .
+- Removed the Made with Emergent badge from .
+- Answered user questions regarding deployment, custom domains, and analytics.
+
+**Earlier issues found/mentioned but not fixed**
+- None.
+
+**Known issue recurrence from previous fork**
+- None.
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Frontend**: React
+-   **Styling**: Tailwind CSS, shadcn/ui
+-   **Mapping**: , 
+-   **Animation**: 
+-   **State Management**: React Hooks (, , )
+-   **Build Tool**: 
+
+**key DB schema**
+-   N/A (Frontend-only application with mock data)
+
+**changes in tech stack**
+-   Added  and  for map visualization.
+
+**All files of reference**
+-   : Main component, handles state and responsive layout.
+-   : Main UI for user interaction; needs mobile fixes.
+-   : Top information bar; needs mobile fixes.
+-   : Renders the map, markers, and animations.
+-   : Entry point, contains GA script.
+-   : Contains global styles and CSS design tokens.
+-   : Vercel configuration file.
+
+**Areas that need refactoring**:
+- The main  component is large and handles significant state and animation logic. Extracting the animation loop () into a custom hook could improve readability.
+
+**key api endpoints**
+- N/A
+
+**Critical Info for New Agent**
+- The immediate priority is to fix the mobile user experience. The user has provided specific requirements: a vertically stacked layout, a visible and usable map, and touch-friendly controls.
+- After fixing the mobile UI, you **must** create a new production build and place it in the  directory. This build has specific requirements: relative paths and an updated Google Analytics ID ().
+- The user mentioned using  if React Router was present. The app does not use React Router, so no changes are needed on that front.
+
+**documents and test reports created in this job**
+-   /app/vercel-deploy/vercel.json
+
+**Last 10 User Messages and any pending HUMAN messages**
+1.  **User (LATEST & PENDING):** The site is not mobile-friendly. Fix map visibility, stack layout vertically, make controls touch-friendly, fix the cramped header, and test at 375px/390px. Then, rebuild for Vercel with specific requirements.
+2.  **User:** Requested creation of a Vercel deployment folder with relative paths and a new GA ID. (Partially Completed, needs rebuild)
+3.  **User:** Asked how to enable internal Emergent analytics. (Answered)
+4.  **User:** Commanded agent to remove the Made with Emergent badge after providing support confirmation. (Completed)
+5.  **User:** Asked how to remove the Made with Emergent badge. (Answered)
+6.  **User:** Complained their site was not on their custom domain after deployment. (Answered with instructions)
+7.  **User:** Provided Google Analytics snippet for integration. (Completed)
+8.  **User:** Confirmed they want Google Analytics integrated. (Completed)
+9.  **User:** Asked about hosting, custom domains, and traffic analytics. (Answered)
+10. **User:** Asked what deploy means on Emergent and about uptime. (Answered)
+
+**Project Health Check:**
+-   **Broken**: The mobile UI is non-functional.
+-   **Mocked**: The application is a frontend prototype; all backend functionality, data, and calculations are mocked on the client side.
+
+**3rd Party Integrations**
+-   **Google Analytics**: Used for traffic analysis. Requires a user-provided Measurement ID.
+
+**Testing status**
+-   **Testing agent used after significant changes**: YES
+-   **Troubleshoot agent used after agent stuck in loop**: NO
+-   **Test files created**: None
+-   **Known regressions**: The mobile user interface is currently broken.
+
+**Credentials to test flow:**
+- N/A
+
+**What agent forgot to execute**
+The agent has correctly identified the next steps from the user's latest request but has not yet completed them. The primary pending task is to finish the mobile responsiveness fixes and then rebuild the application for Vercel deployment according to the user's specifications.</analysis>

@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test the Nuclear Strike Simulation website at https://nuketrails.preview.emergentagent.com - comprehensive testing of map interaction, mission setup, warhead selection, intel tab, launch functionality, and explosion animation"
+user_problem_statement: "Test the Nuclear Strike Simulation website at https://nuke-sim-2.preview.emergentagent.com - comprehensive testing of map interaction, mission setup, warhead selection, intel tab, launch functionality, and explosion animation"
 
 frontend:
   - task: "Map Interaction and City Selection"
