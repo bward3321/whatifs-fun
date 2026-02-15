@@ -274,4 +274,144 @@ export const CREATURE_SVGS = {
       <line x1="5" y1="70" x2="115" y2="70" opacity="0.15" strokeDasharray="4 6" />
     </svg>
   ),
+
+  dolphin: (size) => (
+    <svg width={size} height={size * 0.45} viewBox="0 0 110 50" fill="rgba(255,255,255,0.78)">
+      <path d="M10 28 Q20 12 45 15 Q70 12 90 22 Q100 28 95 32 Q80 40 55 38 Q30 42 15 35 Q8 32 10 28Z" />
+      <path d="M55 15 L58 5 L65 16" />
+      <path d="M90 22 L108 16 L100 26" opacity="0.7" />
+      <circle cx="22" cy="24" r="2" fill="rgba(0,0,0,0.22)" />
+      <path d="M12 26 L5 22 L8 28" opacity="0.6" />
+    </svg>
+  ),
+
+  seaTurtle: (size) => (
+    <svg width={size} height={size * 0.7} viewBox="0 0 90 63" fill="rgba(255,255,255,0.72)">
+      <ellipse cx="45" cy="32" rx="28" ry="20" />
+      <ellipse cx="45" cy="32" rx="22" ry="16" fill="rgba(255,255,255,0.12)" />
+      <circle cx="22" cy="25" r="6" />
+      <circle cx="16" cy="23" r="1.5" fill="rgba(0,0,0,0.22)" />
+      <path d="M20 38 L8 48 L14 36" opacity="0.65" />
+      <path d="M20 26 L6 18 L16 28" opacity="0.65" />
+      <path d="M70 26 L82 18 L72 28" opacity="0.6" />
+      <path d="M70 38 L84 46 L72 36" opacity="0.6" />
+      <path d="M73 32 L88 34 L73 36" opacity="0.5" />
+      <line x1="35" y1="20" x2="35" y2="44" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+      <line x1="45" y1="16" x2="45" y2="48" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+      <line x1="55" y1="20" x2="55" y2="44" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+    </svg>
+  ),
+
+  blueWhale: (size) => (
+    <svg width={size} height={size * 0.3} viewBox="0 0 180 54" fill="rgba(255,255,255,0.7)">
+      <path d="M8 28 Q15 10 50 14 Q90 8 130 18 Q160 24 170 28 Q160 34 130 38 Q90 46 50 40 Q15 44 8 28Z" />
+      <circle cx="25" cy="24" r="2.5" fill="rgba(0,0,0,0.18)" />
+      <path d="M168 28 L180 20 L180 36Z" opacity="0.65" />
+      <path d="M70 14 L72 6 L78 16" opacity="0.5" />
+      <line x1="14" y1="32" x2="45" y2="36" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+      <line x1="16" y1="34" x2="42" y2="38" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+    </svg>
+  ),
+
+  mantaRay: (size) => (
+    <svg width={size} height={size * 0.55} viewBox="0 0 120 66" fill="rgba(255,255,255,0.7)">
+      <path d="M60 10 Q30 5 5 30 Q15 40 35 35 Q50 45 60 55 Q70 45 85 35 Q105 40 115 30 Q90 5 60 10Z" />
+      <circle cx="48" cy="25" r="2" fill="rgba(0,0,0,0.16)" />
+      <circle cx="72" cy="25" r="2" fill="rgba(0,0,0,0.16)" />
+      <path d="M55 55 L52 65" stroke="rgba(255,255,255,0.45)" strokeWidth="1.5" fill="none" />
+    </svg>
+  ),
+
+  hammerheadShark: (size) => (
+    <svg width={size} height={size * 0.4} viewBox="0 0 120 48" fill="rgba(255,255,255,0.72)">
+      <path d="M15 20 Q30 14 55 16 Q80 14 100 22 Q110 26 100 30 Q80 38 55 36 Q30 38 15 28Z" />
+      <rect x="5" y="18" width="25" height="12" rx="6" opacity="0.8" />
+      <circle cx="10" cy="22" r="1.5" fill="rgba(0,0,0,0.22)" />
+      <circle cx="25" cy="22" r="1.5" fill="rgba(0,0,0,0.22)" />
+      <path d="M65 16 L68 6 L72 18" />
+      <path d="M100 24 L118 18 L116 32Z" opacity="0.65" />
+    </svg>
+  ),
+
+  swordfish: (size) => (
+    <svg width={size} height={size * 0.35} viewBox="0 0 130 45" fill="rgba(255,255,255,0.72)">
+      <path d="M45 22 Q55 10 80 14 Q100 10 108 22 Q100 34 80 30 Q55 34 45 22Z" />
+      <path d="M45 22 L5 20" stroke="rgba(255,255,255,0.6)" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="55" cy="19" r="2" fill="rgba(0,0,0,0.2)" />
+      <path d="M75 14 L78 4 L82 16" />
+      <path d="M106 22 L128 16 L126 30Z" opacity="0.6" />
+    </svg>
+  ),
+
+  octopus: (size) => (
+    <svg width={size * 0.8} height={size} viewBox="0 0 72 90" fill="rgba(255,255,255,0.62)">
+      <ellipse cx="36" cy="25" rx="22" ry="20" />
+      <circle cx="28" cy="20" r="4" fill="rgba(0,0,0,0.16)" />
+      <circle cx="44" cy="20" r="4" fill="rgba(0,0,0,0.16)" />
+      <path d="M16 42 Q10 58 8 75" stroke="rgba(255,255,255,0.45)" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M22 44 Q18 62 14 82" stroke="rgba(255,255,255,0.4)" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M30 45 Q28 65 24 88" stroke="rgba(255,255,255,0.45)" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M42 45 Q44 65 48 88" stroke="rgba(255,255,255,0.45)" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M50 44 Q54 62 58 82" stroke="rgba(255,255,255,0.4)" strokeWidth="3" fill="none" strokeLinecap="round" />
+      <path d="M56 42 Q62 58 64 75" stroke="rgba(255,255,255,0.45)" strokeWidth="3" fill="none" strokeLinecap="round" />
+    </svg>
+  ),
+
+  lanternfish: (size) => (
+    <svg width={size} height={size * 0.5} viewBox="0 0 60 30" fill="rgba(255,255,255,0.6)">
+      <ellipse cx="28" cy="15" rx="18" ry="10" />
+      <path d="M44 15 L58 8 L58 22Z" opacity="0.7" />
+      <circle cx="15" cy="12" r="2" fill="rgba(0,0,0,0.18)" />
+      <circle cx="22" cy="18" r="1.5" fill="rgba(180,220,255,0.5)" className="angler-lure" />
+      <circle cx="30" cy="20" r="1" fill="rgba(180,220,255,0.4)" className="angler-lure" />
+      <path d="M20 5 Q28 2 36 5" fill="rgba(255,255,255,0.45)" />
+    </svg>
+  ),
+
+  vampireSquid: (size) => (
+    <svg width={size * 0.7} height={size} viewBox="0 0 56 80" fill="rgba(255,255,255,0.55)">
+      <ellipse cx="28" cy="22" rx="16" ry="18" />
+      <circle cx="20" cy="18" r="4" fill="rgba(0,0,0,0.16)" />
+      <circle cx="36" cy="18" r="4" fill="rgba(0,0,0,0.16)" />
+      <path d="M12 38 Q8 50 5 62 Q10 58 16 45 Q12 55 10 68 Q18 58 22 48 Q20 60 18 74 Q24 62 28 50 Q32 62 38 74 Q36 60 34 48 Q38 58 46 68 Q44 55 40 45 Q46 58 51 62 Q48 50 44 38" fill="rgba(255,255,255,0.4)" />
+    </svg>
+  ),
+
+  fangtooth: (size) => (
+    <svg width={size} height={size * 0.8} viewBox="0 0 70 56" fill="rgba(255,255,255,0.6)">
+      <ellipse cx="35" cy="28" rx="24" ry="20" />
+      <circle cx="25" cy="20" r="5" fill="rgba(0,0,0,0.18)" />
+      <circle cx="25" cy="19" r="2" fill="rgba(0,0,0,0.32)" />
+      <path d="M12 30 L8 36 L15 32 L10 40 L18 34 L14 42 L20 35" stroke="rgba(255,255,255,0.45)" strokeWidth="1" fill="none" />
+      <path d="M50 26 Q60 28 68 32 Q60 36 50 34" opacity="0.5" />
+      <path d="M18 26 L14 22 L20 26 L16 20 L22 25" stroke="rgba(255,255,255,0.38)" strokeWidth="0.8" fill="none" />
+    </svg>
+  ),
+
+  tripodFish: (size) => (
+    <svg width={size} height={size * 1.2} viewBox="0 0 70 84" fill="rgba(255,255,255,0.52)">
+      <ellipse cx="35" cy="22" rx="18" ry="12" />
+      <circle cx="24" cy="18" r="2.5" fill="rgba(0,0,0,0.16)" />
+      <path d="M50 22 L65 16 L64 28Z" opacity="0.55" />
+      <path d="M28 8 Q35 3 42 8" fill="rgba(255,255,255,0.42)" />
+      <line x1="22" y1="34" x2="15" y2="82" stroke="rgba(255,255,255,0.32)" strokeWidth="1.5" />
+      <line x1="35" y1="34" x2="35" y2="84" stroke="rgba(255,255,255,0.32)" strokeWidth="1.5" />
+      <line x1="48" y1="34" x2="55" y2="82" stroke="rgba(255,255,255,0.32)" strokeWidth="1.5" />
+    </svg>
+  ),
+
+  dumboOctopus: (size) => (
+    <svg width={size} height={size * 0.9} viewBox="0 0 70 63" fill="rgba(255,255,255,0.55)">
+      <ellipse cx="35" cy="25" rx="20" ry="18" />
+      <ellipse cx="14" cy="18" rx="10" ry="6" transform="rotate(-20 14 18)" opacity="0.62" />
+      <ellipse cx="56" cy="18" rx="10" ry="6" transform="rotate(20 56 18)" opacity="0.62" />
+      <circle cx="28" cy="22" r="3" fill="rgba(0,0,0,0.14)" />
+      <circle cx="42" cy="22" r="3" fill="rgba(0,0,0,0.14)" />
+      <path d="M22 42 Q18 52 16 58" stroke="rgba(255,255,255,0.38)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M28 43 Q26 54 22 62" stroke="rgba(255,255,255,0.32)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M35 44 Q35 55 35 63" stroke="rgba(255,255,255,0.38)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M42 43 Q44 54 48 62" stroke="rgba(255,255,255,0.32)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <path d="M48 42 Q52 52 54 58" stroke="rgba(255,255,255,0.38)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+    </svg>
+  ),
 };
