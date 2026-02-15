@@ -101,7 +101,7 @@ a {
 .logo-text {
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -187,17 +187,17 @@ a {
 .hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: var(--fg);
   color: white;
-  padding: 6px 16px;
+  padding: 10px 24px;
   border-radius: 100px;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 16px;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero-title {
