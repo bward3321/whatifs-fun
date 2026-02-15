@@ -74,7 +74,7 @@ export default function GamePage() {
           {game.gameState === 'idle' ? (
             <StartScreen
               key="start"
-              onStart={game.startGame}
+              onStart={handleStart}
               selectedMode={selectedMode}
               onModeChange={setSelectedMode}
               bestScores={game.bestScores}
