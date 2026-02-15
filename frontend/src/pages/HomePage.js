@@ -47,7 +47,7 @@ export default function HomePage() {
           transition={{ duration: 0.5 }}
         >
           <div className="hero-badge" data-testid="hero-badge">
-            <Zap size={14} />
+            <Zap size={18} />
             <span>GUESS & COMPETE</span>
           </div>
           <h1 className="hero-title" data-testid="hero-title">

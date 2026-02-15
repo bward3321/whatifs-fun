@@ -17,7 +17,7 @@ export default function Header({ score, highScore, hardMode, onToggleHardMode, i
             </Link>
           ) : (
             <div className="logo-area" data-testid="logo">
-              <Zap size={22} className="logo-icon" />
+              <Zap size={28} className="logo-icon" />
               <span className="logo-text">HIGHER OR LOWER</span>
             </div>
           )}
