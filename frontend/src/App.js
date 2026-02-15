@@ -130,7 +130,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#FFF7ED]">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="*" element={
             <>
@@ -167,7 +167,7 @@ function App() {
             </>
           } />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
       <Toaster position="top-center" />
     </div>
   );
