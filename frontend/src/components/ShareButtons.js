@@ -5,7 +5,7 @@ export default function ShareButtons({ score, categoryName, categorySlug }) {
   const [copied, setCopied] = React.useState(false);
 
   const shareText = `I scored ${score} in Higher or Lower (${categoryName}). Can you beat me?`;
-  const shareUrl = `${window.location.origin}${window.location.pathname}#/higher-or-lower/${categorySlug}`;
+  const shareUrl = `${window.location.origin}/higher-or-lower/${categorySlug}`;
   const fullShare = `${shareText}\n${shareUrl}`;
 
   const handleCopy = async () => {
@@ -14,6 +14,7 @@ export default function ShareButtons({ score, categoryName, categorySlug }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
+      // Fallback
       const el = document.createElement("textarea");
       el.value = fullShare;
       document.body.appendChild(el);
