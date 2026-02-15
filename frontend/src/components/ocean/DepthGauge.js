@@ -1,6 +1,6 @@
-export function DepthGauge({ depth, progress }) {
-  const formatted = depth.toLocaleString();
+import { memo } from 'react';
 
+export const DepthGauge = memo(function DepthGauge({ depth, progress }) {
   return (
     <div className="depth-gauge" data-testid="depth-gauge">
       <div className="gauge-track">
@@ -10,9 +10,6 @@ export function DepthGauge({ depth, progress }) {
           <span className="gauge-label">YOU ARE HERE</span>
         </div>
       </div>
-      <div className="gauge-depth" data-testid="depth-counter">
-        {formatted}m
-      </div>
     </div>
   );
-}
+});
