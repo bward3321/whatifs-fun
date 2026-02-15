@@ -62,7 +62,7 @@ export default function GamePage() {
   const bestForMode = game.bestScores?.[game.mode] || 0;
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col font-body relative overflow-x-hidden" data-testid="game-page">
+    <div className="min-h-screen bg-slate-950 flex flex-col font-body relative overflow-x-hidden" data-testid="game-page" onClick={handleUserInteraction}>
       {/* Ambient background glow */}
       <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
         <div className="absolute top-[-30%] left-[-20%] w-[500px] h-[500px] rounded-full bg-cyan-500/[0.03] blur-[100px]" />
