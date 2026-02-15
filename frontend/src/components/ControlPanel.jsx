@@ -113,9 +113,9 @@ export const ControlPanel = ({
   const canLaunch = launchOrigin && launchTarget && selectedWarhead && !isLaunched;
 
   return (
-    <div className="h-full flex flex-col bg-card/50 border-l border-primary/20 overflow-hidden">
-      {/* Header */}
-      <div className="p-4 border-b border-primary/20 flex-shrink-0">
+    <div className="h-full flex flex-col bg-card/50 border-l border-primary/20 overflow-hidden lg:border-l">
+      {/* Header - hidden on mobile since we have the toggle */}
+      <div className="hidden lg:block p-4 border-b border-primary/20 flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded bg-primary/20 flex items-center justify-center">
             <Radiation className="w-5 h-5 text-primary" />
@@ -129,15 +129,15 @@ export const ControlPanel = ({
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col min-h-0">
-        <TabsList className="mx-4 mt-4 bg-secondary/50 flex-shrink-0">
-          <TabsTrigger value="launch" className="flex-1 font-body">Launch</TabsTrigger>
-          <TabsTrigger value="warhead" className="flex-1 font-body">Warhead</TabsTrigger>
-          <TabsTrigger value="intel" className="flex-1 font-body">Intel</TabsTrigger>
+        <TabsList className="mx-2 sm:mx-4 mt-2 sm:mt-4 bg-secondary/50 flex-shrink-0">
+          <TabsTrigger value="launch" className="flex-1 font-body min-h-[44px] text-xs sm:text-sm">Launch</TabsTrigger>
+          <TabsTrigger value="warhead" className="flex-1 font-body min-h-[44px] text-xs sm:text-sm">Warhead</TabsTrigger>
+          <TabsTrigger value="intel" className="flex-1 font-body min-h-[44px] text-xs sm:text-sm">Intel</TabsTrigger>
         </TabsList>
 
-        <ScrollArea className="flex-1 px-4 min-h-0">
+        <ScrollArea className="flex-1 px-2 sm:px-4 min-h-0">
           {/* Launch Tab */}
-          <TabsContent value="launch" className="mt-4 space-y-4 pb-4">
+          <TabsContent value="launch" className="mt-2 sm:mt-4 space-y-3 sm:space-y-4 pb-4">
             {/* Origin Selection */}
             <Card className="bg-card/80 border-primary/20">
               <CardHeader className="py-3 px-4">
