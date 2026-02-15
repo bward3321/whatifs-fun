@@ -38,17 +38,17 @@ export default function HomeScreen({ onStartGame, personalBests }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF7ED] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen min-h-[100dvh] bg-[#FFF7ED] flex flex-col items-center justify-center p-3 sm:p-4 touch-manipulation">
       <div className="w-full max-w-md mx-auto">
         {/* Title */}
         <motion.div 
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
         >
           <h1 
-            className="font-display text-5xl sm:text-6xl font-bold text-gray-800 leading-tight"
+            className="font-display text-4xl sm:text-5xl md:text-6xl font-bold text-gray-800 leading-tight"
             data-testid="game-title"
           >
             TRUE
@@ -57,35 +57,35 @@ export default function HomeScreen({ onStartGame, personalBests }) {
             <br />
             <span className="text-red-400">TOTALLY FAKE?</span>
           </h1>
-          <p className="mt-4 text-gray-500 text-lg font-medium">
+          <p className="mt-3 sm:mt-4 text-gray-500 text-base sm:text-lg font-medium">
             Think you're smart? Let's see.
           </p>
         </motion.div>
 
         {/* Category Grid */}
         <motion.div
-          className="mb-6"
+          className="mb-5 sm:mb-6"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
         >
-          <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3 text-center">
+          <p className="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2 sm:mb-3 text-center">
             Choose Category
           </p>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {/* Mix All Option */}
             <motion.button
               data-testid="category-mix"
               onClick={() => setSelectedCategory("mix")}
-              className={`col-span-2 category-tile flex items-center justify-center gap-3 py-4 rounded-2xl border-b-4 transition-all ${
+              className={`col-span-2 category-tile flex items-center justify-center gap-2 sm:gap-3 py-3 sm:py-4 rounded-xl sm:rounded-2xl border-b-4 transition-all select-none ${
                 selectedCategory === "mix"
                   ? "bg-gray-800 border-gray-900 text-white scale-[1.02]"
                   : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
               }`}
               whileTap={{ scale: 0.95 }}
             >
-              <Shuffle className="w-6 h-6" />
-              <span className="font-bold text-lg">Mix All Categories</span>
+              <Shuffle className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="font-bold text-base sm:text-lg">Mix All Categories</span>
             </motion.button>
 
             {/* Category Tiles */}
