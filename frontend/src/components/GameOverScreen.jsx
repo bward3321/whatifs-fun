@@ -73,9 +73,14 @@ export default function GameOverScreen({
     }
   };
 
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(shareText + "\n" + window.location.href);
-    toast.success("Copied to clipboard!");
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(shareText + "\n" + window.location.href);
+      toast.success("Copied to clipboard!");
+    } catch (err) {
+      // Fallback for browsers without clipboard permissions
+      toast.info("Share this score with your friends!");
+    }
   };
 
   // Get fun summary line
