@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-red:#ff3c3c;--accent-cyan:#00f0ff;--accent-green:#39ff7f;--accent-orange:#ff8c2e;--accent-purple:#b44cff;--accent-yellow:#ffe03c}
+        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-red:#ff3c3c;--accent-cyan:#00f0ff;--accent-green:#39ff7f;--accent-orange:#ff8c2e;--accent-purple:#b44cff;--accent-yellow:#ffe03c;--accent-blue:#3b82f6}
         body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
         body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
         .header{text-align:center;padding:60px 24px 20px;position:relative}
@@ -50,6 +50,8 @@
         .card--memory:hover{border-color:var(--accent-purple)}.card--memory .card-title{color:var(--accent-purple)}
         .card--higher{background:radial-gradient(ellipse at 30% 60%,rgba(255,224,60,0.15),transparent 60%),radial-gradient(ellipse at 70% 40%,rgba(255,224,60,0.08),transparent 50%),var(--card-bg)}
         .card--higher:hover{border-color:var(--accent-yellow)}.card--higher .card-title{color:var(--accent-yellow)}
+        .card--ocean{background:radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.18),transparent 60%),radial-gradient(ellipse at 20% 20%,rgba(59,130,246,0.08),transparent 50%),var(--card-bg)}
+        .card--ocean:hover{border-color:var(--accent-blue)}.card--ocean .card-title{color:var(--accent-blue)}
         .card--soon{background:var(--card-bg);opacity:0.45;cursor:default}
         .card--soon:hover{transform:none;border-color:var(--card-border);box-shadow:none}
         .card--soon .card-title{color:var(--text-dim)}
@@ -77,7 +79,7 @@
         <div class="logo"><span class="what">what</span><span class="ifs">ifs</span><span class="dot">.</span><span class="fun">fun</span></div>
         <p class="tagline">games, experiments & simulations</p>
     </header>
-    <div class="counter"><span>5 EXPERIENCES LIVE — MORE COMING</span></div>
+    <div class="counter"><span>6 EXPERIENCES LIVE — MORE COMING</span></div>
     <main class="grid-container">
         <div class="grid">
             <a href="./perfect-circle/" class="card card--circle"><div class="ring"></div><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">⭕</div><div class="card-title">Perfect Circle</div><div class="card-subtitle">Can you draw a perfect circle?</div></div></a>
@@ -85,7 +87,7 @@
             <a href="./nuclear-simulation/" class="card card--nuclear"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">☢️</div><div class="card-title">Nuclear Simulation</div><div class="card-subtitle">Simulate nuclear scenarios</div></div></a>
             <a href="./memory-test/" class="card card--memory"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🧠</div><div class="card-title">Memory Test</div><div class="card-subtitle">How good is your memory?</div></div></a>
             <a href="./higher-or-lower/" class="card card--higher"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">📊</div><div class="card-title">Higher or Lower</div><div class="card-subtitle">Guess which stat is higher</div></div></a>
-            <div class="card card--soon"><div class="card-inner"><div class="card-icon">🌍</div><div class="card-title">???</div><div class="card-subtitle">Something cool is coming</div><div class="badge"><span class="pulse-dot"></span>Coming Soon</div></div></div>
+            <a href="./ocean-depth/" class="card card--ocean"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🌊</div><div class="card-title">Ocean Depth</div><div class="card-subtitle">How deep is the ocean really?</div></div></a>
         </div>
     </main>
     <footer class="footer">whatifs.fun — built for fun, not profit</footer>
