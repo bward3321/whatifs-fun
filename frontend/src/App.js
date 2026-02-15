@@ -1,14 +1,14 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import GamePage from "@/components/game/GamePage";
 
 function App() {
   return (
-    <BrowserRouter basename="/memory-test">
+    <HashRouter>
       <Routes>
         <Route path="/" element={<GamePage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
