@@ -350,21 +350,21 @@ export const WorldMap = ({
       <div className="absolute bottom-4 right-4 z-20 flex flex-col gap-2">
         <button
           onClick={() => setZoom(Math.min(zoom * 1.5, 8))}
-          className="w-10 h-10 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-lg sm:text-base"
+          className="w-11 h-11 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-lg sm:text-base"
           aria-label="Zoom in"
         >
           +
         </button>
         <button
           onClick={() => setZoom(Math.max(zoom / 1.5, 1))}
-          className="w-10 h-10 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-lg sm:text-base"
+          className="w-11 h-11 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-lg sm:text-base"
           aria-label="Zoom out"
         >
           −
         </button>
         <button
           onClick={() => { setZoom(1); setCenter([0, 20]); }}
-          className="w-10 h-10 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-sm"
+          className="w-11 h-11 sm:w-8 sm:h-8 bg-card/90 border border-primary/40 rounded flex items-center justify-center text-primary hover:bg-primary/20 transition-colors text-sm"
           aria-label="Reset zoom"
         >
           ⟲
