@@ -43,6 +43,7 @@ class QuestionRequest(BaseModel):
     category: str
     difficulty: str = "medium"  # chill, spicy, savage
     exclude_ids: List[str] = []
+    streak: int = 0  # Current streak for progressive difficulty
 
 class GameSession(BaseModel):
     model_config = ConfigDict(extra="ignore")
