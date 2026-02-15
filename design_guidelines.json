@@ -1,0 +1,141 @@
+{
+  "project_name": "Higher or Lower - Browser Game",
+  "design_identity": {
+    "persona": "E1: The Anti-AI Designer",
+    "core_philosophy": "Fusion over Imitation. Emotion First. Content is King.",
+    "anti_patterns": [
+      "No generic centered layouts without tension",
+      "No gradient overload",
+      "No 'Inter' for headings",
+      "No purples/teals for CTAs (unless specific brand logic)"
+    ]
+  },
+  "typography": {
+    "primary_font": "Barlow Condensed",
+    "secondary_font": "DM Sans",
+    "usage": {
+      "headings": "Barlow Condensed, font-weight: 800, tracking-tight, uppercase",
+      "body": "DM Sans, font-weight: 400, leading-relaxed",
+      "numbers": "Barlow Condensed, font-weight: 900, tracking-tighter (for stats)",
+      "buttons": "Barlow Condensed, font-weight: 700, uppercase, tracking-widest"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-7xl lg:text-9xl",
+      "h2": "text-4xl md:text-6xl",
+      "stat_value": "text-6xl md:text-8xl",
+      "stat_label": "text-lg md:text-xl font-medium tracking-wide opacity-80"
+    }
+  },
+  "colors": {
+    "theme": "light",
+    "palette": {
+      "background": "#F4F4F5",
+      "foreground": "#18181B",
+      "card_bg": "#FFFFFF",
+      "primary": "#18181B",
+      "secondary": "#E4E4E7",
+      "accent_higher": "#10B981",
+      "accent_lower": "#F43F5E",
+      "border": "#27272A",
+      "overlay_gradient": "linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.8))"
+    },
+    "rules": {
+      "text_contrast": "Always use zinc-900 on light backgrounds, white on dark overlays.",
+      "feedback": "Green (Emerald-500) for Correct/Higher. Red (Rose-500) for Wrong/Lower.",
+      "shadows": "Hard shadows: shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+    }
+  },
+  "layout_strategy": {
+    "grid_system": "Bento Grid (Mode A) for Landing Page. Split Screen (50/50) for Game.",
+    "spacing": "Generous. Use p-6, p-8, p-12. Avoid cramped containers.",
+    "mobile_first": "Stack panels vertically on mobile (h-1/2 each). Side-by-side on desktop (w-1/2 each).",
+    "alignment": "Center content within game cards, but use asymmetry in the landing grid."
+  },
+  "components": {
+    "game_card": {
+      "structure": "Full height/width container. Background image with object-cover. Gradient overlay. Content at bottom center.",
+      "typography": "Big bold number (animated). Clear label.",
+      "interaction": "No hover on game cards themselves, but buttons float on top."
+    },
+    "vs_badge": {
+      "style": "Circular, white background, thick black border (4px). Centered absolute. Z-index 50.",
+      "content": "'VS' in black heavy font."
+    },
+    "action_buttons": {
+      "higher": "bg-emerald-500 hover:bg-emerald-400 text-white rounded-full py-4 px-8 shadow-lg transition-transform hover:scale-105 active:scale-95",
+      "lower": "bg-rose-500 hover:bg-rose-400 text-white rounded-full py-4 px-8 shadow-lg transition-transform hover:scale-105 active:scale-95"
+    },
+    "landing_card": {
+      "style": "Bento grid item. Rounded-xl. Border-2 border-black. Hover: -translate-y-1 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]. Transition-all.",
+      "content": "Category Icon + Title + 'Play Now' badge."
+    }
+  },
+  "motion": {
+    "libraries": [
+      "framer-motion",
+      "react-countup",
+      "canvas-confetti"
+    ],
+    "animations": {
+      "card_enter": "Slide in from right (x: 100% -> 0%).",
+      "card_exit": "Slide out to left (x: 0% -> -100%).",
+      "number_reveal": "CountUp from 0 to value over 1.5s easeOut.",
+      "shake": "X-axis shake on wrong guess (0.5s).",
+      "hover": "Scale 1.05 for buttons."
+    }
+  },
+  "visual_assets": {
+    "categories": [
+      {
+        "name": "Country Population",
+        "slug": "population",
+        "image_url": "https://images.unsplash.com/photo-1642764984395-d032bf643e70?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzB8MHwxfHNlYXJjaHwxfHxjcm93ZGVkJTIwY2l0eSUyMGFlcmlhbCUyMHZpZXclMjBwZW9wbGV8ZW58MHx8fHwxNzcxMTIyNjk3fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Aerial view of crowded city night"
+      },
+      {
+        "name": "Movie Box Office",
+        "slug": "box-office",
+        "image_url": "https://images.unsplash.com/photo-1621276336795-925346853745?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzN8MHwxfHNlYXJjaHwxfHxtb3ZpZSUyMHRoZWF0cmUlMjBhdWRpZW5jZSUyMHBvcGNvcm4lMjBjaW5lbWF8ZW58MHx8fHwxNzcxMTIyNjk4fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Cinema audience"
+      },
+      {
+        "name": "NBA Player Salaries",
+        "slug": "nba-salary",
+        "image_url": "https://images.unsplash.com/photo-1577415924319-d05a46e5998c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Nzh8MHwxfHNlYXJjaHwxfHxiYXNrZXRiYWxsJTIwcGxheWVyJTIwZHVua2luZyUyMGFyZW5hJTIwZHJhbWF0aWMlMjBsaWdodGluZ3xlbnwwfHx8fDE3NzExMjI2OTl8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Basketball hoop dramatic"
+      },
+      {
+        "name": "Animal Weight",
+        "slug": "animals",
+        "image_url": "https://images.unsplash.com/photo-1759520277895-69185ef95e4f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwxfHxlbGVwaGFudCUyMGFmcmljYW4lMjBzYXZhbm5haCUyMHdpbGRsaWZlJTIwY2xvc2UlMjB1cHxlbnwwfHx8fDE3NzExMjI3MDB8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Elephant close up"
+      },
+      {
+        "name": "Country GDP",
+        "slug": "gdp",
+        "image_url": "https://images.unsplash.com/photo-1761587941453-bd1790225d52?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA6MTJ8MHwxfHNlYXJjaHwxfHxnbG9iYWwlMjBlY29ub215JTIwc3RvY2slMjBtYXJrZXQlMjBncmFwaCUyMGZpbmFuY2V8ZW58MHx8fHwxNzcxMTIyNzAwfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Finance stock market"
+      }
+    ]
+  },
+  "accessibility": {
+    "contrast": "Ensure text over images has sufficient scrim (gradient overlay).",
+    "keyboard_nav": "Enter/Space to select Higher/Lower. Arrow keys support (Up=Higher, Down=Lower).",
+    "reduced_motion": "Disable confetti and slide animations if prefers-reduced-motion is true."
+  },
+  "instructions_to_main_agent": [
+    "Install required packages: framer-motion, react-countup, canvas-confetti, lucide-react.",
+    "Use 'Barlow Condensed' from Google Fonts for all numbers and headings.",
+    "Implement the Game Loop state machine strictly: Card A (Left) vs Card B (Right/Hidden) -> User Guess -> Reveal B -> Animation -> Slide B to A -> New B.",
+    "Ensure the 'VS' circle is perfectly centered and z-indexed above the split cards.",
+    "On Mobile: Stack cards vertically. On Desktop: Split horizontally.",
+    "Use LocalStorage for 'Best Score' persistence.",
+    "Hard Mode: Hides the exact number of Card A, giving only a range or partial hint (optional logic)."
+  ],
+  "universal_guidelines": [
+    "Do not use gradients for text.",
+    "Avoid default shadow-sm. Use custom hard shadows for the 'Pop' effect.",
+    "Micro-interactions on every click.",
+    "All interactive elements must have data-testid."
+  ]
+}
