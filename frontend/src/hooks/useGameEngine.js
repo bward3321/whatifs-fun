@@ -210,6 +210,9 @@ export function useGameEngine(sounds) {
   const [rule, setRule] = useState(null);
   const [objects, setObjects] = useState([]);
   const [ruleFlash, setRuleFlash] = useState(false);
+  const [countdown, setCountdown] = useState(null);
+  const [screenShake, setScreenShake] = useState(false);
+  const [effects, setEffects] = useState([]);
 
   const r = useRef({
     gameState: 'menu',
@@ -236,6 +239,7 @@ export function useGameEngine(sounds) {
   const clearTimers = useCallback(() => {
     clearTimeout(r.current.waveTimer);
     clearInterval(r.current.gameTimer);
+    clearInterval(r.current.countdownTimer);
   }, []);
 
   const endGame = useCallback(() => {
@@ -326,12 +330,21 @@ export function useGameEngine(sounds) {
         setStreak(r.current.streak);
         setBestStreak(r.current.bestStreak);
         soundsRef.current?.playCorrect?.();
+
+        // Particle burst effect
+        const eid = `e-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`;
+        setEffects((prev) => [...prev, { id: eid, x: obj.x, y: obj.y }]);
+        setTimeout(() => setEffects((prev) => prev.filter((e) => e.id !== eid)), 600);
       } else {
         r.current.streak = 0;
         r.current.lives = Math.max(0, r.current.lives - 1);
         setStreak(0);
         setLives(r.current.lives);
         soundsRef.current?.playWrong?.();
+
+        // Screen shake effect
+        setScreenShake(true);
+        setTimeout(() => setScreenShake(false), 350);
 
         if (r.current.lives <= 0) {
           const updated = r.current.objects.map((o) =>
@@ -401,32 +414,49 @@ export function useGameEngine(sounds) {
       r.current.rule = initialRule;
       setRule(initialRule);
 
-      setGameState('playing');
+      setGameState('countdown');
+      setCountdown(3);
 
-      r.current.gameTimer = setInterval(() => {
-        if (r.current.gameState !== 'playing') return;
-        r.current.gameTime++;
-        setGameTime(r.current.gameTime);
+      let cdCount = 3;
+      r.current.countdownTimer = setInterval(() => {
+        cdCount--;
+        if (cdCount > 0) {
+          setCountdown(cdCount);
+        } else if (cdCount === 0) {
+          setCountdown(0);
+        } else {
+          clearInterval(r.current.countdownTimer);
+          setCountdown(null);
 
-        const diff = getDifficulty(r.current.gameTime, r.current.mode);
-        r.current.speed = diff.speed;
-        if (diff.speed > r.current.maxSpeed) r.current.maxSpeed = diff.speed;
-        setSpeed(diff.speed);
+          r.current.gameState = 'playing';
+          setGameState('playing');
 
-        if (r.current.mode === 'rule_switch' || r.current.mode === 'chaos') {
-          const interval = r.current.mode === 'chaos' ? 8 : 12;
-          if (r.current.gameTime - r.current.lastRuleChange >= interval) {
-            const newRule = pickRule(diff.rulePool, r.current.rule?.id);
-            r.current.rule = newRule;
-            r.current.lastRuleChange = r.current.gameTime;
-            setRule(newRule);
-            setRuleFlash(true);
-            setTimeout(() => setRuleFlash(false), 600);
-          }
+          r.current.gameTimer = setInterval(() => {
+            if (r.current.gameState !== 'playing') return;
+            r.current.gameTime++;
+            setGameTime(r.current.gameTime);
+
+            const diff = getDifficulty(r.current.gameTime, r.current.mode);
+            r.current.speed = diff.speed;
+            if (diff.speed > r.current.maxSpeed) r.current.maxSpeed = diff.speed;
+            setSpeed(diff.speed);
+
+            if (r.current.mode === 'rule_switch' || r.current.mode === 'chaos') {
+              const interval = r.current.mode === 'chaos' ? 8 : 12;
+              if (r.current.gameTime - r.current.lastRuleChange >= interval) {
+                const newRule = pickRule(diff.rulePool, r.current.rule?.id);
+                r.current.rule = newRule;
+                r.current.lastRuleChange = r.current.gameTime;
+                setRule(newRule);
+                setRuleFlash(true);
+                setTimeout(() => setRuleFlash(false), 600);
+              }
+            }
+          }, 1000);
+
+          setTimeout(() => spawnWave(), 300);
         }
-      }, 1000);
-
-      setTimeout(() => spawnWave(), 600);
+      }, 700);
     },
     [clearTimers, spawnWave]
   );
