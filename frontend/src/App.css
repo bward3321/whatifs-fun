@@ -1,34 +1,512 @@
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+/* ═══════════════════════════════════════════════
+   HOW DEEP IS THE OCEAN — CINEMATIC STYLES
+   ═══════════════════════════════════════════════ */
+
+/* ── FIXED LAYERS ── */
+.ocean-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
 }
 
-.App-header {
-    background-color: #0f0f10;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+.ocean-content {
+  position: relative;
+  z-index: 2;
 }
 
-.App-link {
-    color: #61dafb;
+/* ── DEPTH GAUGE ── */
+.depth-gauge {
+  position: fixed;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 38vh;
+  max-height: 280px;
 }
 
-@keyframes App-logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
+.gauge-track {
+  position: relative;
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 1px;
+}
+
+.gauge-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 1px;
+}
+
+.gauge-indicator {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gauge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+  flex-shrink: 0;
+}
+
+.gauge-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  position: absolute;
+  right: calc(100% + 14px);
+}
+
+.gauge-depth {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 10px;
+  letter-spacing: 0.05em;
+}
+
+/* ── AUDIO TOGGLE ── */
+.audio-toggle {
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  z-index: 50;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.audio-toggle:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── SECTIONS ── */
+.ocean-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── TITLE SECTION ── */
+.title-section {
+  padding-top: 28vh;
+  overflow: hidden;
+}
+
+.sunlight-rays {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85vh;
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 35%, transparent 65%);
+  pointer-events: none;
+}
+
+.sunlight-rays::before {
+  content: '';
+  position: absolute;
+  top: -8%;
+  left: 12%;
+  width: 28%;
+  height: 75%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07) 0%, transparent 100%);
+  transform: skewX(-15deg);
+}
+
+.sunlight-rays::after {
+  content: '';
+  position: absolute;
+  top: -4%;
+  left: 52%;
+  width: 22%;
+  height: 65%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, transparent 100%);
+  transform: skewX(10deg);
+}
+
+.wave-surface {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  height: 3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.18) 15%,
+    rgba(255,255,255,0.35) 30%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.3) 70%,
+    rgba(255,255,255,0.15) 85%,
+    transparent 100%
+  );
+  animation: wave-move 8s ease-in-out infinite;
+}
+
+@keyframes wave-move {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-3%); }
+}
+
+.title-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 5vw;
+  margin-bottom: 8vh;
+  position: relative;
+  z-index: 3;
+}
+
+.title-text {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+  color: white;
+  letter-spacing: -0.01em;
+  line-height: 1.08;
+  margin-bottom: 1.5rem;
+}
+
+.subtitle-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.04em;
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6vh;
+  margin-bottom: 15vh;
+  position: relative;
+  z-index: 3;
+}
+
+.scroll-indicator span {
+  font-family: 'Outfit', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.scroll-arrow {
+  width: 14px;
+  height: 14px;
+  border-right: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.35);
+  transform: rotate(45deg);
+  animation: bounce-down 2.2s ease-in-out infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(6px); }
+}
+
+/* ── STANDARD SECTION ── */
+.standard-section {
+  padding: 18vh 5vw 22vh;
+  gap: 8vh;
+}
+
+/* ── CREATURES ── */
+.creatures-container {
+  position: relative;
+  width: 100%;
+  min-height: 52vh;
+}
+
+.marine-creature {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.creature-swim {
+  /* animation set inline */
+}
+
+.creature-label {
+  display: block;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 5px;
+}
+
+.creature-fact {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.55;
+  max-width: 250px;
+  text-align: center;
+  white-space: normal;
+  pointer-events: none;
+  z-index: 10;
+  animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.bioluminescent {
+  filter: drop-shadow(0 0 14px rgba(100, 200, 255, 0.35));
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.angler-lure {
+  animation: pulse-lure 2s ease-in-out infinite;
+}
+
+@keyframes pulse-lure {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+/* ── DEPTH MARKER ── */
+.depth-marker {
+  width: 100%;
+  text-align: center;
+  padding: 3vh 0;
+}
+
+.depth-marker-line {
+  width: 88%;
+  max-width: 780px;
+  height: 0;
+  border-top: 1px dashed rgba(255, 255, 255, 0.22);
+  margin: 0 auto 2.5vh;
+}
+
+.depth-marker-text {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+  color: white;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── TEXT CONTENT ── */
+.text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 3.5vh;
+  padding: 0 5vw;
+  max-width: 640px;
+}
+
+.section-subtitle {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 2.2vw, 1.35rem);
+  color: rgba(255, 255, 255, 0.82);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stat-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.88rem, 1.6vw, 1.05rem);
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.65;
+}
+
+.comparison-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.note-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.48);
+  letter-spacing: 0.04em;
+}
+
+/* ── FLOATING STATS ── */
+.floating-stats-wrapper {
+  margin-top: 6vh;
+}
+
+.floating-stat {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+  color: rgba(255, 255, 255, 0.42);
+  letter-spacing: 0.03em;
+  text-align: center;
+  padding: 0 5vw;
+}
+
+/* ── ENDING SECTION ── */
+.ending-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6vh;
+  padding: 22vh 5vw;
+}
+
+.ending-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.55;
+  max-width: 560px;
+}
+
+.ending-final {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+  color: white;
+  letter-spacing: 0.02em;
+}
+
+.restart-button {
+  margin-top: 4vh;
+  padding: 14px 38px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: white;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.restart-button:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: scale(1.02);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .depth-gauge {
+    right: 10px;
+    height: 22vh;
+    max-height: 180px;
+  }
+
+  .gauge-label {
+    display: none;
+  }
+
+  .gauge-depth {
+    font-size: 10px;
+  }
+
+  .audio-toggle {
+    bottom: 14px;
+    left: 14px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .creatures-container {
+    min-height: 38vh;
+  }
+
+  .standard-section {
+    padding: 12vh 4vw 16vh;
+    gap: 6vh;
+  }
+
+  .title-section {
+    padding-top: 20vh;
+  }
+
+  .creature-label {
+    font-size: 8px;
+  }
+
+  .creature-fact {
+    max-width: 200px;
+    font-size: 11px;
+  }
 }
