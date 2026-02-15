@@ -568,14 +568,14 @@ export const ControlPanel = ({
         </ScrollArea>
 
         {/* Launch Controls - Fixed at bottom */}
-        <div className="p-4 border-t border-primary/20 bg-card/95 flex-shrink-0">
+        <div className="p-2 sm:p-4 border-t border-primary/20 bg-card/95 flex-shrink-0">
           {/* Launch/Reset buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3">
             {!isLaunched ? (
               <Button
                 variant="launch"
                 size="xl"
-                className="flex-1"
+                className="flex-1 min-h-[52px] text-base"
                 onClick={onLaunch}
                 disabled={!canLaunch}
               >
@@ -586,7 +586,7 @@ export const ControlPanel = ({
               <Button
                 variant="outline"
                 size="xl"
-                className="flex-1"
+                className="flex-1 min-h-[52px] text-base"
                 onClick={onReset}
               >
                 <RotateCcw className="w-5 h-5 mr-2" />
@@ -596,8 +596,8 @@ export const ControlPanel = ({
           </div>
 
           {!canLaunch && !isLaunched && (
-            <p className="text-xs text-muted-foreground text-center mt-2">
-              {!launchOrigin && "Select launch origin • "}
+            <p className="text-[10px] sm:text-xs text-muted-foreground text-center mt-2">
+              {!launchOrigin && "Select origin • "}
               {!launchTarget && "Select target • "}
               {!selectedWarhead && "Select warhead"}
             </p>
