@@ -57,3 +57,12 @@ Build a mobile-first, visually rich, fast-paced reflex game called "Too Fast To 
 - Add more visual polish (screen shake, particle bursts)
 - Add 3-2-1 countdown animation
 - PWA support for mobile install
+
+## Iteration 2 Updates (Feb 2026)
+- Fixed GAME OVER title centering (text-align: center, width: 100%)
+- Added 3-2-1 countdown animation before game starts (countdown-pop animation, neon glow)
+- Added screen shake effect on wrong clicks (CSS shake + red vignette flash)
+- Added colorful particle burst effects on correct clicks (8 particles, burst-fly animation)
+- Added mobile responsive breakpoints (480px, 360px) with optimized object sizes
+- Added safe-area-inset support for notched phones
+- Added touch optimization (tap-highlight-color, touch-callout, user-select)
