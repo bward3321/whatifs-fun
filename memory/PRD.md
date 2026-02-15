@@ -32,23 +32,25 @@ Build a premium, immersive, scroll-driven cinematic vertical experience showing 
 - [x] Depth markers with dotted lines
 - [x] Background gradient transitions (blue to teal to dark to black)
 - [x] Canvas particle system (density increases with depth)
-- [x] Fixed depth gauge with "YOU ARE HERE" indicator
+- [x] Fixed depth gauge — enlarged (14px dot, 55vh height, "YOU ARE HERE" label)
+- [x] Live depth counter — glassmorphism bottom-center, real-time updates
 - [x] Web Audio API ambient drone (muted by default)
 - [x] Stats, comparisons, and notes at each section
 - [x] Cinematic ending with 3 reveal texts
-- [x] "Explore Another Wonder" button (loops to surface)
+- [x] "Explore Another Wonder" button (scrolls to surface)
 - [x] Bioluminescent glow effects (jellyfish, anglerfish, lanternfish)
 - [x] Framer Motion scroll animations
 - [x] Increased font sizes for desktop readability
-- [x] 11 new creatures: sea turtle, blue whale, manta ray, hammerhead shark, swordfish, octopus, lanternfish, vampire squid, fangtooth, tripod fish, dumbo octopus
+- [x] 11 new creatures (sea turtle, blue whale, manta ray, etc.)
+- [x] Mobile responsive (breakpoints: 1024px, 768px, 480px)
 
 ## Testing Status
 - Iteration 1: 19/19 passed (initial build)
-- Iteration 2: 38/38 passed (font size + content enhancement regression)
+- Iteration 2: 38/38 passed (font size + content enhancement)
+- Iteration 3: 24/24 passed (bigger gauge, live counter, mobile optimization)
 
 ## Prioritized Backlog
 ### P1 - Next Up
-- Mobile optimization (test + fix responsiveness, touch interactions)
 - "Explore Another Wonder" button — add meaningful functionality
 - Scroll-snap refinement for guided descent feel
 
@@ -57,4 +59,3 @@ Build a premium, immersive, scroll-driven cinematic vertical experience showing 
 - Social sharing (share depth screenshot)
 - Sound effects on creature hover
 - Visitor analytics (track average scroll depth)
-- Smooth scroll speed control (slower descent option)
