@@ -74,7 +74,7 @@ export const SECTIONS = [
     type: 'standard',
     depth: 10,
     depthLabel: '10 METERS DEEP',
-    minHeight: '280vh',
+    minHeight: '220vh',
     subtitle: 'Swimming Depth',
     stats: [
       'Most recreational divers never go below 18 meters.',
@@ -95,7 +95,7 @@ export const SECTIONS = [
     type: 'standard',
     depth: 50,
     depthLabel: '49 METERS DEEP',
-    minHeight: '400vh',
+    minHeight: '300vh',
     subtitle: null,
     stats: [
       'This is deeper than a 15-story building is tall.',
@@ -146,7 +146,7 @@ export const SECTIONS = [
     type: 'standard',
     depth: 1000,
     depthLabel: '1,000 METERS DEEP',
-    minHeight: '400vh',
+    minHeight: '300vh',
     subtitle: 'The Midnight Zone',
     stats: [
       'Pressure here is 100 times surface pressure.',
@@ -194,7 +194,7 @@ export const SECTIONS = [
     type: 'standard',
     depth: 4000,
     depthLabel: '4,000 METERS DEEP',
-    minHeight: '400vh',
+    minHeight: '300vh',
     subtitle: 'The Abyssal Plain',
     stats: [
       'This is the average depth of the ocean.',
@@ -259,7 +259,7 @@ export const SECTIONS = [
     type: 'standard',
     depth: 10984,
     depthLabel: '10,984 METERS DEEP',
-    minHeight: '380vh',
+    minHeight: '300vh',
     subtitle: 'The Mariana Trench',
     stats: [
       'Pressure here is over 1,000 times surface pressure.',
