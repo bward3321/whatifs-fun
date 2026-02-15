@@ -44,7 +44,7 @@ export default function GameScreen({
   const [isAnimating, setIsAnimating] = useState(false);
   const [sessionQuestionIds, setSessionQuestionIds] = useState([]); // Track this session's questions
 
-  // Fetch a new question
+  // Fetch a new question with progressive difficulty based on streak
   const fetchQuestion = useCallback(async () => {
     setLoading(true);
     setAnswerState(null);
@@ -60,7 +60,8 @@ export default function GameScreen({
         body: JSON.stringify({
           category,
           difficulty,
-          exclude_ids: allExcludeIds
+          exclude_ids: allExcludeIds,
+          streak // Pass streak for progressive difficulty
         })
       });
       
@@ -79,7 +80,7 @@ export default function GameScreen({
     } finally {
       setLoading(false);
     }
-  }, [category, difficulty, recentQuestionIds, sessionQuestionIds, addRecentQuestion]);
+  }, [category, difficulty, streak, recentQuestionIds, sessionQuestionIds, addRecentQuestion]);
 
   useEffect(() => {
     fetchQuestion();
