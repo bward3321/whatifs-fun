@@ -181,7 +181,7 @@ async def get_categories():
 
 @api_router.post("/questions/generate", response_model=Question)
 async def generate_question(request: QuestionRequest):
-    """Generate a new question using LLM - prioritizes NEW unique questions"""
+    """Generate a new question using LLM - with progressive difficulty based on streak"""
     if request.category not in CATEGORIES and request.category != "mix":
         raise HTTPException(status_code=400, detail="Invalid category")
     
@@ -190,7 +190,34 @@ async def generate_question(request: QuestionRequest):
     if category == "mix":
         category = random.choice(list(CATEGORIES.keys()))
     
-    difficulty_range = DIFFICULTY_MAP.get(request.difficulty, [2, 3])
+    # Progressive difficulty based on streak
+    base_difficulty = request.difficulty
+    streak = request.streak
+    
+    # Determine difficulty range based on streak
+    if base_difficulty == "savage":
+        # Savage mode always hard
+        difficulty_range = [3, 4]
+    elif base_difficulty == "chill":
+        # Chill mode stays easier but scales slightly
+        if streak >= 10:
+            difficulty_range = [2, 3]
+        elif streak >= 5:
+            difficulty_range = [1, 2, 2]  # Weighted towards 2
+        else:
+            difficulty_range = [1, 2]
+    else:  # spicy (default)
+        # Progressive scaling for spicy mode
+        if streak >= 15:
+            difficulty_range = [3, 4, 4]  # Mostly savage
+        elif streak >= 10:
+            difficulty_range = [3, 3, 4]  # Hard
+        elif streak >= 7:
+            difficulty_range = [2, 3, 3]  # Medium-hard
+        elif streak >= 4:
+            difficulty_range = [2, 3]  # Medium
+        else:
+            difficulty_range = [2, 2, 3]  # Start easier
     
     # Get recent question topics to avoid repetition
     recent_questions = await db.questions.find(
@@ -202,26 +229,23 @@ async def generate_question(request: QuestionRequest):
     avoid_topics = []
     for q in recent_questions:
         stmt = q.get("statement", "").lower()
-        # Extract key nouns/topics from statement
         words = stmt.replace('"', '').replace("'", '').split()
         for word in words:
             if len(word) > 4 and word not in ['about', 'their', 'there', 'which', 'would', 'could', 'should', 'being', 'called', 'three', 'have', 'with']:
                 avoid_topics.append(word)
-    avoid_topics = list(set(avoid_topics))[:50]  # Unique topics, max 50
+    avoid_topics = list(set(avoid_topics))[:50]
     
     # Count available cached questions NOT in exclude list
     available_count = await db.questions.count_documents({
         "category": category,
-        "difficulty": {"$in": difficulty_range},
+        "difficulty": {"$in": list(set(difficulty_range))},
         "id": {"$nin": request.exclude_ids}
     })
     
-    # ALWAYS generate new question (100% of time for true variety)
-    # Only use cache as fallback when generation fails
+    # Generate new question
     question = await generate_question_with_llm(category, difficulty_range, avoid_topics)
     
     if question:
-        # Cache the question
         doc = question.model_dump()
         doc['created_at'] = doc['created_at'].isoformat()
         await db.questions.insert_one(doc)
@@ -232,7 +256,7 @@ async def generate_question(request: QuestionRequest):
         pipeline = [
             {"$match": {
                 "category": category,
-                "difficulty": {"$in": difficulty_range},
+                "difficulty": {"$in": list(set(difficulty_range))},
                 "id": {"$nin": request.exclude_ids}
             }},
             {"$sample": {"size": 1}}
