@@ -140,11 +140,11 @@ export const ControlPanel = ({
           <TabsContent value="launch" className="mt-2 sm:mt-4 space-y-3 sm:space-y-4 pb-4">
             {/* Origin Selection */}
             <Card className="bg-card/80 border-primary/20">
-              <CardHeader className="py-3 px-4">
+              <CardHeader className="py-2 sm:py-3 px-3 sm:px-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Rocket className="w-4 h-4 text-success" />
-                    <CardTitle className="text-sm font-display tracking-wider text-success">
+                    <CardTitle className="text-xs sm:text-sm font-display tracking-wider text-success">
                       LAUNCH ORIGIN
                     </CardTitle>
                   </div>
@@ -152,13 +152,13 @@ export const ControlPanel = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setSelectionMode(selectionMode === 'origin' ? null : 'origin')}
-                    className={selectionMode === 'origin' ? 'text-success' : ''}
+                    className={`min-h-[44px] min-w-[44px] ${selectionMode === 'origin' ? 'text-success' : ''}`}
                   >
-                    <MapPin className="w-4 h-4" />
+                    <MapPin className="w-5 h-5" />
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="px-4 pb-4">
+              <CardContent className="px-3 sm:px-4 pb-3 sm:pb-4">
                 <div className="space-y-3">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
