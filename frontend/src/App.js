@@ -1,5 +1,5 @@
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useState, useCallback, useEffect } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import HomeScreen from "@/components/HomeScreen";
