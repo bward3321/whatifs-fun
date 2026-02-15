@@ -10,21 +10,6 @@ Build a premium, immersive, scroll-driven cinematic vertical experience showing 
 - Web Audio API for procedural ambient sound
 - SVG marine life illustrations (30+ creatures)
 
-## User Personas
-- Science enthusiasts, curious minds
-- Museum visitors, educational content consumers
-- Anyone fascinated by ocean depth and marine life
-
-## Core Requirements
-- 10 depth sections from 0m to 10,984m
-- Gradual background gradient (bright blue to black)
-- 30+ SVG marine creature illustrations with hover facts
-- Live depth counter + "YOU ARE HERE" gauge
-- Floating particle effects increasing with depth
-- Ambient audio with mute/unmute toggle
-- Cinematic ending with restart option
-- Mobile responsive
-
 ## What's Been Implemented (Feb 2026)
 - [x] Title section with sunlight rays, wave animation, seagull
 - [x] 10 depth sections (0m, 10m, 50m, 200m, 1000m, 2500m, 4000m, 6000m, 8848m, 10984m)
@@ -43,6 +28,7 @@ Build a premium, immersive, scroll-driven cinematic vertical experience showing 
 - [x] Increased font sizes for desktop readability
 - [x] 11 new creatures (sea turtle, blue whale, manta ray, etc.)
 - [x] Mobile responsive (breakpoints: 1024px, 768px, 480px)
+- [x] Compressed beginning — title section 160vh, depth counts from 3% scroll
 
 ## Testing Status
 - Iteration 1: 19/19 passed (initial build)
@@ -58,4 +44,3 @@ Build a premium, immersive, scroll-driven cinematic vertical experience showing 
 - Refactor creatures.js into individual modules
 - Social sharing (share depth screenshot)
 - Sound effects on creature hover
-- Visitor analytics (track average scroll depth)
