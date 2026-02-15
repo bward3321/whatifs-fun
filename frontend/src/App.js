@@ -240,19 +240,24 @@ function App() {
   const [reactionTime, setReactionTime] = useState(null);
   const [showResults, setShowResults] = useState(false);
   const [colorPair, setColorPair] = useState(getRandomColorPair);
+  const [inputEnabled, setInputEnabled] = useState(true);
   const greenTimestamp = useRef(null);
   const timeoutRef = useRef(null);
+  const inputDelayRef = useRef(null);
 
   // Initialize audio on mount
   useEffect(() => {
     sounds.init();
   }, []);
 
-  // Cleanup timeout on unmount
+  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
+      }
+      if (inputDelayRef.current) {
+        clearTimeout(inputDelayRef.current);
       }
     };
   }, []);
@@ -270,6 +275,17 @@ function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   });
 
+  // Disable input briefly after state transitions to prevent accidental mobile touches
+  const disableInputBriefly = useCallback((duration = 300) => {
+    setInputEnabled(false);
+    if (inputDelayRef.current) {
+      clearTimeout(inputDelayRef.current);
+    }
+    inputDelayRef.current = setTimeout(() => {
+      setInputEnabled(true);
+    }, duration);
+  }, []);
+
   const startGame = useCallback(() => {
     sounds.click();
     // Pick new random color pair each game
@@ -277,6 +293,9 @@ function App() {
     setGameState(STATES.WAITING);
     setReactionTime(null);
     setShowResults(false);
+    
+    // Disable input briefly to prevent accidental touches during transition
+    disableInputBriefly(300);
     
     // Random delay between 1-4 seconds
     const delay = Math.random() * 3000 + 1000;
@@ -286,9 +305,12 @@ function App() {
       setGameState(STATES.READY);
       sounds.go();
     }, delay);
-  }, []);
+  }, [disableInputBriefly]);
 
   const handleClick = useCallback(() => {
+    // Ignore input if disabled (during transitions)
+    if (!inputEnabled) return;
+    
     if (gameState === STATES.IDLE) {
       startGame();
     } else if (gameState === STATES.WAITING) {
@@ -298,6 +320,7 @@ function App() {
       }
       sounds.fail();
       setGameState(STATES.EARLY_CLICK);
+      disableInputBriefly(300);
       
       // Reset after a moment
       setTimeout(() => {
@@ -316,13 +339,14 @@ function App() {
         setShowResults(true);
       }, 300);
     }
-  }, [gameState, startGame]);
+  }, [gameState, startGame, inputEnabled, disableInputBriefly]);
 
   const handleTryAgain = useCallback(() => {
     setShowResults(false);
     setGameState(STATES.IDLE);
     sounds.click();
-  }, []);
+    disableInputBriefly(300);
+  }, [disableInputBriefly]);
 
   // Get dynamic background style based on state
   const getBackgroundStyle = () => {
