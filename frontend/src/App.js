@@ -1,52 +1,67 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import { useMemo } from 'react';
+import '@/App.css';
+import { useGameEngine } from '@/hooks/useGameEngine';
+import { useSound } from '@/hooks/useSound';
+import LandingScreen from '@/components/screens/LandingScreen';
+import GameScreen from '@/components/screens/GameScreen';
+import GameOverScreen from '@/components/screens/GameOverScreen';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+const Particles = () => {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 25 }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 15,
+        duration: 10 + Math.random() * 15,
+        size: 1 + Math.random() * 2.5,
+        opacity: 0.15 + Math.random() * 0.25,
+      })),
+    []
+  );
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
+    <div className="particles-layer" data-testid="particles">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="particle"
+          style={{
+            left: `${p.left}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            opacity: p.opacity,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+          }}
+        />
+      ))}
     </div>
   );
 };
 
 function App() {
+  const sounds = useSound();
+  const game = useGameEngine(sounds);
+
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div className="app-container" data-testid="app-container">
+      <div className="game-bg" />
+      <Particles />
+
+      {game.gameState === 'menu' && (
+        <LandingScreen onSelectMode={game.startGame} />
+      )}
+      {(game.gameState === 'playing' || game.gameState === 'paused') && (
+        <GameScreen game={game} sounds={sounds} />
+      )}
+      {game.gameState === 'gameOver' && (
+        <GameOverScreen
+          game={game}
+          onPlayAgain={game.startGame}
+          onGoHome={game.resetGame}
+        />
+      )}
     </div>
   );
 }
