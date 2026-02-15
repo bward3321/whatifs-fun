@@ -124,7 +124,7 @@ export const MissionTimer = ({
                     variant={speedMultiplier === speed ? "default" : "outline"}
                     size="sm"
                     onClick={() => setSpeedMultiplier(speed)}
-                    className={`w-9 h-8 font-mono text-xs min-h-[44px] ${
+                    className={`w-10 h-10 font-mono text-xs ${
                       speedMultiplier === speed 
                         ? 'bg-primary text-primary-foreground' 
                         : 'border-primary/30 hover:bg-primary/20'
