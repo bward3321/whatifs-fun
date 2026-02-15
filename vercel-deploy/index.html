@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-red:#ff3c3c;--accent-cyan:#00f0ff;--accent-green:#39ff7f;--accent-orange:#ff8c2e;--accent-purple:#b44cff;--accent-yellow:#ffe03c;--accent-blue:#3b82f6;--accent-pink:#f472b6;--accent-lime:#a3e635}
+        :root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#f0efe9;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c}
         body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
         body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
         .header{text-align:center;padding:60px 24px 20px;position:relative}
@@ -32,30 +32,10 @@
         .counter span{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--text-dim);background:rgba(255,255,255,0.04);border:1px solid var(--card-border);padding:6px 16px;border-radius:100px;letter-spacing:1px}
         .grid-container{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
         .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
-        .card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-bg);cursor:pointer;transition:transform 0.3s cubic-bezier(0.19,1,0.22,1),border-color 0.3s ease,box-shadow 0.3s ease;text-decoration:none;display:block;aspect-ratio:16/10}
-        .card:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(255,255,255,0.12);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
-        .card-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:32px 24px;position:relative;z-index:2}
-        .card-icon{font-size:3rem;margin-bottom:16px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.3))}
-        .card-title{font-family:'Space Mono',monospace;font-size:1.15rem;font-weight:700;text-align:center;color:var(--text);letter-spacing:-0.5px;line-height:1.3}
-        .card-subtitle{font-size:0.8rem;color:var(--text-dim);text-align:center;margin-top:6px;font-weight:400}
-        .card--circle{background:radial-gradient(ellipse at 30% 80%,rgba(255,60,60,0.15),transparent 60%),radial-gradient(ellipse at 70% 20%,rgba(255,60,60,0.08),transparent 50%),var(--card-bg)}
-        .card--circle:hover{border-color:var(--accent-red)}.card--circle .card-title{color:var(--accent-red)}
-        .card--circle .ring{position:absolute;width:180px;height:180px;border:2px solid rgba(255,60,60,0.15);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1}
-        .card--circle .ring::after{content:'';position:absolute;width:120px;height:120px;border:1px solid rgba(255,60,60,0.08);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
-        .card--reflex{background:radial-gradient(ellipse at 60% 70%,rgba(0,240,255,0.12),transparent 60%),radial-gradient(ellipse at 20% 30%,rgba(0,240,255,0.06),transparent 50%),var(--card-bg)}
-        .card--reflex:hover{border-color:var(--accent-cyan)}.card--reflex .card-title{color:var(--accent-cyan)}
-        .card--nuclear{background:radial-gradient(ellipse at 50% 90%,rgba(255,140,46,0.15),transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(255,227,60,0.06),transparent 50%),var(--card-bg)}
-        .card--nuclear:hover{border-color:var(--accent-orange)}.card--nuclear .card-title{color:var(--accent-orange)}
-        .card--memory{background:radial-gradient(ellipse at 40% 70%,rgba(180,76,255,0.15),transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(180,76,255,0.08),transparent 50%),var(--card-bg)}
-        .card--memory:hover{border-color:var(--accent-purple)}.card--memory .card-title{color:var(--accent-purple)}
-        .card--higher{background:radial-gradient(ellipse at 30% 60%,rgba(255,224,60,0.15),transparent 60%),radial-gradient(ellipse at 70% 40%,rgba(255,224,60,0.08),transparent 50%),var(--card-bg)}
-        .card--higher:hover{border-color:var(--accent-yellow)}.card--higher .card-title{color:var(--accent-yellow)}
-        .card--ocean{background:radial-gradient(ellipse at 50% 80%,rgba(59,130,246,0.18),transparent 60%),radial-gradient(ellipse at 20% 20%,rgba(59,130,246,0.08),transparent 50%),var(--card-bg)}
-        .card--ocean:hover{border-color:var(--accent-blue)}.card--ocean .card-title{color:var(--accent-blue)}
-        .card--trivia{background:radial-gradient(ellipse at 60% 80%,rgba(244,114,182,0.15),transparent 60%),radial-gradient(ellipse at 30% 20%,rgba(244,114,182,0.08),transparent 50%),var(--card-bg)}
-        .card--trivia:hover{border-color:var(--accent-pink)}.card--trivia .card-title{color:var(--accent-pink)}
-        .card--speed{background:radial-gradient(ellipse at 40% 60%,rgba(163,230,53,0.15),transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(163,230,53,0.08),transparent 50%),var(--card-bg)}
-        .card--speed:hover{border-color:var(--accent-lime)}.card--speed .card-title{color:var(--accent-lime)}
+        .card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--card-border);background:var(--card-bg);cursor:pointer;transition:transform 0.3s cubic-bezier(0.19,1,0.22,1),border-color 0.3s ease,box-shadow 0.3s ease;text-decoration:none;display:block}
+        .card:hover{transform:translateY(-6px) scale(1.015);border-color:rgba(255,255,255,0.18);box-shadow:0 20px 60px rgba(0,0,0,0.5)}
+        .card img{width:100%;height:auto;display:block;transition:transform 0.4s cubic-bezier(0.19,1,0.22,1)}
+        .card:hover img{transform:scale(1.03)}
         .badge-new{position:absolute;top:14px;right:14px;font-family:'Space Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:2px;color:var(--bg);background:var(--accent-green);padding:3px 10px;border-radius:100px;z-index:3;font-weight:700}
         .card{opacity:0;transform:translateY(30px);animation:fadeUp 0.6s cubic-bezier(0.19,1,0.22,1) forwards}
         .card:nth-child(1){animation-delay:0.1s}.card:nth-child(2){animation-delay:0.18s}.card:nth-child(3){animation-delay:0.26s}.card:nth-child(4){animation-delay:0.34s}.card:nth-child(5){animation-delay:0.42s}.card:nth-child(6){animation-delay:0.50s}.card:nth-child(7){animation-delay:0.58s}.card:nth-child(8){animation-delay:0.66s}
@@ -64,9 +44,7 @@
         .counter{opacity:0;animation:fadeIn 0.8s ease 0.3s forwards}
         @keyframes fadeIn{to{opacity:1}}
         .footer{text-align:center;padding:20px 24px 60px;font-size:0.78rem;color:var(--text-dim);font-family:'Space Mono',monospace}
-        .footer a{color:var(--text-dim);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1);transition:color 0.2s}
-        .footer a:hover{color:var(--text)}
-        @media(max-width:700px){.grid{grid-template-columns:1fr}.header{padding:40px 20px 16px}.grid-container{padding:30px 16px 60px}.card{aspect-ratio:16/9}}
+        @media(max-width:700px){.grid{grid-template-columns:1fr}.header{padding:40px 20px 16px}.grid-container{padding:30px 16px 60px}}
         @media(min-width:701px) and (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
     </style>
 </head>
@@ -78,14 +56,14 @@
     <div class="counter"><span>8 EXPERIENCES LIVE — MORE COMING</span></div>
     <main class="grid-container">
         <div class="grid">
-            <a href="./perfect-circle/" class="card card--circle"><div class="ring"></div><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">⭕</div><div class="card-title">Perfect Circle</div><div class="card-subtitle">Can you draw a perfect circle?</div></div></a>
-            <a href="./reflex-test/" class="card card--reflex"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">⚡</div><div class="card-title">Reflex Test</div><div class="card-subtitle">How fast are your reflexes?</div></div></a>
-            <a href="./nuclear-simulation/" class="card card--nuclear"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">☢️</div><div class="card-title">Nuclear Simulation</div><div class="card-subtitle">Simulate nuclear scenarios</div></div></a>
-            <a href="./memory-test/" class="card card--memory"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🧠</div><div class="card-title">Memory Test</div><div class="card-subtitle">How good is your memory?</div></div></a>
-            <a href="./higher-or-lower/" class="card card--higher"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">📊</div><div class="card-title">Higher or Lower</div><div class="card-subtitle">Guess which stat is higher</div></div></a>
-            <a href="./ocean-depth/" class="card card--ocean"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🌊</div><div class="card-title">Ocean Depth</div><div class="card-subtitle">How deep is the ocean really?</div></div></a>
-            <a href="./true-or-false/" class="card card--trivia"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🤔</div><div class="card-title">True or False</div><div class="card-subtitle">Can you spot the fake facts?</div></div></a>
-            <a href="./speed-click-test/" class="card card--speed"><span class="badge-new">NEW</span><div class="card-inner"><div class="card-icon">🎯</div><div class="card-title">Speed Click Test</div><div class="card-subtitle">Click the target before time runs out</div></div></a>
+            <a href="./perfect-circle/" class="card"><span class="badge-new">NEW</span><img src="./images/perfect-circle.jpg" alt="Perfect Circle — Draw the perfect circle" loading="lazy"></a>
+            <a href="./reflex-test/" class="card"><span class="badge-new">NEW</span><img src="./images/reflex-test.jpg" alt="Reflex Test — Test your reaction time" loading="lazy"></a>
+            <a href="./nuclear-simulation/" class="card"><span class="badge-new">NEW</span><img src="./images/nuclear-simulation.jpg" alt="Nuclear Simulation — Simulate nuclear scenarios" loading="lazy"></a>
+            <a href="./memory-test/" class="card"><span class="badge-new">NEW</span><img src="./images/memory-test.jpg" alt="Memory Test — Remember the order" loading="lazy"></a>
+            <a href="./higher-or-lower/" class="card"><span class="badge-new">NEW</span><img src="./images/higher-or-lower.jpg" alt="Higher or Lower — Compare real-world statistics" loading="lazy"></a>
+            <a href="./ocean-depth/" class="card"><span class="badge-new">NEW</span><img src="./images/ocean-depth.jpg" alt="Ocean Depth — How deep is the ocean really?" loading="lazy"></a>
+            <a href="./true-or-false/" class="card"><span class="badge-new">NEW</span><img src="./images/true-or-false.jpg" alt="True or False — Can you spot the fake facts?" loading="lazy"></a>
+            <a href="./speed-click-test/" class="card"><span class="badge-new">NEW</span><img src="./images/speed-click-test.jpg" alt="Speed Click Test — Click the target before time runs out" loading="lazy"></a>
         </div>
     </main>
     <footer class="footer">whatifs.fun — built for fun, not profit</footer>
