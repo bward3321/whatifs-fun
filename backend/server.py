@@ -178,7 +178,7 @@ async def get_categories():
 
 @api_router.post("/questions/generate", response_model=Question)
 async def generate_question(request: QuestionRequest):
-    """Generate a new question using LLM"""
+    """Generate a new question using LLM - prioritizes NEW questions for variety"""
     if request.category not in CATEGORIES and request.category != "mix":
         raise HTTPException(status_code=400, detail="Invalid category")
     
@@ -189,23 +189,58 @@ async def generate_question(request: QuestionRequest):
     
     difficulty_range = DIFFICULTY_MAP.get(request.difficulty, [2, 3])
     
-    # Try to get a cached question first (that hasn't been shown recently)
-    cached = await db.questions.find_one({
+    # Count available cached questions NOT in exclude list
+    available_count = await db.questions.count_documents({
         "category": category,
         "difficulty": {"$in": difficulty_range},
         "id": {"$nin": request.exclude_ids}
-    }, {"_id": 0})
+    })
     
-    if cached:
-        # Convert timestamp if needed
-        if isinstance(cached.get('created_at'), str):
-            cached['created_at'] = datetime.fromisoformat(cached['created_at'])
-        return Question(**cached)
+    # ALWAYS generate new question if:
+    # 1. Less than 50 unique questions available for this category
+    # 2. 70% chance to generate new even if cache exists (for variety)
+    should_generate_new = available_count < 50 or random.random() < 0.7
+    
+    if not should_generate_new and available_count > 0:
+        # Get random question from cache using aggregation for true randomness
+        pipeline = [
+            {"$match": {
+                "category": category,
+                "difficulty": {"$in": difficulty_range},
+                "id": {"$nin": request.exclude_ids}
+            }},
+            {"$sample": {"size": 1}}
+        ]
+        cached_list = await db.questions.aggregate(pipeline).to_list(1)
+        
+        if cached_list:
+            cached = cached_list[0]
+            del cached['_id']  # Remove MongoDB _id
+            if isinstance(cached.get('created_at'), str):
+                cached['created_at'] = datetime.fromisoformat(cached['created_at'])
+            return Question(**cached)
     
     # Generate new question
     question = await generate_question_with_llm(category, difficulty_range)
     
     if not question:
+        # Fallback to cache if generation fails
+        if available_count > 0:
+            pipeline = [
+                {"$match": {
+                    "category": category,
+                    "difficulty": {"$in": difficulty_range},
+                    "id": {"$nin": request.exclude_ids}
+                }},
+                {"$sample": {"size": 1}}
+            ]
+            cached_list = await db.questions.aggregate(pipeline).to_list(1)
+            if cached_list:
+                cached = cached_list[0]
+                del cached['_id']
+                if isinstance(cached.get('created_at'), str):
+                    cached['created_at'] = datetime.fromisoformat(cached['created_at'])
+                return Question(**cached)
         raise HTTPException(status_code=500, detail="Failed to generate question")
     
     # Cache the question
