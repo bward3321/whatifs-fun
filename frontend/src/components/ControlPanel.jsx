@@ -159,14 +159,14 @@ export const ControlPanel = ({
                 </div>
               </CardHeader>
               <CardContent className="px-3 sm:px-4 pb-3 sm:pb-4">
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                     <Input
                       placeholder="Search city..."
                       value={searchOrigin}
                       onChange={(e) => setSearchOrigin(e.target.value)}
-                      className="pl-9 bg-secondary/50 border-primary/20"
+                      className="pl-9 bg-secondary/50 border-primary/20 min-h-[44px]"
                     />
                   </div>
                   
@@ -179,7 +179,7 @@ export const ControlPanel = ({
                             setLaunchOrigin(city);
                             setSearchOrigin('');
                           }}
-                          className="w-full text-left px-3 py-2 text-sm rounded bg-secondary/30 hover:bg-primary/20 transition-colors"
+                          className="w-full text-left px-3 py-3 text-sm rounded bg-secondary/30 hover:bg-primary/20 transition-colors min-h-[44px]"
                         >
                           <span className="text-foreground">{city.name}</span>
                           <span className="text-muted-foreground ml-2 text-xs">{city.country}</span>
@@ -189,7 +189,7 @@ export const ControlPanel = ({
                   )}
                   
                   {launchOrigin && (
-                    <div className="bg-success/10 border border-success/30 rounded p-3">
+                    <div className="bg-success/10 border border-success/30 rounded p-2 sm:p-3">
                       <div className="flex items-center justify-between">
                         <div>
                           <div className="font-display text-success text-sm">{launchOrigin.name}</div>
