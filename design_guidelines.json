@@ -1,0 +1,131 @@
+{
+  "identity": {
+    "persona": "E1",
+    "tone": "Playful, Polished, Addictive, Viral, High-Energy",
+    "description": "A top 1% creative designer specializing in 'Anti-AI' aesthetics. The goal is to build a 'True or Totally Fake?' browser game that feels like a polished mobile app or a Saturday Morning Cartoon."
+  },
+  "typography": {
+    "primary_font": "Fredoka",
+    "secondary_font": "Nunito",
+    "rules": [
+      "Use 'Fredoka' (Google Font) for all Headings and the Game Title. It is rounded, bold, and fun.",
+      "Use 'Nunito' (Google Font) for body text, questions, and explanations. It is legible but soft.",
+      "Game Title must be HUGE (text-5xl or text-6xl) and Center Aligned on Home.",
+      "Question Text must be clear (text-2xl or text-3xl) and bold (font-bold)."
+    ]
+  },
+  "colors": {
+    "theme": "light",
+    "background": "#FFF7ED",
+    "text": {
+      "primary": "#4B5563",
+      "secondary": "#9CA3AF"
+    },
+    "gameplay": {
+      "true": "#4ADE80",
+      "fake": "#F87171",
+      "lives": "#F43F5E",
+      "streak": "#F59E0B"
+    },
+    "categories": {
+      "animals": {
+        "bg": "#DCFCE7",
+        "text": "#166534",
+        "accent": "#22C55E"
+      },
+      "geography": {
+        "bg": "#DBEAFE",
+        "text": "#1E40AF",
+        "accent": "#3B82F6"
+      },
+      "history": {
+        "bg": "#FEF9C3",
+        "text": "#854D0E",
+        "accent": "#EAB308"
+      },
+      "food": {
+        "bg": "#FFEDD5",
+        "text": "#9A3412",
+        "accent": "#F97316"
+      },
+      "space": {
+        "bg": "#F3E8FF",
+        "text": "#6B21A8",
+        "accent": "#A855F7"
+      },
+      "pop_culture": {
+        "bg": "#FCE7F3",
+        "text": "#9D174D",
+        "accent": "#EC4899"
+      }
+    }
+  },
+  "layout": {
+    "structure": "mobile-first",
+    "container": "max-w-md mx-auto min-h-screen bg-orange-50 relative overflow-hidden shadow-2xl",
+    "spacing": {
+      "standard": "p-6",
+      "loose": "p-8",
+      "tight": "p-4"
+    },
+    "grid_strategy": "Bento Grid for Categories (Home Screen). 2 columns on mobile.",
+    "card_style": "bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border-b-8 border-gray-200"
+  },
+  "components": {
+    "buttons": {
+      "style": "rounded-full font-black uppercase tracking-wider transition-all active:scale-95",
+      "true_btn": "bg-green-400 hover:bg-green-500 text-white shadow-[0_6px_0_rgb(21,128,61)] active:shadow-none active:translate-y-1",
+      "fake_btn": "bg-red-400 hover:bg-red-500 text-white shadow-[0_6px_0_rgb(185,28,28)] active:shadow-none active:translate-y-1",
+      "start_btn": "w-full py-4 text-xl bg-black text-white shadow-[0_6px_0_rgba(0,0,0,0.4)] hover:shadow-[0_8px_0_rgba(0,0,0,0.4)] active:shadow-none active:translate-y-2"
+    },
+    "cards": {
+      "question_card": "relative w-full aspect-[3/4] flex flex-col items-center justify-between p-6 bg-white rounded-3xl shadow-xl overflow-hidden border-4 border-gray-100",
+      "category_tile": "aspect-square flex flex-col items-center justify-center gap-2 rounded-2xl transition-all hover:scale-105 active:scale-95 cursor-pointer border-b-4 border-black/10"
+    },
+    "feedback": {
+      "correct": "Confetti explosion (canvas-confetti) + Green Flash",
+      "wrong": "Screen Shake (framer-motion) + Red Flash + 'X' Icon overlay"
+    }
+  },
+  "assets": {
+    "icons": "Lucide React (Install: lucide-react)",
+    "images": {
+      "animals": "https://images.unsplash.com/photo-1746913434626-27d04183ede6?auto=format&fit=crop&w=600&q=80",
+      "geography": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=600&q=80",
+      "history": "https://images.unsplash.com/photo-1557512090-a433545c27f5?auto=format&fit=crop&w=600&q=80",
+      "food": "https://images.unsplash.com/photo-1626869300069-eb1c0866feea?auto=format&fit=crop&w=600&q=80",
+      "space": "https://images.unsplash.com/photo-1647323968696-0ea09525407c?auto=format&fit=crop&w=600&q=80",
+      "pop_culture": "https://images.unsplash.com/photo-1709731191876-899e32264420?auto=format&fit=crop&w=600&q=80"
+    }
+  },
+  "motion": {
+    "library": "framer-motion",
+    "transitions": {
+      "default": "type: 'spring', stiffness: 300, damping: 30",
+      "card_enter": "initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}",
+      "shake": "animate={{ x: [-10, 10, -10, 10, 0] }} transition={{ duration: 0.4 }}"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Install 'lucide-react', 'framer-motion', 'canvas-confetti', 'clsx', 'tailwind-merge'.",
+    "Use 'Fredoka' from Google Fonts via import in index.css.",
+    "Ensure the layout is strictly constrained to mobile width (max-w-md) on desktop to maintain the 'app' feel.",
+    "The 'True' and 'Fake' buttons must be MASSIVE and at the bottom of the screen for easy thumb reach.",
+    "Do not use default alert() or confirm(). Use custom overlays for Game Over and Explanations.",
+    "Implement a 'Streak' counter that animates (scales up/down) when updated.",
+    "Use the provided Unsplash images as backgrounds for Category Tiles with a heavy overlay to ensure text readability.",
+    "For the Question Card, if dynamic images are not available, use a large, colorful Lucide Icon in the center representing the category."
+  ],
+  "universal_guidelines": {
+    "do_not": [
+      "Do not use gradients for text.",
+      "Do not use default blue links.",
+      "Do not make buttons small."
+    ],
+    "must": [
+      "All interactive elements must have a scale-down effect on click.",
+      "Use ample whitespace (padding-6 or padding-8) inside cards.",
+      "Ensure contrast ratios are high (WCAG AA)."
+    ]
+  }
+}
