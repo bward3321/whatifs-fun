@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Average Are You? — A Statistical Self-Experiment | whatifs.fun</title>
+    <meta name="description" content="Answer rapid questions and complete micro challenges. We'll compare your responses to global behavioral distributions and reveal how statistically typical you really are.">
+    <meta property="og:title" content="How Average Are You? — whatifs.fun">
+    <meta property="og:description" content="Discover how statistically typical or unusual you are. A 2-minute self-experiment.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://whatifs.fun/how-average-are-you/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-13KHBC5TPS');
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0d1117;
+            --bg-elevated: #151b23;
+            --surface: rgba(255,255,255,0.04);
+            --surface-hover: rgba(255,255,255,0.07);
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.16);
+            --text: #e6e4df;
+            --text-secondary: #9da1ab;
+            --text-dim: #6e717a;
+            --accent: #5eadb8;
+            --accent-glow: rgba(94,173,184,0.15);
+            --accent-bright: #7dd3c6;
+            --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            --font-display: 'Instrument Serif', Georgia, serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-body);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(94,173,184,0.05) 0%, rgba(94,173,184,0.015) 35%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 100;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        /* SCREEN SYSTEM: display:none when inactive, flex when active */
+        .screen {
+            position: fixed;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            z-index: 10;
+            overflow-y: auto;
+            background: var(--bg);
+        }
+
+        .screen.active {
+            display: flex;
+            animation: screenIn 0.45s ease both;
+        }
+
+        /* Results screen needs to scroll, not center vertically */
+        .screen.scrollable {
+            justify-content: flex-start;
+            padding: 60px 24px 100px;
+        }
+
+        @keyframes screenIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* INTRO */
+        .intro-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 28px;
+        }
+
+        .intro-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.2rem);
+            font-weight: 400;
+            line-height: 1.08;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .intro-subtitle {
+            font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 460px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .intro-desc {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 440px;
+            line-height: 1.7;
+            margin-bottom: 52px;
+            opacity: 0.7;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            font-family: var(--font-body);
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--bg);
+            background: var(--accent);
+            border: none;
+            padding: 15px 44px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-bright);
+            box-shadow: 0 4px 28px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            font-family: var(--font-body);
+            font-size: 0.84rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 13px 34px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: var(--text);
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+        }
+
+        /* QUESTIONS */
+        .question-counter {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 36px;
+        }
+
+        .question-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+            font-weight: 400;
+            text-align: center;
+            max-width: 580px;
+            line-height: 1.3;
+            margin-bottom: 48px;
+            color: var(--text);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .option-btn {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 17px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.25s ease;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            color: var(--text);
+            background: var(--surface-hover);
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        /* CHALLENGES */
+        .challenge-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 18px;
+        }
+
+        .challenge-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+
+        .challenge-desc {
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 400px;
+            line-height: 1.65;
+            margin-bottom: 48px;
+        }
+
+        /* TIMING */
+        .timing-btn {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.3px;
+        }
+
+        .timing-btn:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
+        }
+
+        .timing-btn.running {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            color: var(--accent-bright);
+            animation: pulseGlow 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 40px var(--accent-glow); }
+            50% { box-shadow: 0 0 70px rgba(94,173,184,0.25); }
+        }
+
+        .timing-result {
+            margin-top: 30px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            text-align: center;
+            min-height: 24px;
+        }
+
+        .timing-result .dev-number {
+            font-weight: 600;
+            color: var(--accent-bright);
+        }
+
+        /* MEMORY */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 30px;
+        }
+
+        .memory-tile {
+            width: 96px;
+            height: 96px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .memory-tile.lit {
+            border-color: var(--accent);
+            background: rgba(94,173,184,0.18);
+            box-shadow: 0 0 36px var(--accent-glow);
+        }
+
+        .memory-tile.correct {
+            border-color: #4ade80;
+            background: rgba(74,222,128,0.14);
+            box-shadow: 0 0 24px rgba(74,222,128,0.12);
+        }
+
+        .memory-tile.wrong {
+            border-color: #f87171;
+            background: rgba(248,113,113,0.14);
+            box-shadow: 0 0 24px rgba(248,113,113,0.12);
+        }
+
+        .memory-tile:not(.disabled):hover {
+            border-color: var(--border-hover);
+            background: var(--surface-hover);
+        }
+
+        .memory-status {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 26px;
+            min-height: 22px;
+        }
+
+        /* CALCULATING */
+        .calc-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .calc-text {
+            font-size: 0.88rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .calc-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--surface-hover);
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .calc-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            border-radius: 1px;
+            animation: calcLoad 2s ease-in-out forwards;
+        }
+
+        @keyframes calcLoad {
+            0% { width: 0%; }
+            60% { width: 75%; }
+            100% { width: 100%; }
+        }
+
+        /* RESULTS */
+        .results-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 560px;
+            width: 100%;
+        }
+
+        .results-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: rFade 0.5s ease 0.2s forwards;
+        }
+
+        .results-number {
+            font-family: var(--font-display);
+            font-size: clamp(5.5rem, 20vw, 11rem);
+            font-weight: 400;
+            line-height: 1;
+            margin-bottom: 6px;
+            color: var(--text);
+            opacity: 0;
+            animation: rFade 0.6s ease 0.4s forwards;
+        }
+
+        .results-number .pct {
+            font-family: var(--font-body);
+            font-size: 0.3em;
+            font-weight: 300;
+            color: var(--text-dim);
+            vertical-align: super;
+            margin-left: 2px;
+        }
+
+        .results-word {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: rFade 0.5s ease 0.55s forwards;
+        }
+
+        .results-subtext {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 420px;
+            line-height: 1.65;
+            margin-bottom: 44px;
+            opacity: 0;
+            animation: rFade 0.5s ease 0.7s forwards;
+        }
+
+        .results-traits {
+            display: flex;
+            gap: 36px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: rFade 0.5s ease 0.9s forwards;
+        }
+
+        .trait-highlight { text-align: center; }
+
+        .trait-hl-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .trait-hl-value {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .divider {
+            width: 1px;
+            background: var(--border);
+            align-self: stretch;
+        }
+
+        /* BARS */
+        .bars-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 48px;
+            opacity: 0;
+            animation: rFade 0.5s ease 1.1s forwards;
+        }
+
+        .bar-row { display: flex; align-items: center; gap: 14px; }
+
+        .bar-label {
+            font-size: 0.76rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            width: 130px;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 3px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+        }
+
+        .bar-fill::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.9;
+        }
+
+        .bar-midline {
+            position: absolute;
+            left: 50%;
+            top: -7px;
+            bottom: -7px;
+            width: 1px;
+            background: rgba(255,255,255,0.08);
+        }
+
+        .bar-value {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            width: 38px;
+            text-align: left;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .bc0 { background: #c084fc; } .bc1 { background: #60a5fa; }
+        .bc2 { background: #5eadb8; } .bc3 { background: #fbbf24; }
+        .bc4 { background: #f87171; } .bc5 { background: #86efac; }
+        .bc6 { background: #f0abfc; } .bc7 { background: #38bdf8; }
+        .bc8 { background: #fb923c; } .bc9 { background: #a78bfa; }
+        .bc10 { background: #34d399; } .bc11 { background: #93c5fd; }
+
+        /* SHARE */
+        .share-section {
+            display: flex;
+            gap: 12px;
+            opacity: 0;
+            animation: rFade 0.5s ease 1.4s forwards;
+        }
+
+        .share-toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text);
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            padding: 11px 22px;
+            border-radius: 6px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 200;
+        }
+
+        .share-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @keyframes rFade { to { opacity: 1; } }
+
+        .screen-footer {
+            position: absolute;
+            bottom: 28px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+        }
+
+        .screen-footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .screen-footer a:hover { color: var(--text-secondary); }
+
+        .results-footer {
+            margin-top: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            text-align: center;
+            opacity: 0;
+            animation: rFade 0.5s ease 1.6s forwards;
+        }
+
+        .results-footer a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .results-footer a:hover { color: var(--text-secondary); }
+
+        /* Confetti canvas */
+        #confettiCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        @media (max-width: 600px) {
+            .memory-tile { width: 78px; height: 78px; }
+            .timing-btn { width: 150px; height: 150px; }
+            .results-traits { flex-direction: column; gap: 20px; }
+            .divider { width: 40px; height: 1px; align-self: center; }
+            .bar-label { width: 95px; font-size: 0.7rem; }
+            .options { max-width: 100%; }
+            .share-section { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width: 0%"></div>
+
+<!-- INTRO -->
+<div class="screen active" id="screen-intro">
+    <div class="intro-label">A Statistical Self-Experiment</div>
+    <h1 class="intro-title">How Average<br>Are You?</h1>
+    <p class="intro-subtitle">Discover how statistically typical — or unusual — you really are.</p>
+    <p class="intro-desc">Answer a few rapid questions and complete two micro challenges. We'll compare your responses to global behavioral distributions.</p>
+    <button class="btn-primary" onclick="startExperiment()">Begin (2 minutes)</button>
+    <div class="screen-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<!-- QUESTION -->
+<div class="screen" id="screen-question">
+    <div class="question-counter" id="questionCounter"></div>
+    <div class="question-text" id="questionText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="screen-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<!-- TIMING -->
+<div class="screen" id="screen-timing">
+    <div class="challenge-label">Micro Challenge 1 of 2</div>
+    <div class="challenge-title">One-Second Interval</div>
+    <div class="challenge-desc">Press the button to start a hidden timer, then press again when you believe exactly one second has elapsed.</div>
+    <button class="timing-btn" id="timingBtn" onclick="handleTiming()">Press to start</button>
+    <div class="timing-result" id="timingResult"></div>
+    <div class="screen-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<!-- MEMORY -->
+<div class="screen" id="screen-memory">
+    <div class="challenge-label">Micro Challenge 2 of 2</div>
+    <div class="challenge-title">Sequence Recall</div>
+    <div class="challenge-desc">Watch the four tiles carefully. Then repeat the exact sequence from memory.</div>
+    <div class="memory-status" id="memoryStatus">Get ready</div>
+    <div class="memory-grid" id="memoryGrid">
+        <div class="memory-tile disabled" data-tile="0"></div>
+        <div class="memory-tile disabled" data-tile="1"></div>
+        <div class="memory-tile disabled" data-tile="2"></div>
+        <div class="memory-tile disabled" data-tile="3"></div>
+    </div>
+    <button class="btn-primary" id="memoryStartBtn" onclick="startMemory()">Start</button>
+    <div class="screen-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<!-- CALCULATING -->
+<div class="screen" id="screen-calc">
+    <div class="calc-container">
+        <div class="calc-text">Comparing to global distributions</div>
+        <div class="calc-bar"><div class="calc-bar-fill"></div></div>
+    </div>
+</div>
+
+<!-- RESULTS -->
+<div class="screen scrollable" id="screen-results">
+    <div class="results-content">
+        <div class="results-label">Your Result</div>
+        <div class="results-number" id="resultsNumber">—<span class="pct">%</span></div>
+        <div class="results-word" id="resultsWord">Average</div>
+        <div class="results-subtext" id="resultsSubtext"></div>
+        <div class="results-traits">
+            <div class="trait-highlight">
+                <div class="trait-hl-label">Most Average Trait</div>
+                <div class="trait-hl-value" id="mostAverage">—</div>
+            </div>
+            <div class="divider"></div>
+            <div class="trait-highlight">
+                <div class="trait-hl-label">Most Unusual Trait</div>
+                <div class="trait-hl-value" id="mostUnusual">—</div>
+            </div>
+        </div>
+        <div class="bars-container" id="barsContainer"></div>
+        <div class="share-section">
+            <button class="btn-primary" onclick="shareResult()">Share Result</button>
+            <button class="btn-secondary" onclick="restartExperiment()">Retake</button>
+        </div>
+        <div class="results-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+    </div>
+</div>
+
+<div class="share-toast" id="shareToast">Link copied to clipboard</div>
+<canvas id="confettiCanvas"></canvas>
+
+<script>
+const questions = [
+    { trait: "Social Energy", text: "You arrive at a gathering where you know no one. What is your instinct?", options: [
+        { label: "Leave within ten minutes", percentile: 12 },
+        { label: "Stay near the edges and observe", percentile: 30 },
+        { label: "Find one person to talk to", percentile: 50 },
+        { label: "Work the room gradually", percentile: 72 },
+        { label: "Introduce yourself to everyone", percentile: 90 }
+    ]},
+    { trait: "Risk Tolerance", text: "A friend proposes a bet: flip a coin — win $100 or lose $50. What do you do?", options: [
+        { label: "Decline immediately", percentile: 14 },
+        { label: "Probably pass", percentile: 34 },
+        { label: "Consider it depending on my mood", percentile: 52 },
+        { label: "Likely take it", percentile: 72 },
+        { label: "Accept — the math favors me", percentile: 91 }
+    ]},
+    { trait: "Orderliness", text: "How would you describe your workspace right now?", options: [
+        { label: "Meticulously organized", percentile: 86 },
+        { label: "Generally tidy with minor clutter", percentile: 66 },
+        { label: "Functional but not pretty", percentile: 48 },
+        { label: "Messy, though I know where things are", percentile: 30 },
+        { label: "I prefer not to discuss it", percentile: 12 }
+    ]},
+    { trait: "Patience", text: "You are in a slow-moving line with no phone. What happens?", options: [
+        { label: "I wait calmly — I will just think", percentile: 87 },
+        { label: "Mild annoyance but I stay composed", percentile: 65 },
+        { label: "I get restless fairly quickly", percentile: 42 },
+        { label: "I actively look for a faster option", percentile: 24 },
+        { label: "I leave", percentile: 9 }
+    ]},
+    { trait: "Curiosity", text: "You encounter a Wikipedia article on a topic you know nothing about.", options: [
+        { label: "I read it, then open five more tabs", percentile: 92 },
+        { label: "I read the whole article", percentile: 70 },
+        { label: "I skim the introduction", percentile: 50 },
+        { label: "I glance at it and move on", percentile: 28 },
+        { label: "I do not click it", percentile: 10 }
+    ]},
+    { trait: "Impulsiveness", text: "A friend suggests an unplanned weekend trip, departing tomorrow.", options: [
+        { label: "I am already packing", percentile: 91 },
+        { label: "Sounds exciting — I will figure it out", percentile: 72 },
+        { label: "I would need to check a few things first", percentile: 50 },
+        { label: "I would probably decline", percentile: 28 },
+        { label: "Absolutely not without proper planning", percentile: 10 }
+    ]},
+    { trait: "Decisiveness", text: "When choosing what to order at a restaurant, how quickly do you decide?", options: [
+        { label: "Under thirty seconds", percentile: 88 },
+        { label: "I usually know fairly quickly", percentile: 66 },
+        { label: "I narrow it down, then deliberate", percentile: 46 },
+        { label: "I go back and forth several times", percentile: 26 },
+        { label: "The server sometimes has to come back", percentile: 9 }
+    ]},
+    { trait: "Independence", text: "Most people in a group agree on something you disagree with. You tend to:", options: [
+        { label: "Voice my disagreement clearly", percentile: 86 },
+        { label: "Share my view, but diplomatically", percentile: 66 },
+        { label: "Stay quiet but hold my position", percentile: 44 },
+        { label: "Start doubting my own perspective", percentile: 24 },
+        { label: "Go along with the group", percentile: 10 }
+    ]},
+    { trait: "Emotional Reactivity", text: "When something minor goes wrong — spilled coffee, a missed bus — what happens?", options: [
+        { label: "I barely notice", percentile: 12 },
+        { label: "Brief annoyance, then I move on", percentile: 36 },
+        { label: "It lingers for a few minutes", percentile: 54 },
+        { label: "It can shift my mood for a while", percentile: 74 },
+        { label: "It can affect the rest of my day", percentile: 91 }
+    ]},
+    { trait: "Routine Preference", text: "If you had no obligations, your daily structure would be:", options: [
+        { label: "Rigidly scheduled, same time every day", percentile: 11 },
+        { label: "Loosely structured with consistent habits", percentile: 36 },
+        { label: "A mix of routine and spontaneity", percentile: 52 },
+        { label: "Mostly unstructured, I follow my energy", percentile: 72 },
+        { label: "Completely freeform — no two days alike", percentile: 90 }
+    ]}
+];
+
+/* Each question gets a unique accent color for the selected answer */
+const qColors = [
+    { border: '#c084fc', bg: 'rgba(192,132,252,0.12)', text: '#dbb4fe' },
+    { border: '#60a5fa', bg: 'rgba(96,165,250,0.12)', text: '#93c5fd' },
+    { border: '#5eadb8', bg: 'rgba(94,173,184,0.12)', text: '#7dd3c6' },
+    { border: '#fbbf24', bg: 'rgba(251,191,36,0.10)', text: '#fcd34d' },
+    { border: '#f87171', bg: 'rgba(248,113,113,0.12)', text: '#fca5a5' },
+    { border: '#86efac', bg: 'rgba(134,239,172,0.10)', text: '#a7f3d0' },
+    { border: '#f0abfc', bg: 'rgba(240,171,252,0.12)', text: '#f5d0fe' },
+    { border: '#38bdf8', bg: 'rgba(56,189,248,0.12)', text: '#7dd3fc' },
+    { border: '#fb923c', bg: 'rgba(251,146,60,0.10)', text: '#fdba74' },
+    { border: '#a78bfa', bg: 'rgba(167,139,250,0.12)', text: '#c4b5fd' }
+];
+
+let currentQ = 0, answers = [], timingDev = null, memoryAcc = null;
+let timingStart = null, timingState = 'idle';
+let memSeq = [], memInput = [], memActive = false;
+
+function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    void document.getElementById(id).offsetWidth;
+    document.getElementById(id).classList.add('active');
+}
+
+function updateProgress(step, total) {
+    document.getElementById('progressBar').style.width = (step / total * 100) + '%';
+}
+
+function startExperiment() {
+    currentQ = 0; answers = []; timingDev = null; memoryAcc = null; timingState = 'idle';
+    renderQuestion();
+    updateProgress(1, 13);
+    goTo('screen-question');
+}
+
+function renderQuestion() {
+    document.getElementById('questionCounter').textContent = `Question ${currentQ + 1} of 10`;
+    document.getElementById('questionText').textContent = questions[currentQ].text;
+    const c = document.getElementById('optionsContainer');
+    c.innerHTML = '';
+    const color = qColors[currentQ];
+    questions[currentQ].options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt.label;
+        btn.onclick = () => selectOption(i, btn, color);
+        c.appendChild(btn);
+    });
+}
+
+function selectOption(index, btn, color) {
+    answers.push({ trait: questions[currentQ].trait, percentile: questions[currentQ].options[index].percentile });
+    btn.style.color = color.text;
+    btn.style.borderColor = color.border;
+    btn.style.background = color.bg;
+    document.querySelectorAll('.option-btn').forEach(b => b.style.pointerEvents = 'none');
+
+    setTimeout(() => {
+        currentQ++;
+        updateProgress(currentQ + 1, 13);
+        if (currentQ < questions.length) {
+            goTo('screen-question');
+            renderQuestion();
+        } else {
+            goTo('screen-timing');
+        }
+    }, 400);
+}
+
+function handleTiming() {
+    const btn = document.getElementById('timingBtn');
+    const res = document.getElementById('timingResult');
+    if (timingState === 'idle') {
+        timingState = 'running';
+        timingStart = performance.now();
+        btn.textContent = 'Press at one second';
+        btn.classList.add('running');
+        res.innerHTML = '';
+    } else if (timingState === 'running') {
+        const elapsed = performance.now() - timingStart;
+        const dev = Math.abs(elapsed - 1000);
+        timingDev = dev;
+        timingState = 'done';
+        btn.classList.remove('running');
+        btn.textContent = Math.round(elapsed) + ' ms';
+        btn.style.pointerEvents = 'none';
+        const v = dev < 50 ? 'Remarkably precise.' : dev < 100 ? 'Very close.' : dev < 200 ? 'Decent internal clock.' : dev < 400 ? 'Moderate deviation.' : 'Significant deviation.';
+        res.innerHTML = `<span class="dev-number">${Math.round(dev)} ms</span> deviation. ${v}`;
+        updateProgress(12, 13);
+        setTimeout(() => goTo('screen-memory'), 1800);
+    }
+}
+
+function generateSeq() {
+    const s = [];
+    for (let i = 0; i < 4; i++) {
+        const a = [0,1,2,3].filter(t => t !== s[s.length - 1]);
+        s.push(a[Math.floor(Math.random() * a.length)]);
+    }
+    return s;
+}
+
+function startMemory() {
+    document.getElementById('memoryStartBtn').style.display = 'none';
+    memSeq = generateSeq(); memInput = []; memActive = false;
+    document.getElementById('memoryStatus').textContent = 'Watch carefully';
+    const tiles = document.querySelectorAll('.memory-tile');
+    let step = 0;
+    const showNext = () => {
+        if (step >= memSeq.length) {
+            setTimeout(() => {
+                tiles.forEach(t => t.classList.remove('lit'));
+                setTimeout(() => {
+                    document.getElementById('memoryStatus').textContent = 'Now repeat the sequence';
+                    memActive = true;
+                    tiles.forEach(t => t.classList.remove('disabled'));
+                }, 300);
+            }, 400);
+            return;
+        }
+        tiles.forEach(t => t.classList.remove('lit'));
+        setTimeout(() => { tiles[memSeq[step]].classList.add('lit'); step++; setTimeout(showNext, 500); }, 150);
+    };
+    setTimeout(showNext, 600);
+}
+
+document.querySelectorAll('.memory-tile').forEach(tile => {
+    tile.addEventListener('click', function() {
+        if (!memActive) return;
+        const idx = parseInt(this.dataset.tile);
+        memInput.push(idx);
+        const ok = memSeq[memInput.length - 1] === idx;
+        this.classList.add(ok ? 'correct' : 'wrong');
+        setTimeout(() => this.classList.remove('correct', 'wrong'), 300);
+        if (memInput.length === memSeq.length) {
+            memActive = false;
+            document.querySelectorAll('.memory-tile').forEach(t => t.classList.add('disabled'));
+            let hits = 0;
+            for (let i = 0; i < memSeq.length; i++) if (memSeq[i] === memInput[i]) hits++;
+            memoryAcc = hits / memSeq.length;
+            const pct = Math.round(memoryAcc * 100);
+            document.getElementById('memoryStatus').textContent = pct === 100 ? 'Perfect recall.' : pct >= 75 ? 'Strong recall.' : pct >= 50 ? 'Partial recall.' : 'Sequence lost.';
+            updateProgress(13, 13);
+            setTimeout(() => { goTo('screen-calc'); setTimeout(computeResults, 2400); }, 1200);
+        }
+    });
+});
+
+function computeResults() {
+    let tP;
+    if (timingDev < 30) tP = 92; else if (timingDev < 60) tP = 80;
+    else if (timingDev < 100) tP = 68; else if (timingDev < 150) tP = 55;
+    else if (timingDev < 200) tP = 45; else if (timingDev < 300) tP = 32;
+    else if (timingDev < 500) tP = 20; else tP = 10;
+
+    let mP;
+    if (memoryAcc === 1) mP = 85; else if (memoryAcc >= 0.75) mP = 62;
+    else if (memoryAcc >= 0.5) mP = 40; else if (memoryAcc >= 0.25) mP = 22; else mP = 8;
+
+    const all = [...answers.map(a => ({ trait: a.trait, percentile: a.percentile })),
+        { trait: "Timing Precision", percentile: tP }, { trait: "Memory Accuracy", percentile: mP }];
+
+    const dists = all.map(t => Math.abs(t.percentile - 50));
+    const mean = dists.reduce((a, b) => a + b, 0) / dists.length;
+    let score = Math.round(100 - (mean * 2.2));
+    score = Math.max(8, Math.min(96, score));
+
+    let minD = Infinity, maxD = -1, mostAvg = '', mostUn = '';
+    all.forEach(t => {
+        const d = Math.abs(t.percentile - 50);
+        if (d < minD) { minD = d; mostAvg = t.trait; }
+        if (d > maxD) { maxD = d; mostUn = t.trait; }
+    });
+
+    goTo('screen-results');
+    launchConfetti();
+
+    document.getElementById('resultsNumber').innerHTML = `${score}<span class="pct">%</span>`;
+    document.getElementById('resultsWord').textContent = score >= 75 ? 'Average' : score >= 55 ? 'Mostly Typical' : score >= 35 ? 'Somewhat Unusual' : 'Outlier';
+    document.getElementById('resultsSubtext').textContent = score >= 75
+        ? 'You cluster near the statistical center in most behavioral dimensions. Remarkably typical across the board.'
+        : score >= 55 ? 'You exhibit moderate deviation across several traits. Statistically common, with some notable edges.'
+        : score >= 35 ? 'You diverge meaningfully from the median in multiple areas. Less predictable than most.'
+        : 'You sit far from the behavioral center in several dimensions. Statistically, you are an outlier.';
+    document.getElementById('mostAverage').textContent = mostAvg;
+    document.getElementById('mostUnusual').textContent = mostUn;
+
+    const bc = document.getElementById('barsContainer');
+    bc.innerHTML = '';
+    all.forEach((t, i) => {
+        const r = document.createElement('div');
+        r.className = 'bar-row';
+        r.innerHTML = `<div class="bar-label">${t.trait}</div><div class="bar-track"><div class="bar-midline"></div><div class="bar-fill bc${i}" id="bf${i}" style="width:0%"></div></div><div class="bar-value">${t.percentile}th</div>`;
+        bc.appendChild(r);
+    });
+
+    setTimeout(() => { all.forEach((t, i) => { setTimeout(() => { document.getElementById(`bf${i}`).style.width = t.percentile + '%'; }, i * 100); }); }, 1600);
+    window.__score = score;
+}
+
+function shareResult() {
+    const s = window.__score || '??';
+    const text = `I'm ${s}% Average. How typical are you?\nhttps://whatifs.fun/how-average-are-you/`;
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(showToast);
+    else { const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast(); }
+}
+
+function showToast() {
+    const t = document.getElementById('shareToast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function restartExperiment() {
+    timingState = 'idle';
+    const tb = document.getElementById('timingBtn');
+    tb.textContent = 'Press to start'; tb.classList.remove('running'); tb.style.pointerEvents = '';
+    document.getElementById('timingResult').innerHTML = '';
+    document.getElementById('memoryStartBtn').style.display = '';
+    document.getElementById('memoryStatus').textContent = 'Get ready';
+    document.querySelectorAll('.memory-tile').forEach(t => { t.className = 'memory-tile disabled'; });
+    document.getElementById('progressBar').style.width = '0%';
+    goTo('screen-intro');
+}
+
+function launchConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const colors = ['#c084fc','#60a5fa','#5eadb8','#fbbf24','#f87171','#86efac','#f0abfc','#38bdf8','#fb923c','#a78bfa','#34d399','#93c5fd'];
+    const particles = [];
+
+    for (let i = 0; i < 120; i++) {
+        particles.push({
+            x: canvas.width * 0.5 + (Math.random() - 0.5) * canvas.width * 0.4,
+            y: canvas.height * 0.3 + (Math.random() - 0.5) * 100,
+            vx: (Math.random() - 0.5) * 12,
+            vy: (Math.random() - 1) * 10 - 3,
+            w: Math.random() * 8 + 3,
+            h: Math.random() * 5 + 2,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotation: Math.random() * 360,
+            rotSpeed: (Math.random() - 0.5) * 12,
+            gravity: 0.12 + Math.random() * 0.08,
+            opacity: 1,
+            decay: 0.003 + Math.random() * 0.004
+        });
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let alive = 0;
+        particles.forEach(p => {
+            if (p.opacity <= 0) return;
+            alive++;
+            p.x += p.vx; p.vy += p.gravity; p.y += p.vy;
+            p.vx *= 0.99; p.rotation += p.rotSpeed;
+            p.opacity -= p.decay;
+            if (p.opacity < 0) p.opacity = 0;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation * Math.PI / 180);
+            ctx.globalAlpha = p.opacity;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+            ctx.restore();
+        });
+        if (alive > 0) requestAnimationFrame(animate);
+        else ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    animate();
+
+    // Second burst
+    setTimeout(() => {
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: canvas.width * 0.5 + (Math.random() - 0.5) * canvas.width * 0.6,
+                y: canvas.height * 0.2 + (Math.random() - 0.5) * 80,
+                vx: (Math.random() - 0.5) * 10,
+                vy: (Math.random() - 1) * 8 - 2,
+                w: Math.random() * 7 + 3,
+                h: Math.random() * 4 + 2,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                rotSpeed: (Math.random() - 0.5) * 10,
+                gravity: 0.12 + Math.random() * 0.08,
+                opacity: 1,
+                decay: 0.004 + Math.random() * 0.004
+            });
+        }
+    }, 400);
+}
+</script>
+</body>
+</html>
