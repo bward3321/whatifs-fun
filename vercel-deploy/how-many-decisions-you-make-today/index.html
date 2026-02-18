@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>How Many Decisions Did You Make Today? | whatifs.fun</title>
+<meta name="description" content="Your brain makes thousands of tiny choices every day — most below awareness. Estimate yours, then watch the day fill up.">
+<meta property="og:title" content="How Many Decisions Did You Make Today? — whatifs.fun">
+<meta property="og:description" content="Most of them you never noticed. Explore your daily decision load.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://whatifs.fun/how-many-decisions-you-make-today/">
+<link rel="canonical" href="https://whatifs.fun/how-many-decisions-you-make-today/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"How Many Decisions Did You Make Today?","description":"Explore your daily decision load with this interactive experience.","url":"https://whatifs.fun/how-many-decisions-you-make-today/","applicationCategory":"EducationalApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#F5F6F8;--bg2:#FFFFFF;--bg3:#ECEEF2;
+--text:#1F2328;--text2:#4B5058;--text3:#6B7280;--text4:#9CA3AF;
+--accent:#2F6FED;--accent-light:#EBF1FD;--accent-muted:#5B8EF5;
+--teal:#2AA9A1;--teal-light:#E7F7F6;
+--warm:#E8A44A;--warm-light:#FDF4E6;
+--rose:#D45D5D;--rose-light:#FAEAEA;
+--border:#E5E7EB;--border-light:#F0F1F4;
+--card:#FFFFFF;--card-shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 20px rgba(0,0,0,0.03);
+--radius:14px;--radius-sm:10px;
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:'Karla',sans-serif;font-weight:400;font-size:15px;line-height:1.65;overflow-x:hidden}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif}
+
+/* ===== SCREENS ===== */
+.screen{display:none;min-height:100vh;min-height:100dvh;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;position:relative}
+.screen.active{display:flex}
+.screen-scroll{display:none;padding:0 0 80px}
+.screen-scroll.active{display:block}
+
+/* ===== INTRO ===== */
+#intro{text-align:center;background:var(--bg)}
+#intro::before{content:'';position:absolute;top:-30%;right:-20%;width:600px;height:600px;background:radial-gradient(circle,rgba(47,111,237,0.04) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+.intro-label{font-size:0.68rem;font-weight:600;text-transform:uppercase;letter-spacing:3.5px;color:var(--accent);margin-bottom:20px;opacity:0;animation:fadeUp .7s ease .15s forwards}
+.intro-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:600;line-height:1.2;color:var(--text);margin-bottom:10px;opacity:0;animation:fadeUp .7s ease .3s forwards}
+.intro-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.2rem);font-weight:400;font-style:italic;color:var(--text3);margin-bottom:28px;opacity:0;animation:fadeUp .7s ease .45s forwards}
+.intro-desc{font-size:0.9rem;color:var(--text2);line-height:1.75;max-width:440px;margin:0 auto 36px;opacity:0;animation:fadeUp .7s ease .6s forwards}
+.intro-cta{display:inline-block;padding:15px 48px;background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Karla',sans-serif;font-size:0.92rem;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .25s;opacity:0;animation:fadeUp .7s ease .75s forwards}
+.intro-cta:hover{background:#2d3038;transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.intro-link{display:block;margin-top:16px;font-size:.78rem;color:var(--text4);cursor:pointer;text-decoration:underline;text-underline-offset:3px;opacity:0;animation:fadeUp .7s ease .85s forwards;border:none;background:none;font-family:'Karla',sans-serif}
+.intro-link:hover{color:var(--text3)}
+.intro-footer{position:absolute;bottom:20px;font-size:.72rem;color:var(--text4)}
+.intro-footer a{color:var(--text3);text-decoration:none}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:1000;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--bg2);border-radius:var(--radius);max-width:480px;width:100%;padding:32px 28px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.3rem;color:var(--text3);cursor:pointer;padding:4px}
+.modal h3{font-size:1.2rem;font-weight:600;margin-bottom:12px}
+.modal p{font-size:.88rem;color:var(--text2);line-height:1.7;margin-bottom:10px}
+
+/* ===== GUESS ===== */
+#guess{text-align:center;background:var(--bg)}
+.guess-prompt{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2rem);font-weight:600;color:var(--text);margin-bottom:6px}
+.guess-sub{font-size:.88rem;color:var(--text3);margin-bottom:32px}
+.guess-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:380px;width:100%;margin-bottom:32px}
+.guess-card{background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:22px 16px;text-align:center;cursor:pointer;display:flex;flex-direction:column;gap:4px;transition:all .2s;font-family:'Karla',sans-serif}
+.guess-card:hover{border-color:var(--accent-muted);box-shadow:0 2px 12px rgba(47,111,237,.08)}
+.guess-card.selected{border-color:var(--accent);background:var(--accent-light);box-shadow:0 2px 12px rgba(47,111,237,.1)}
+.guess-card-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--text)}
+.guess-card.selected .guess-card-num{color:var(--accent)}
+.guess-card-feel{font-size:.74rem;color:var(--text4);font-weight:400}
+.reveal-cta{padding:15px 48px;background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Karla',sans-serif;font-size:.92rem;font-weight:600;cursor:pointer;transition:all .25s}
+.reveal-cta:hover{background:#2d3038;transform:translateY(-1px)}
+.reveal-cta:disabled{opacity:.35;cursor:not-allowed;transform:none}
+
+/* ===== REVEAL ===== */
+#reveal{text-align:center;background:var(--bg)}
+.reveal-yours{font-size:.85rem;color:var(--text3);font-weight:500;margin-bottom:4px}
+.reveal-yours-num{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:600;color:var(--text);margin-bottom:28px;font-style:italic}
+.reveal-estimated-label{font-size:.85rem;color:var(--text3);font-weight:500;margin-bottom:4px;opacity:0}
+.reveal-estimated{font-family:'Cormorant Garamond',serif;font-size:clamp(2.8rem,8vw,4.5rem);font-weight:700;color:var(--accent);line-height:1.1;margin-bottom:12px;opacity:0}
+.reveal-sub{font-size:.88rem;color:var(--text2);max-width:380px;margin:0 auto 8px;opacity:0}
+.reveal-note{font-size:.75rem;color:var(--text4);margin-top:16px;opacity:0}
+.reveal-continue{margin-top:32px;padding:14px 40px;background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Karla',sans-serif;font-size:.9rem;font-weight:600;cursor:pointer;opacity:0;transition:all .25s}
+.reveal-continue:hover{background:#2d3038}
+.fade-in-delay{animation:fadeUp .6s ease forwards}
+
+/* ===== RESULTS SECTIONS ===== */
+.r-section{padding:48px 24px;max-width:720px;margin:0 auto}
+.r-section+.r-section{border-top:1px solid var(--border-light)}
+.r-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,3vw,1.7rem);font-weight:600;color:var(--text);text-align:center;margin-bottom:6px}
+.r-subtitle{font-size:.82rem;color:var(--text4);text-align:center;margin-bottom:28px}
+
+/* ===== VIZ ===== */
+.viz-container{position:relative;width:100%;max-width:680px;margin:0 auto 16px;aspect-ratio:2/1;border-radius:var(--radius);overflow:hidden;background:var(--bg2);border:1px solid var(--border-light)}
+#vizCanvas{width:100%;height:100%;display:block}
+.viz-legend{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;color:var(--text4);max-width:680px;margin:0 auto}
+.viz-count{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--text)}
+
+/* ===== CATEGORIES ===== */
+.cat-list{display:flex;flex-direction:column;gap:16px}
+.cat-item{display:flex;flex-direction:column;gap:5px}
+.cat-header{display:flex;justify-content:space-between;align-items:baseline}
+.cat-name{font-size:.88rem;color:var(--text2);font-weight:500}
+.cat-count{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--text)}
+.cat-desc{font-size:.75rem;color:var(--text4);margin-top:-2px}
+.cat-track{height:4px;background:var(--bg3);border-radius:4px;overflow:hidden}
+.cat-fill{height:100%;border-radius:4px;background:var(--accent);transition:width 1s cubic-bezier(.25,.46,.45,.94);width:0}
+.cat-fill.c1{background:var(--accent)}.cat-fill.c2{background:var(--teal)}.cat-fill.c3{background:var(--warm)}.cat-fill.c4{background:#7C6EE6}.cat-fill.c5{background:var(--rose)}.cat-fill.c6{background:#5BA37A}.cat-fill.c7{background:#B07CC6}
+
+/* ===== SLIDERS ===== */
+.slider-grid{display:flex;flex-direction:column;gap:18px}
+.slider-row{display:flex;flex-direction:column;gap:6px}
+.slider-label{display:flex;justify-content:space-between;align-items:baseline;font-size:.85rem}
+.slider-name{color:var(--text2);font-weight:500}
+.slider-val{font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--text);font-weight:600}
+.scenario-slider{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:var(--border);border-radius:4px;outline:none;cursor:pointer;touch-action:none}
+.scenario-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;box-shadow:0 1px 6px rgba(47,111,237,.25)}
+.scenario-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:none}
+.slider-ends{display:flex;justify-content:space-between;font-size:.68rem;color:var(--text4);margin-top:-2px}
+.scenario-total{text-align:center;margin-top:24px;padding:20px;background:var(--bg);border-radius:var(--radius-sm);border:1px solid var(--border-light)}
+.scenario-total-label{font-size:.75rem;color:var(--text4);text-transform:uppercase;letter-spacing:1.5px;font-weight:600}
+.scenario-total-num{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--accent)}
+
+/* ===== PERSPECTIVE ===== */
+.perspective-cards{display:flex;flex-direction:column;gap:12px}
+.persp-card{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:var(--bg2);border:1px solid var(--border-light);border-radius:var(--radius-sm);cursor:default}
+.persp-card-info{flex:1}
+.persp-card-label{font-size:.88rem;color:var(--text2);font-weight:500}
+.persp-card-desc{font-size:.75rem;color:var(--text4);margin-top:2px}
+.persp-card-num{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--text);text-align:right;min-width:80px}
+.persp-card-diff{font-size:.72rem;color:var(--teal);font-weight:600;text-align:right}
+
+/* ===== SUMMARY ===== */
+.summary-card{background:var(--bg2);border:1px solid var(--border-light);border-radius:var(--radius);padding:32px 28px;max-width:400px;margin:0 auto 24px;text-align:center;box-shadow:var(--card-shadow)}
+.summary-heading{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--text);margin-bottom:16px}
+.summary-big{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;color:var(--accent);line-height:1.1}
+.summary-big-label{font-size:.75rem;color:var(--text4);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-bottom:20px}
+.summary-bars{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;text-align:left}
+.summary-bar-row{display:flex;align-items:center;gap:10px}
+.summary-bar-name{font-size:.72rem;color:var(--text3);width:80px;text-align:right;flex-shrink:0}
+.summary-bar-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.summary-bar-fill{height:100%;border-radius:3px}
+.summary-bar-fill.c1{background:var(--accent)}.summary-bar-fill.c2{background:var(--teal)}.summary-bar-fill.c3{background:var(--warm)}.summary-bar-fill.c4{background:#7C6EE6}.summary-bar-fill.c5{background:var(--rose)}
+.summary-footer{font-size:.72rem;color:var(--text4);border-top:1px solid var(--border-light);padding-top:12px}
+.summary-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--text3);max-width:380px;margin:0 auto 24px;text-align:center;line-height:1.6}
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-primary{padding:14px 32px;background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Karla',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s}
+.btn-primary:hover{background:#2d3038;transform:translateY(-1px)}
+.btn-secondary{padding:14px 32px;background:var(--bg);color:var(--text2);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:'Karla',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .25s}
+.btn-secondary:hover{border-color:var(--text3);color:var(--text)}
+
+/* ===== REVEAL ANIMATIONS ===== */
+.reveal-anim{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal-anim.visible{opacity:1;transform:translateY(0)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countUp{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    .screen{padding:32px 18px}
+    .intro-title{font-size:1.8rem}
+    .intro-desc{font-size:.85rem;margin-bottom:28px}
+    .intro-footer{position:relative;bottom:auto;margin-top:28px}
+    .guess-prompt{font-size:1.4rem}
+    .guess-grid{gap:10px;max-width:100%}
+    .guess-card{padding:18px 12px}
+    .guess-card-num{font-size:1rem}
+    .reveal-cta{width:100%;max-width:340px;padding:16px}
+    .reveal-yours-num{font-size:1.5rem}
+    .reveal-estimated{font-size:2.4rem !important}
+    .reveal-continue{width:100%;max-width:340px;padding:16px}
+    .r-section{padding:32px 16px}
+    .r-title{font-size:1.25rem;margin-bottom:4px}
+    .r-subtitle{margin-bottom:20px}
+    .viz-container{aspect-ratio:3/2}
+    .cat-name{font-size:.84rem}
+    .cat-count{font-size:.95rem}
+    .slider-grid{gap:16px}
+    .scenario-slider::-webkit-slider-thumb{width:26px;height:26px}
+    .scenario-slider::-moz-range-thumb{width:26px;height:26px}
+    .scenario-slider{height:4px}
+    .scenario-total-num{font-size:2rem}
+    .persp-card{flex-direction:column;align-items:flex-start;gap:8px}
+    .persp-card-num{text-align:left;font-size:1.4rem}
+    .summary-card{padding:24px 18px}
+    .summary-big{font-size:2.4rem}
+    .summary-bar-name{width:65px;font-size:.68rem}
+    .btn-row{flex-direction:column;width:100%;max-width:340px;margin:0 auto}
+    .btn-primary,.btn-secondary{width:100%;text-align:center;padding:16px}
+    .summary-quote{font-size:.95rem}
+    .modal{padding:24px 20px;margin:16px}
+    .modal h3{font-size:1.1rem}
+    .modal p{font-size:.84rem}
+}
+@media(max-width:380px){
+    .guess-grid{grid-template-columns:1fr 1fr;gap:8px}
+    .guess-card{padding:16px 10px}
+    .guess-card-num{font-size:.92rem}
+    .guess-card-feel{font-size:.68rem}
+    .intro-title{font-size:1.6rem}
+    .reveal-estimated{font-size:2rem !important}
+    .r-title{font-size:1.15rem}
+    .viz-container{aspect-ratio:1/1}
+    .scenario-total-num{font-size:1.8rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+<div class="modal">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <h3 class="serif">What counts as a decision?</h3>
+    <p>A "decision" includes any micro-choice your brain processes: where to look, what to tap, how to word a sentence, whether to respond, which route to take, when to eat, what to ignore.</p>
+    <p>Most are automatic and happen below conscious awareness. Researchers estimate the brain processes thousands of these selection-events per waking hour.</p>
+    <p style="color:var(--text4);font-size:.8rem;margin-bottom:0">All outputs are simplified estimates for exploration, not clinical claims.</p>
+</div>
+</div>
+
+<!-- ===== INTRO ===== -->
+<div id="intro" class="screen active">
+    <p class="intro-label">whatifs.fun</p>
+    <h1 class="intro-title">How Many Decisions<br>Did You Make Today?</h1>
+    <p class="intro-subtitle">Most of them you never noticed.</p>
+    <p class="intro-desc">Your brain makes thousands of tiny choices every day — most below awareness. Estimate yours, then watch the day fill up.</p>
+    <button class="intro-cta" onclick="showScreen('guess')">Start</button>
+    <button class="intro-link" onclick="openModal()">What counts as a decision?</button>
+    <div class="intro-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<!-- ===== GUESS ===== -->
+<div id="guess" class="screen">
+    <p class="guess-prompt">Take your best guess.</p>
+    <p class="guess-sub">How many decisions did your brain make today?</p>
+    <div class="guess-grid">
+        <button class="guess-card" onclick="pickGuess(this, 50)">
+            <span class="guess-card-num">Under 100</span>
+            <span class="guess-card-feel">A handful</span>
+        </button>
+        <button class="guess-card" onclick="pickGuess(this, 500)">
+            <span class="guess-card-num">Hundreds</span>
+            <span class="guess-card-feel">A busy mind</span>
+        </button>
+        <button class="guess-card" onclick="pickGuess(this, 5000)">
+            <span class="guess-card-num">Thousands</span>
+            <span class="guess-card-feel">Nonstop choosing</span>
+        </button>
+        <button class="guess-card" onclick="pickGuess(this, 25000)">
+            <span class="guess-card-num">Tens of thousands</span>
+            <span class="guess-card-feel">More than I realize</span>
+        </button>
+    </div>
+    <button class="reveal-cta" id="revealBtn" onclick="doReveal()" disabled>Reveal</button>
+</div>
+
+<!-- ===== REVEAL ===== -->
+<div id="reveal" class="screen">
+    <p class="reveal-yours">You guessed</p>
+    <div class="reveal-yours-num" id="revealYours"></div>
+    <p class="reveal-estimated-label" id="revEstLabel">The actual estimate</p>
+    <div class="reveal-estimated" id="revEstNum"></div>
+    <p class="reveal-sub" id="revSub"></p>
+    <p class="reveal-note" id="revNote">Estimates vary by researcher. This uses a simplified behavioral model.</p>
+    <button class="reveal-continue" id="revContinue" onclick="showResults()">Explore the breakdown</button>
+</div>
+
+<!-- ===== RESULTS ===== -->
+<div id="results" class="screen-scroll">
+
+<!-- Visualization -->
+<div class="r-section reveal-anim" id="vizSection">
+    <h2 class="r-title">Your Day, Visualized</h2>
+    <p class="r-subtitle">Each dot is one decision</p>
+    <div class="viz-container">
+        <canvas id="vizCanvas"></canvas>
+    </div>
+    <div class="viz-legend">
+        <span>1 dot = 1 decision</span>
+        <span class="viz-count" id="vizCount">0 decisions</span>
+    </div>
+</div>
+
+<!-- Categories -->
+<div class="r-section reveal-anim" id="catSection">
+    <h2 class="r-title">Where They Came From</h2>
+    <p class="r-subtitle">Decision categories throughout your day</p>
+    <div class="cat-list" id="catList"></div>
+</div>
+
+<!-- Scenario Sliders -->
+<div class="r-section reveal-anim" id="sliderSection">
+    <h2 class="r-title">What Changes the Number?</h2>
+    <p class="r-subtitle">Adjust factors and watch the estimate shift</p>
+    <div class="slider-grid" id="sliderGrid"></div>
+    <div class="scenario-total">
+        <div class="scenario-total-label">Adjusted Estimate</div>
+        <div class="scenario-total-num" id="scenarioTotal">0</div>
+    </div>
+</div>
+
+<!-- Perspective -->
+<div class="r-section reveal-anim" id="perspSection">
+    <h2 class="r-title">Perspective</h2>
+    <p class="r-subtitle">How decision load has changed</p>
+    <div class="perspective-cards" id="perspCards"></div>
+</div>
+
+<!-- Summary -->
+<div class="r-section reveal-anim" id="summarySection">
+    <h2 class="r-title">Your Decision Day</h2>
+    <p class="r-subtitle">A snapshot of today</p>
+    <div class="summary-card" id="summaryCard">
+        <div class="summary-heading">Decision Load</div>
+        <div class="summary-big" id="summaryBig">0</div>
+        <div class="summary-big-label">estimated decisions</div>
+        <div class="summary-bars" id="summaryBars"></div>
+        <div class="summary-footer">whatifs.fun</div>
+    </div>
+    <p class="summary-quote">Less choice can feel like freedom.<br>More choice can feel like fatigue.</p>
+    <div class="btn-row">
+        <button class="btn-primary" onclick="restart()">Try Another Scenario</button>
+        <button class="btn-secondary" onclick="shareResult()">Share Result</button>
+    </div>
+</div>
+</div>
+
+<script>
+// =====================================================
+//  STATE
+// =====================================================
+let userGuess = 0;
+let userGuessLabel = '';
+let baseEstimate = 0;
+let currentEstimate = 0;
+let categories = [];
+
+const SLIDER_DEFS = [
+    {id:'daytype', name:'Day type', lo:'Weekend', hi:'Weekday', min:0, max:100, def:60, factor:3000},
+    {id:'phone', name:'Smartphone use', lo:'Low', hi:'High', min:0, max:100, def:65, factor:5500},
+    {id:'work', name:'Work intensity', lo:'Calm', hi:'Overloaded', min:0, max:100, def:50, factor:4000},
+    {id:'social', name:'Social exposure', lo:'Alone', hi:'Many interactions', min:0, max:100, def:45, factor:3000},
+    {id:'commute', name:'Commute', lo:'None', hi:'Long commute', min:0, max:100, def:30, factor:1500},
+    {id:'parenting', name:'Parenting', lo:'No', hi:'Yes', min:0, max:100, def:0, factor:2500},
+];
+
+const CAT_DEFS = [
+    {name:'Attention shifts', desc:'Looking away, checking, switching focus', base:0.28, phoneBoost:0.06, workBoost:0.04, color:'c1'},
+    {name:'Digital micro-actions', desc:'Taps, scroll decisions, notifications', base:0.20, phoneBoost:0.10, workBoost:0.02, color:'c2'},
+    {name:'Food & consumption', desc:'What, when, how much to eat or drink', base:0.08, phoneBoost:0, workBoost:-0.01, color:'c3'},
+    {name:'Social & communication', desc:'Wording, tone, response timing', base:0.14, phoneBoost:0.02, workBoost:0.02, color:'c4'},
+    {name:'Work & task choices', desc:'Prioritization, sequencing, micro-judgments', base:0.12, phoneBoost:0, workBoost:0.08, color:'c5'},
+    {name:'Navigation & movement', desc:'Routes, timing, pacing, spatial choices', base:0.10, phoneBoost:-0.02, workBoost:-0.01, color:'c6'},
+    {name:'Self-regulation', desc:'Rest, posture, impulse control, habits', base:0.08, phoneBoost:0.02, workBoost:0.02, color:'c7'},
+];
+
+// =====================================================
+//  NAVIGATION
+// =====================================================
+function showScreen(id){
+    document.querySelectorAll('.screen,.screen-scroll').forEach(s=>{s.classList.remove('active')});
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+}
+
+function openModal(){document.getElementById('modalOverlay').classList.add('show')}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show')}
+
+function updateGuess(v){}
+
+function pickGuess(btn, val){
+    document.querySelectorAll('.guess-card').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    userGuess = val;
+    userGuessLabel = btn.querySelector('.guess-card-num').textContent;
+    document.getElementById('revealBtn').disabled = false;
+}
+
+// =====================================================
+//  ESTIMATION MODEL
+// =====================================================
+function calcEstimate(sliderVals){
+    let total = 18000; // absolute baseline
+    SLIDER_DEFS.forEach(s=>{
+        const v = sliderVals ? sliderVals[s.id] : s.def;
+        total += (v/100) * s.factor;
+    });
+    // Baseline calculation
+    return Math.round(total/100)*100; // round to nearest 100
+}
+
+function getDefaultSliderVals(){
+    const vals={};
+    SLIDER_DEFS.forEach(s=>vals[s.id]=s.def);
+    return vals;
+}
+
+function calcCategories(total, sliderVals){
+    const phone = sliderVals ? sliderVals.phone/100 : 0.65;
+    const work = sliderVals ? sliderVals.work/100 : 0.50;
+    return CAT_DEFS.map(c=>{
+        let pct = c.base + c.phoneBoost * phone + c.workBoost * work;
+        pct = Math.max(0.03, pct);
+        return {...c, pct};
+    }).map((c,_,arr)=>{
+        const sum = arr.reduce((a,b)=>a+b.pct,0);
+        const normalizedPct = c.pct/sum;
+        return {...c, pct:normalizedPct, count:Math.round(total*normalizedPct)};
+    });
+}
+
+// =====================================================
+//  REVEAL ANIMATION
+// =====================================================
+function doReveal(){
+    baseEstimate = calcEstimate(getDefaultSliderVals());
+    currentEstimate = baseEstimate;
+    categories = calcCategories(currentEstimate, getDefaultSliderVals());
+
+    document.getElementById('revealYours').textContent = '"' + userGuessLabel + '"';
+
+    showScreen('reveal');
+
+    // Animate reveal
+    const estLabel = document.getElementById('revEstLabel');
+    const estNum = document.getElementById('revEstNum');
+    const sub = document.getElementById('revSub');
+    const note = document.getElementById('revNote');
+    const cont = document.getElementById('revContinue');
+
+    setTimeout(()=>{
+        estLabel.style.animation='fadeUp .5s ease forwards';
+    }, 600);
+
+    setTimeout(()=>{
+        estNum.style.animation='fadeUp .6s ease forwards';
+        animateCounter(estNum, 0, currentEstimate, 1200);
+    }, 900);
+
+    const perMin = Math.round(currentEstimate / (16*60));
+    setTimeout(()=>{
+        sub.textContent=`That's roughly ${perMin} decisions per minute while awake.`;
+        sub.style.animation='fadeUp .5s ease forwards';
+    }, 1800);
+
+    setTimeout(()=>{
+        note.style.animation='fadeUp .5s ease forwards';
+        cont.style.animation='fadeUp .5s ease forwards';
+    }, 2300);
+}
+
+function animateCounter(el, from, to, duration){
+    const start = performance.now();
+    function tick(now){
+        const elapsed = now - start;
+        const progress = Math.min(elapsed/duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+        const val = Math.round(from + (to - from) * eased);
+        el.textContent = val.toLocaleString();
+        if(progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+}
+
+// =====================================================
+//  RESULTS
+// =====================================================
+function showResults(){
+    showScreen('results');
+    buildCategories();
+    buildSliders();
+    buildPerspective();
+    buildSummary();
+
+    // Trigger scroll reveals
+    setTimeout(()=>{
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(e=>{
+                if(e.isIntersecting){
+                    e.target.classList.add('visible');
+                    if(e.target.id==='vizSection') startVisualization();
+                    if(e.target.id==='catSection') animateCategoryBars();
+                    observer.unobserve(e.target);
+                }
+            });
+        },{threshold:0.15});
+        document.querySelectorAll('.reveal-anim').forEach(el=>observer.observe(el));
+    }, 100);
+}
+
+// =====================================================
+//  CANVAS VISUALIZATION
+// =====================================================
+function startVisualization(){
+    const canvas = document.getElementById('vizCanvas');
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.parentElement.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    const W = rect.width;
+    const H = rect.height;
+
+    const total = currentEstimate;
+    const dotSize = Math.max(1.5, Math.min(3, Math.sqrt((W*H)/(total*3))));
+    const gap = dotSize + Math.max(0.8, dotSize * 0.4);
+    const cols = Math.floor(W / gap);
+    const rows = Math.floor(H / gap);
+    const maxDots = Math.min(total, cols * rows);
+    const offsetX = (W - cols * gap) / 2;
+    const offsetY = (H - rows * gap) / 2;
+
+    const colors = ['#2F6FED','#5B8EF5','#2AA9A1','#7C6EE6','#E8A44A','#D45D5D','#5BA37A'];
+
+    let drawn = 0;
+    const batchSize = Math.max(100, Math.floor(maxDots / 60));
+    const countEl = document.getElementById('vizCount');
+
+    function drawBatch(){
+        const end = Math.min(drawn + batchSize, maxDots);
+        ctx.globalAlpha = 0.7;
+        for(let i = drawn; i < end; i++){
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            const x = offsetX + col * gap;
+            const y = offsetY + row * gap;
+            ctx.fillStyle = colors[i % colors.length];
+            ctx.beginPath();
+            ctx.arc(x + dotSize/2, y + dotSize/2, dotSize/2, 0, Math.PI*2);
+            ctx.fill();
+        }
+        drawn = end;
+        countEl.textContent = Math.round(drawn / maxDots * total).toLocaleString() + ' decisions';
+        if(drawn < maxDots) requestAnimationFrame(drawBatch);
+    }
+    requestAnimationFrame(drawBatch);
+}
+
+// =====================================================
+//  CATEGORIES
+// =====================================================
+function buildCategories(){
+    const list = document.getElementById('catList');
+    list.innerHTML = categories.map((c,i)=>`
+        <div class="cat-item">
+            <div class="cat-header">
+                <span class="cat-name">${c.name}</span>
+                <span class="cat-count">${c.count.toLocaleString()} <span style="font-family:'Karla';font-size:.72rem;color:var(--text4);font-weight:400">(${Math.round(c.pct*100)}%)</span></span>
+            </div>
+            <div class="cat-desc">${c.desc}</div>
+            <div class="cat-track"><div class="cat-fill ${c.color}" data-width="${c.pct*100}" id="catBar${i}"></div></div>
+        </div>
+    `).join('');
+}
+
+function animateCategoryBars(){
+    categories.forEach((_,i)=>{
+        const bar = document.getElementById('catBar'+i);
+        if(bar) setTimeout(()=>{bar.style.width=bar.dataset.width+'%'},i*80);
+    });
+}
+
+// =====================================================
+//  SCENARIO SLIDERS
+// =====================================================
+function buildSliders(){
+    const grid = document.getElementById('sliderGrid');
+    const vals = getDefaultSliderVals();
+
+    grid.innerHTML = SLIDER_DEFS.map(s=>`
+        <div class="slider-row">
+            <div class="slider-label">
+                <span class="slider-name">${s.name}</span>
+                <span class="slider-val" id="sv_${s.id}">${s.def}%</span>
+            </div>
+            <input type="range" class="scenario-slider" id="ss_${s.id}" min="${s.min}" max="${s.max}" value="${s.def}" oninput="updateScenario()">
+            <div class="slider-ends"><span>${s.lo}</span><span>${s.hi}</span></div>
+        </div>
+    `).join('');
+    updateScenario();
+}
+
+function updateScenario(){
+    const vals = {};
+    SLIDER_DEFS.forEach(s=>{
+        const el = document.getElementById('ss_'+s.id);
+        if(el){
+            vals[s.id] = parseInt(el.value);
+            document.getElementById('sv_'+s.id).textContent = el.value + '%';
+        }
+    });
+    currentEstimate = calcEstimate(vals);
+    categories = calcCategories(currentEstimate, vals);
+    document.getElementById('scenarioTotal').textContent = currentEstimate.toLocaleString();
+}
+
+// =====================================================
+//  PERSPECTIVE
+// =====================================================
+function buildPerspective(){
+    const cards = document.getElementById('perspCards');
+    const preSmartphone = Math.round(currentEstimate * 0.62 / 100) * 100;
+    const simplerEra = Math.round(currentEstimate * 0.38 / 100) * 100;
+    const diff1 = currentEstimate - preSmartphone;
+    const diff2 = currentEstimate - simplerEra;
+
+    cards.innerHTML = `
+        <div class="persp-card">
+            <div class="persp-card-info">
+                <div class="persp-card-label">Today (your estimate)</div>
+                <div class="persp-card-desc">Smartphones, notifications, infinite options</div>
+            </div>
+            <div>
+                <div class="persp-card-num">${currentEstimate.toLocaleString()}</div>
+            </div>
+        </div>
+        <div class="persp-card">
+            <div class="persp-card-info">
+                <div class="persp-card-label">Pre-smartphone day (circa 2005)</div>
+                <div class="persp-card-desc">Fewer screens, less constant input</div>
+            </div>
+            <div>
+                <div class="persp-card-num">${preSmartphone.toLocaleString()}</div>
+                <div class="persp-card-diff">${diff1.toLocaleString()} fewer</div>
+            </div>
+        </div>
+        <div class="persp-card">
+            <div class="persp-card-info">
+                <div class="persp-card-label">A simpler routine (circa 1960)</div>
+                <div class="persp-card-desc">Stable routines, fewer consumer choices</div>
+            </div>
+            <div>
+                <div class="persp-card-num">${simplerEra.toLocaleString()}</div>
+                <div class="persp-card-diff">${diff2.toLocaleString()} fewer</div>
+            </div>
+        </div>
+    `;
+}
+
+// =====================================================
+//  SUMMARY
+// =====================================================
+function buildSummary(){
+    document.getElementById('summaryBig').textContent = currentEstimate.toLocaleString();
+
+    const top5 = categories.slice().sort((a,b)=>b.count-a.count).slice(0,5);
+    const maxCount = top5[0].count;
+
+    document.getElementById('summaryBars').innerHTML = top5.map((c,i)=>`
+        <div class="summary-bar-row">
+            <span class="summary-bar-name">${c.name.split(' ')[0]}</span>
+            <div class="summary-bar-track"><div class="summary-bar-fill c${i+1}" style="width:${(c.count/maxCount)*100}%"></div></div>
+        </div>
+    `).join('');
+}
+
+// =====================================================
+//  SHARE & RESTART
+// =====================================================
+function shareResult(){
+    const text = `I guessed "${userGuessLabel}" — turns out the real number is around ${currentEstimate.toLocaleString()} decisions per day. Most of them I never noticed.\n\nTry it: whatifs.fun/how-many-decisions-you-make-today/`;
+    if(navigator.share){
+        navigator.share({text}).catch(()=>{});
+    } else {
+        navigator.clipboard.writeText(text).then(()=>{
+            const btn = document.querySelector('.btn-secondary');
+            const orig = btn.textContent;
+            btn.textContent = 'Copied to clipboard';
+            setTimeout(()=>{btn.textContent=orig},2000);
+        });
+    }
+}
+
+function restart(){
+    // Reset reveal animations
+    ['revEstLabel','revEstNum','revSub','revNote','revContinue'].forEach(id=>{
+        document.getElementById(id).style.animation='none';
+        document.getElementById(id).style.opacity='0';
+    });
+    document.querySelectorAll('.reveal-anim').forEach(el=>el.classList.remove('visible'));
+    showScreen('intro');
+}
+</script>
+</body>
+</html>
