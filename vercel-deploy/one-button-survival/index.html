@@ -1,75 +1,1105 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://whatifs.fun/</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/how-average-are-you/</loc>
-    <lastmod>2026-02-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/perfect-circle/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/reflex-test/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/nuclear-simulation/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/memory-test/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/higher-or-lower/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/ocean-depth/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/true-or-false/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/speed-click-test/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/one-button-survival/</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://whatifs.fun/blog/average-human-reaction-time/</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-</urlset>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>One Button Survival — How Long Can You Stay Alive? | whatifs.fun</title>
+    <meta name="description" content="A minimal survival experiment with one input. Tap, click, or press space to defy gravity. How long can you stay alive?">
+    <meta property="og:title" content="One Button Survival — How Long Can You Stay Alive?">
+    <meta property="og:description" content="A minimal survival experiment with one input. Tap to defy gravity. How long can you survive?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://whatifs.fun/one-button-survival/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://whatifs.fun/one-button-survival/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-13KHBC5TPS');
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "One Button Survival",
+      "url": "https://whatifs.fun/one-button-survival/",
+      "description": "A minimal survival experiment with one input. Tap, click, or press space to defy gravity and avoid obstacles. How long can you stay alive?",
+      "applicationCategory": "Game",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "isPartOf": { "@type": "WebSite", "name": "whatifs.fun", "url": "https://whatifs.fun/" }
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0c0e14;
+            --bg-mid: #10131c;
+            --surface: #161a26;
+            --text: #f0efe9;
+            --text-dim: #5a5e6e;
+            --text-mid: #8a8e9e;
+            --accent: #ffffff;
+            --obstacle: #2a2e3a;
+            --obstacle-light: #3a3e4e;
+            --glow: rgba(255, 255, 255, 0.08);
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Syne', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%; height: 100%;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+
+        /* UI Overlays */
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Intro Screen */
+        #intro {
+            background: var(--bg);
+        }
+
+        .intro-content {
+            text-align: center;
+            animation: fadeUp 1s ease;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+
+        .intro-subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            margin-bottom: 56px;
+        }
+
+        .start-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--bg);
+            background: var(--text);
+            border: none;
+            padding: 16px 52px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.12);
+        }
+
+        .start-btn:active {
+            transform: translateY(0);
+        }
+
+        .intro-hint {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-top: 32px;
+            letter-spacing: 0.5px;
+            opacity: 0.6;
+        }
+
+        /* HUD */
+        #hud {
+            position: fixed;
+            top: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #hud.visible {
+            opacity: 1;
+        }
+
+        .hud-score {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1;
+        }
+
+        .hud-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Death Screen */
+        #death {
+            background: rgba(12, 14, 20, 0.0);
+            backdrop-filter: none;
+        }
+
+        #death.visible-bg {
+            background: rgba(12, 14, 20, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .death-content {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+        }
+
+        #death.visible-bg .death-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .death-time {
+            font-family: 'Space Mono', monospace;
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .death-unit {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+            margin-bottom: 8px;
+        }
+
+        .death-label {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            color: var(--text-mid);
+            margin-bottom: 48px;
+        }
+
+        .death-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .death-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border: none;
+            padding: 14px 36px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .death-btn.primary {
+            color: var(--bg);
+            background: var(--text);
+        }
+
+        .death-btn.secondary {
+            color: var(--text-mid);
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .death-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .death-btn.primary:hover {
+            box-shadow: 0 8px 30px rgba(255, 255, 255, 0.12);
+        }
+
+        .death-btn.secondary:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--text);
+        }
+
+        .death-best {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-top: 32px;
+            letter-spacing: 1px;
+        }
+
+        .death-new-best {
+            color: #4fd685;
+        }
+
+        /* Share toast */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text);
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 24px;
+            border-radius: 100px;
+            letter-spacing: 1px;
+            opacity: 0;
+            z-index: 20;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Daily record */
+        .daily-record {
+            position: fixed;
+            bottom: 20px;
+            right: 24px;
+            z-index: 5;
+            text-align: right;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .daily-record.visible {
+            opacity: 1;
+        }
+
+        .daily-record-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        .daily-record-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            letter-spacing: -0.5px;
+            margin-top: 2px;
+        }
+
+        /* Back link */
+        .back-link {
+            position: fixed;
+            top: 20px;
+            left: 24px;
+            z-index: 15;
+            font-family: 'Syne', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--text); }
+
+        @media (max-width: 600px) {
+            .death-actions { flex-direction: column; align-items: center; }
+            .death-btn { width: 220px; text-align: center; }
+            .back-link { top: 14px; left: 16px; font-size: 0.75rem; }
+            .daily-record { bottom: 14px; right: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="/" class="back-link">&larr; whatifs.fun</a>
+
+<canvas id="game"></canvas>
+
+<div id="hud">
+    <div class="hud-score" id="scoreDisplay">0.0</div>
+    <div class="hud-label">seconds survived</div>
+</div>
+
+<div class="daily-record" id="dailyRecord">
+    <div class="daily-record-label">Today's Best</div>
+    <div class="daily-record-value" id="dailyBestDisplay">—</div>
+</div>
+
+<div class="overlay" id="intro">
+    <div class="intro-content">
+        <h1 class="intro-title">One Button<br>Survival</h1>
+        <p class="intro-subtitle">How long can you stay alive?</p>
+        <button class="start-btn" id="startBtn">Start</button>
+        <p class="intro-hint">click, tap, or spacebar</p>
+    </div>
+</div>
+
+<div class="overlay hidden" id="death">
+    <div class="death-content">
+        <div class="death-time" id="deathTime">0.0</div>
+        <div class="death-unit">seconds</div>
+        <div class="death-label">You survived.</div>
+        <div class="death-actions">
+            <button class="death-btn primary" id="retryBtn">Try Again</button>
+            <button class="death-btn secondary" id="shareBtn">Share Score</button>
+        </div>
+        <div class="death-best" id="deathBest"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast">Copied to clipboard</div>
+
+<script>
+(function() {
+    'use strict';
+
+    // --- Canvas Setup ---
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+    let W, H, dpr;
+
+    function resize() {
+        dpr = window.devicePixelRatio || 1;
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener('resize', () => { resize(); updateScale(); });
+    resize();
+    updateScale();
+
+    // --- Audio Engine ---
+    let audioCtx = null;
+
+    function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function playFlap() {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(380, audioCtx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.08);
+    }
+
+    function playDeath() {
+        if (!audioCtx) return;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(260, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.4);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 0.5);
+
+        // Noise layer
+        const bufferSize = audioCtx.sampleRate * 0.3;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+            data[i] = (Math.random() * 2 - 1) * 0.03 * (1 - i / bufferSize);
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const nGain = audioCtx.createGain();
+        noise.connect(nGain);
+        nGain.connect(audioCtx.destination);
+        nGain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        nGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        noise.start(audioCtx.currentTime);
+    }
+
+    // Ambient drone
+    let ambientOsc = null, ambientGain = null;
+
+    function startAmbient() {
+        if (!audioCtx || ambientOsc) return;
+        ambientOsc = audioCtx.createOscillator();
+        ambientGain = audioCtx.createGain();
+        const filter = audioCtx.createBiquadFilter();
+        ambientOsc.connect(filter);
+        filter.connect(ambientGain);
+        ambientGain.connect(audioCtx.destination);
+        ambientOsc.type = 'sine';
+        ambientOsc.frequency.value = 55;
+        filter.type = 'lowpass';
+        filter.frequency.value = 120;
+        ambientGain.gain.value = 0;
+        ambientGain.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 2);
+        ambientOsc.start();
+    }
+
+    function stopAmbient() {
+        if (ambientGain) {
+            ambientGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.5);
+            setTimeout(() => {
+                if (ambientOsc) { ambientOsc.stop(); ambientOsc = null; ambientGain = null; }
+            }, 600);
+        }
+    }
+
+    // --- Daily Best ---
+    function getDailyKey() {
+        const d = new Date();
+        return `obs_daily_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+    }
+
+    function getDailyBest() {
+        try {
+            return parseFloat(localStorage.getItem(getDailyKey())) || 0;
+        } catch(e) { return 0; }
+    }
+
+    function setDailyBest(val) {
+        try {
+            localStorage.setItem(getDailyKey(), val.toFixed(1));
+        } catch(e) {}
+    }
+
+    function updateDailyDisplay() {
+        const best = getDailyBest();
+        document.getElementById('dailyBestDisplay').textContent = best > 0 ? best.toFixed(1) + 's' : '—';
+    }
+
+    // --- Game State ---
+    const STATE = { INTRO: 0, PLAYING: 1, DYING: 2, DEAD: 3 };
+    let state = STATE.INTRO;
+
+    // Player
+    let player = { x: 0, y: 0, vy: 0, radius: 7, glowIntensity: 0 };
+
+    // --- Responsive Scaling ---
+    // All physics/sizes scale relative to a 900px tall reference screen
+    const REF_H = 900;
+    const REF_W = 1400;
+    let s = 1;   // vertical scale
+    let sx = 1;  // horizontal scale
+
+    function updateScale() {
+        s = Math.max(0.55, Math.min(1.2, H / REF_H));
+        sx = Math.max(0.5, Math.min(1.2, W / REF_W));
+    }
+
+    function GRAVITY()    { return 1400 * s; }
+    function FLAP_FORCE() { return -420 * s; }
+    function TERMINAL_VEL(){ return 600 * s; }
+    function OBS_WIDTH()  { return Math.round(28 * Math.max(sx, 0.7)); }
+    function BASE_SPEED() { return 180 * Math.max(sx, 0.65); }
+    function BASE_GAP()   { return 180 * s; }
+    function MIN_GAP()    { return 105 * s; }
+    function BASE_SPACING(){ return 280 * Math.max(sx, 0.6); }
+    function PLAYER_RADIUS(){ return Math.max(5, Math.round(7 * s)); }
+
+    // Obstacles
+    let obstacles = [];
+
+    // Background particles
+    let particles = [];
+    const PARTICLE_COUNT = 40;
+
+    // Timing
+    let gameTime = 0;
+    let lastTime = 0;
+    let deathTimer = 0;
+    let score = 0;
+    let pressing = false;
+
+    // Parallax offset
+    let parallaxOffset = 0;
+
+    // Death slow-mo
+    let timeScale = 1;
+
+    function initParticles() {
+        particles = [];
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                size: Math.random() * 1.2 + 0.3,
+                speed: Math.random() * 12 + 4,
+                alpha: Math.random() * 0.12 + 0.02
+            });
+        }
+    }
+
+    function getSpeed() {
+        const t = gameTime;
+        const base = BASE_SPEED();
+        if (t < 5) return base;
+        if (t < 15) return base + (t - 5) * 12 * sx;
+        if (t < 30) return base + 120 * sx + (t - 15) * 8 * sx;
+        return base + 240 * sx + (t - 30) * 4 * sx;
+    }
+
+    function getGap() {
+        const t = gameTime;
+        const base = BASE_GAP();
+        const min = MIN_GAP();
+        if (t < 5) return base;
+        if (t < 15) return base;
+        if (t < 30) return base - (t - 15) * 3.5 * s;
+        const g = base - 52.5 * s - (t - 30) * 1.5 * s;
+        return Math.max(g, min);
+    }
+
+    function getSpacing() {
+        const t = gameTime;
+        const base = BASE_SPACING();
+        const min = 180 * Math.max(sx, 0.6);
+        if (t < 15) return base;
+        if (t < 30) return base - (t - 15) * 2 * sx;
+        return Math.max(base - 30 * sx - (t - 30) * 1 * sx, min);
+    }
+
+    function spawnObstacle(x) {
+        const gap = getGap();
+        const margin = 60 * s;
+        let gapCenter;
+
+        if (gameTime > 30) {
+            // Add unpredictability
+            const lastObs = obstacles[obstacles.length - 1];
+            const lastCenter = lastObs ? lastObs.gapCenter : H / 2;
+            const drift = (Math.random() - 0.5) * (H * 0.5);
+            gapCenter = lastCenter + drift;
+            gapCenter = Math.max(margin + gap / 2, Math.min(H - margin - gap / 2, gapCenter));
+        } else {
+            gapCenter = margin + gap / 2 + Math.random() * (H - 2 * margin - gap);
+        }
+
+        obstacles.push({
+            x: x,
+            gapCenter: gapCenter,
+            gap: gap,
+            width: OBS_WIDTH(),
+            passed: false
+        });
+    }
+
+    function resetGame() {
+        resize();
+        updateScale();
+
+        player.radius = PLAYER_RADIUS();
+        player.y = H / 2;
+        player.vy = 0;
+        player.x = W * 0.22;
+        player.glowIntensity = 0;
+        obstacles = [];
+        gameTime = 0;
+        score = 0;
+        timeScale = 1;
+        pressing = false;
+        parallaxOffset = 0;
+
+        initParticles();
+
+        // Spawn initial obstacles off-screen
+        let x = W * 0.6;
+        while (x < W + 400) {
+            spawnObstacle(x);
+            x += getSpacing() + OBS_WIDTH();
+        }
+
+        document.getElementById('scoreDisplay').textContent = '0.0';
+    }
+
+    // --- Input Handling ---
+    function onPress() {
+        if (state === STATE.INTRO) return;
+        if (state === STATE.DEAD) return;
+        if (state === STATE.DYING) return;
+
+        pressing = true;
+        player.vy = FLAP_FORCE();
+        playFlap();
+    }
+
+    function onRelease() {
+        pressing = false;
+    }
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Space' || e.key === ' ') {
+            e.preventDefault();
+            if (state === STATE.INTRO) {
+                startGame();
+                return;
+            }
+            if (state === STATE.DEAD) {
+                restart();
+                return;
+            }
+            onPress();
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.code === 'Space') onRelease();
+    });
+
+    // Mouse
+    canvas.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        if (state === STATE.PLAYING) onPress();
+    });
+
+    canvas.addEventListener('mouseup', onRelease);
+
+    // Touch
+    canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        if (state === STATE.PLAYING) onPress();
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        onRelease();
+    }, { passive: false });
+
+    // --- Game Flow ---
+    function startGame() {
+        initAudio();
+        startAmbient();
+        resetGame();
+        state = STATE.PLAYING;
+
+        document.getElementById('intro').classList.add('hidden');
+        document.getElementById('hud').classList.add('visible');
+        document.getElementById('dailyRecord').classList.add('visible');
+        updateDailyDisplay();
+
+        lastTime = performance.now();
+        requestAnimationFrame(gameLoop);
+    }
+
+    function die() {
+        state = STATE.DYING;
+        timeScale = 0.15;
+        deathTimer = 0;
+        playDeath();
+        stopAmbient();
+
+        score = gameTime;
+
+        // Check daily best
+        const prev = getDailyBest();
+        const isNewBest = score > prev;
+        if (isNewBest) {
+            setDailyBest(score);
+            updateDailyDisplay();
+        }
+
+        // Populate death screen
+        document.getElementById('deathTime').textContent = score.toFixed(1);
+
+        const bestEl = document.getElementById('deathBest');
+        if (isNewBest && prev > 0) {
+            bestEl.innerHTML = '<span class="death-new-best">New daily best!</span>';
+        } else if (prev > 0) {
+            bestEl.textContent = 'Today\'s best: ' + Math.max(getDailyBest(), score).toFixed(1) + 's';
+        } else {
+            bestEl.textContent = '';
+        }
+    }
+
+    function showDeathScreen() {
+        state = STATE.DEAD;
+        const deathEl = document.getElementById('death');
+        deathEl.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            deathEl.classList.add('visible-bg');
+        });
+        document.getElementById('hud').classList.remove('visible');
+    }
+
+    function restart() {
+        const deathEl = document.getElementById('death');
+        deathEl.classList.remove('visible-bg');
+        deathEl.classList.add('hidden');
+
+        initAudio();
+        startAmbient();
+        resetGame();
+        state = STATE.PLAYING;
+
+        document.getElementById('hud').classList.add('visible');
+        updateDailyDisplay();
+
+        lastTime = performance.now();
+        requestAnimationFrame(gameLoop);
+    }
+
+    // --- Collision ---
+    function checkCollision() {
+        const px = player.x;
+        const py = player.y;
+        const pr = player.radius;
+
+        // Ceiling/floor
+        if (py - pr <= 0 || py + pr >= H) return true;
+
+        for (const obs of obstacles) {
+            const ol = obs.x;
+            const or_ = obs.x + obs.width;
+
+            // Check if player overlaps horizontally
+            if (px + pr > ol && px - pr < or_) {
+                const gapTop = obs.gapCenter - obs.gap / 2;
+                const gapBottom = obs.gapCenter + obs.gap / 2;
+
+                if (py - pr < gapTop || py + pr > gapBottom) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    // --- Proximity glow ---
+    function getProximity() {
+        const px = player.x;
+        const py = player.y;
+        let minDist = Infinity;
+
+        for (const obs of obstacles) {
+            const ol = obs.x;
+            const or_ = obs.x + obs.width;
+
+            if (px + 60 * s > ol && px - 60 * s < or_) {
+                const gapTop = obs.gapCenter - obs.gap / 2;
+                const gapBottom = obs.gapCenter + obs.gap / 2;
+                const dTop = Math.abs(py - gapTop);
+                const dBottom = Math.abs(py - gapBottom);
+                minDist = Math.min(minDist, dTop, dBottom);
+            }
+        }
+
+        // Floor/ceiling
+        minDist = Math.min(minDist, py, H - py);
+
+        return minDist;
+    }
+
+    // --- Main Loop ---
+    function gameLoop(now) {
+        const rawDt = Math.min((now - lastTime) / 1000, 0.05);
+        lastTime = now;
+
+        const dt = rawDt * timeScale;
+
+        if (state === STATE.PLAYING) {
+            gameTime += dt;
+            score = gameTime;
+
+            // Update player
+            player.vy += GRAVITY() * dt;
+            player.vy = Math.min(player.vy, TERMINAL_VEL());
+            player.y += player.vy * dt;
+
+            // Update obstacles
+            const speed = getSpeed();
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].x -= speed * dt;
+                if (obstacles[i].x + obstacles[i].width < -20) {
+                    obstacles.splice(i, 1);
+                }
+            }
+
+            // Spawn new obstacles
+            const lastObs = obstacles[obstacles.length - 1];
+            if (!lastObs || lastObs.x < W - getSpacing()) {
+                spawnObstacle(W + 40);
+            }
+
+            // Proximity glow
+            const dist = getProximity();
+            const targetGlow = dist < 50 * s ? (1 - dist / (50 * s)) * 0.8 : 0;
+            player.glowIntensity += (targetGlow - player.glowIntensity) * 8 * dt;
+
+            // Parallax
+            parallaxOffset += speed * 0.08 * dt;
+
+            // Collision
+            if (checkCollision()) {
+                die();
+            }
+
+            // Update HUD
+            document.getElementById('scoreDisplay').textContent = gameTime.toFixed(1);
+        }
+
+        if (state === STATE.DYING) {
+            deathTimer += rawDt;
+
+            // Still simulate a tiny bit
+            player.vy += GRAVITY() * dt;
+            player.y += player.vy * dt;
+
+            const speed = getSpeed();
+            for (const obs of obstacles) {
+                obs.x -= speed * dt;
+            }
+
+            timeScale = Math.max(timeScale - rawDt * 0.3, 0);
+
+            if (deathTimer > 1.2) {
+                showDeathScreen();
+            }
+        }
+
+        render();
+
+        if (state === STATE.PLAYING || state === STATE.DYING) {
+            requestAnimationFrame(gameLoop);
+        }
+    }
+
+    // --- Rendering ---
+    function render() {
+        ctx.clearRect(0, 0, W, H);
+
+        // Background gradient
+        const bgGrad = ctx.createRadialGradient(W * 0.4, H * 0.5, 0, W * 0.4, H * 0.5, W * 0.7);
+        bgGrad.addColorStop(0, '#12151f');
+        bgGrad.addColorStop(1, var_bg());
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        // Parallax vertical lines (very subtle)
+        ctx.save();
+        ctx.globalAlpha = 0.025;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 0.5;
+        const lineSpacing = 120;
+        const offset = -(parallaxOffset % lineSpacing);
+        for (let x = offset; x < W + lineSpacing; x += lineSpacing) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, H);
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        // Particles
+        for (const p of particles) {
+            p.x -= p.speed * 0.016 * (state === STATE.DYING ? timeScale : 1);
+            if (p.x < -5) { p.x = W + 5; p.y = Math.random() * H; }
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+            ctx.fill();
+        }
+
+        // Obstacles
+        for (const obs of obstacles) {
+            const gapTop = obs.gapCenter - obs.gap / 2;
+            const gapBottom = obs.gapCenter + obs.gap / 2;
+
+            // Top bar
+            ctx.fillStyle = '#1e222e';
+            ctx.fillRect(obs.x, 0, obs.width, gapTop);
+
+            // Bottom bar
+            ctx.fillRect(obs.x, gapBottom, obs.width, H - gapBottom);
+
+            // Subtle edge highlight
+            ctx.fillStyle = 'rgba(255,255,255,0.04)';
+            ctx.fillRect(obs.x, 0, 1, gapTop);
+            ctx.fillRect(obs.x, gapBottom, 1, H - gapBottom);
+
+            // Gap edge glow
+            ctx.fillStyle = 'rgba(255,255,255,0.02)';
+            ctx.fillRect(obs.x - 2, gapTop - 2, obs.width + 4, 2);
+            ctx.fillRect(obs.x - 2, gapBottom, obs.width + 4, 2);
+        }
+
+        // Player
+        if (state === STATE.PLAYING || state === STATE.DYING) {
+            const px = player.x;
+            const py = Math.max(player.radius, Math.min(H - player.radius, player.y));
+            const r = player.radius;
+
+            // Outer glow
+            const glowSize = (30 + player.glowIntensity * 25) * s;
+            const glowAlpha = 0.08 + player.glowIntensity * 0.15;
+            const glow = ctx.createRadialGradient(px, py, r, px, py, glowSize);
+            glow.addColorStop(0, `rgba(255,255,255,${glowAlpha})`);
+            glow.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(px, py, glowSize, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Inner glow
+            const glowPad = 3 * s;
+            const innerGlow = ctx.createRadialGradient(px, py, 0, px, py, r + glowPad);
+            innerGlow.addColorStop(0, 'rgba(255,255,255,0.95)');
+            innerGlow.addColorStop(0.7, 'rgba(255,255,255,0.8)');
+            innerGlow.addColorStop(1, 'rgba(255,255,255,0.0)');
+            ctx.fillStyle = innerGlow;
+            ctx.beginPath();
+            ctx.arc(px, py, r + glowPad, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Core dot
+            ctx.beginPath();
+            ctx.arc(px, py, r, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+        }
+
+        // Death flash
+        if (state === STATE.DYING && deathTimer < 0.15) {
+            ctx.fillStyle = `rgba(255,255,255,${0.15 * (1 - deathTimer / 0.15)})`;
+            ctx.fillRect(0, 0, W, H);
+        }
+    }
+
+    function var_bg() {
+        return '#0c0e14';
+    }
+
+    // --- Buttons ---
+    document.getElementById('startBtn').addEventListener('click', () => {
+        startGame();
+    });
+
+    document.getElementById('retryBtn').addEventListener('click', () => {
+        restart();
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const text = `I survived ${score.toFixed(1)} seconds on One Button Survival — how long can you last?\n\nwhatifs.fun/one-button-survival/`;
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }).catch(() => {});
+    });
+
+    // --- Initial Render ---
+    initParticles();
+    // Render a static background for intro
+    function renderIntro() {
+        resize();
+        player.x = W * 0.22;
+        player.y = H / 2;
+
+        ctx.clearRect(0, 0, W, H);
+        const bgGrad = ctx.createRadialGradient(W * 0.4, H * 0.5, 0, W * 0.4, H * 0.5, W * 0.7);
+        bgGrad.addColorStop(0, '#12151f');
+        bgGrad.addColorStop(1, '#0c0e14');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        // Particles
+        for (const p of particles) {
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${p.alpha})`;
+            ctx.fill();
+        }
+    }
+
+    renderIntro();
+    updateDailyDisplay();
+
+    // Animate intro particles
+    function introLoop() {
+        if (state !== STATE.INTRO) return;
+        for (const p of particles) {
+            p.x -= p.speed * 0.012;
+            if (p.x < -5) { p.x = W + 5; p.y = Math.random() * H; }
+        }
+        renderIntro();
+        requestAnimationFrame(introLoop);
+    }
+    introLoop();
+
+})();
+</script>
+</body>
+</html>
