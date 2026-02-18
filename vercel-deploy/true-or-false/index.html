@@ -1,29 +1,783 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<meta name="theme-color" content="#FFF7ED"/>
-<meta name="description" content="True or Totally Fake? - A fun, addictive trivia game. Test your knowledge with AI-generated questions!"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<title>True or Totally Fake? - Trivia Game</title>
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-13KHBC5TPS');
-</script>
-<script defer="defer" src="./static/js/main.770bd741.js"></script>
-<link href="./static/css/main.461f2249.css" rel="stylesheet">
-<link rel="canonical" href="https://whatifs.fun/true-or-false/">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"True or False","url":"https://whatifs.fun/true-or-false/","description":"Test your knowledge with surprising true or false questions spanning science, history, geography, and pop culture.","applicationCategory":"Game","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>True or Totally Fake? — Free Trivia Game | whatifs.fun</title>
+    <meta name="description" content="Think you're smart? Test your knowledge with surprising true-or-false statements across 6 categories. Free, endless, no login required.">
+    <meta property="og:title" content="True or Totally Fake? — whatifs.fun">
+    <meta property="og:description" content="A fast, addictive trivia survival game. Can you tell fact from fiction?">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://whatifs.fun/true-or-false/">
+    <link rel="canonical" href="https://whatifs.fun/true-or-false/">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"True or Totally Fake?","description":"A fast, addictive trivia survival game. Can you tell fact from fiction?","url":"https://whatifs.fun/true-or-false/","applicationCategory":"Game","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#FFF8F0;--bg2:#FFF1E3;
+            --text:#2D2A32;--text-dim:#8E8A93;--text-light:#B5B1BA;
+            --card:#FFFFFF;--card-shadow:0 8px 32px rgba(45,42,50,0.08);
+            --green:#22C55E;--green-light:#DCFCE7;--green-glow:rgba(34,197,94,0.3);
+            --red:#EF4444;--red-light:#FEE2E2;--red-glow:rgba(239,68,68,0.3);
+            --cat-animals:#10B981;--cat-animals-bg:#D1FAE5;
+            --cat-geo:#3B82F6;--cat-geo-bg:#DBEAFE;
+            --cat-history:#EAB308;--cat-history-bg:#FEF9C3;
+            --cat-food:#F97316;--cat-food-bg:#FFEDD5;
+            --cat-space:#8B5CF6;--cat-space-bg:#EDE9FE;
+            --cat-pop:#EC4899;--cat-pop-bg:#FCE7F3;
+            --radius:16px;--radius-sm:10px;--radius-xs:8px;
+        }
+        html{-webkit-tap-highlight-color:transparent}
+        body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+        /* ===== SCREENS ===== */
+        .screen{display:none;flex-direction:column;align-items:center;min-height:100vh;min-height:100dvh;padding:20px;position:relative}
+        .screen.active{display:flex}
+
+        /* ===== HOME SCREEN ===== */
+        #home{justify-content:flex-start;padding-top:40px;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+        .home-title{font-family:'Lilita One',cursive;text-align:center;line-height:1;margin-bottom:6px}
+        .home-title .true{font-size:clamp(3rem,10vw,5rem);color:var(--text);display:block}
+        .home-title .or{font-size:clamp(1.8rem,5vw,2.8rem);color:var(--text-dim);display:block;margin:-4px 0}
+        .home-title .fake{font-size:clamp(2.8rem,9vw,4.5rem);color:var(--red);display:block}
+        .home-subtitle{font-size:clamp(0.95rem,2.5vw,1.15rem);color:var(--text-dim);font-weight:600;margin-bottom:32px;text-align:center}
+        .section-label{font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:var(--text-light);margin-bottom:14px;text-align:center}
+        .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:400px;margin-bottom:28px}
+        .cat-btn{border:none;border-radius:var(--radius);padding:28px 12px 22px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;transition:transform 0.2s,box-shadow 0.2s;position:relative;overflow:hidden}
+        .cat-btn:active{transform:scale(0.96)}
+        .cat-btn:hover{box-shadow:0 6px 24px rgba(0,0,0,0.08)}
+        .cat-btn.selected::after{content:'✓';position:absolute;top:10px;right:12px;font-size:1.1rem;font-weight:900}
+        .cat-btn .cat-icon{font-size:2rem;line-height:1}
+        .cat-btn[data-cat="animals"]{background:var(--cat-animals-bg);color:var(--cat-animals)}.cat-btn[data-cat="animals"].selected::after{color:var(--cat-animals)}
+        .cat-btn[data-cat="geo"]{background:var(--cat-geo-bg);color:var(--cat-geo)}.cat-btn[data-cat="geo"].selected::after{color:var(--cat-geo)}
+        .cat-btn[data-cat="history"]{background:var(--cat-history-bg);color:var(--cat-history)}.cat-btn[data-cat="history"].selected::after{color:var(--cat-history)}
+        .cat-btn[data-cat="food"]{background:var(--cat-food-bg);color:var(--cat-food)}.cat-btn[data-cat="food"].selected::after{color:var(--cat-food)}
+        .cat-btn[data-cat="space"]{background:var(--cat-space-bg);color:var(--cat-space)}.cat-btn[data-cat="space"].selected::after{color:var(--cat-space)}
+        .cat-btn[data-cat="pop"]{background:var(--cat-pop-bg);color:var(--cat-pop)}.cat-btn[data-cat="pop"].selected::after{color:var(--cat-pop)}
+        .mix-btn{width:100%;max-width:400px;border:2px solid var(--text);background:var(--text);color:var(--bg);border-radius:var(--radius);padding:16px;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:transform 0.2s,opacity 0.2s;margin-bottom:20px}
+        .mix-btn:active{transform:scale(0.97)}
+        .mix-btn.selected{background:var(--green);border-color:var(--green);color:#fff}
+        .diff-row{display:flex;gap:8px;width:100%;max-width:400px;margin-bottom:24px}
+        .diff-btn{flex:1;border:2px solid #E5E2E9;background:#fff;border-radius:var(--radius-sm);padding:12px 8px;font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:700;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s}
+        .diff-btn.selected{border-color:var(--text);background:var(--text);color:#fff}
+        .diff-btn:active{transform:scale(0.96)}
+        .play-btn{width:100%;max-width:400px;background:var(--text);color:#fff;border:none;border-radius:var(--radius);padding:18px;font-family:'Lilita One',cursive;font-size:1.4rem;letter-spacing:1px;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 6px 0 #1a1720,0 8px 24px rgba(0,0,0,0.15)}
+        .play-btn:active{transform:translateY(3px);box-shadow:0 3px 0 #1a1720,0 4px 12px rgba(0,0,0,0.15)}
+        .play-btn:disabled{opacity:0.4;cursor:not-allowed}
+        .home-footer{margin-top:auto;padding:20px 0 10px;font-size:0.75rem;color:var(--text-light);text-align:center}
+        .home-footer a{color:var(--text-dim);text-decoration:none;font-weight:700}
+
+        /* ===== GAME SCREEN ===== */
+        #game{justify-content:flex-start;padding:16px 16px 24px;background:var(--bg)}
+        .game-top{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:500px;margin-bottom:8px}
+        .game-cat-badge{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:0.78rem;font-weight:800}
+        .game-hearts{display:flex;gap:4px}
+        .game-heart{font-size:1.4rem;transition:transform 0.3s,opacity 0.3s}
+        .game-heart.lost{opacity:0.2;transform:scale(0.8)}
+        .game-streak{display:flex;align-items:center;gap:6px;font-size:1rem;font-weight:800;color:var(--text);margin-bottom:16px}
+        .game-streak .streak-icon{font-size:1.2rem}
+        .game-streak .streak-num{font-family:'Lilita One',cursive;font-size:1.6rem}
+
+        .question-card{width:100%;max-width:500px;background:var(--card);border-radius:20px;box-shadow:var(--card-shadow);padding:32px 24px 28px;text-align:center;position:relative;transition:transform 0.4s cubic-bezier(.34,1.56,.64,1),box-shadow 0.3s;overflow:hidden;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:280px;max-height:50vh}
+        .question-card.correct{box-shadow:0 0 0 3px var(--green),0 0 40px var(--green-glow)}
+        .question-card.wrong{box-shadow:0 0 0 3px var(--red),0 0 40px var(--red-glow)}
+        .question-card.shake{animation:shake 0.5s ease}
+        @keyframes shake{0%,100%{transform:translateX(0)}10%,50%,90%{transform:translateX(-6px)}30%,70%{transform:translateX(6px)}}
+        .question-icon{font-size:3.5rem;margin-bottom:16px;display:block;line-height:1}
+        .question-text{font-size:clamp(1.15rem,3.5vw,1.45rem);font-weight:800;line-height:1.45;color:var(--text);max-width:420px}
+        .question-difficulty{display:inline-flex;align-items:center;gap:4px;margin-top:14px;font-size:0.7rem;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px}
+
+        .reveal-overlay{display:none;position:absolute;inset:0;border-radius:20px;flex-direction:column;align-items:center;justify-content:center;padding:24px;z-index:5}
+        .reveal-overlay.show{display:flex}
+        .reveal-overlay.is-correct{background:linear-gradient(135deg,#DCFCE7 0%,#BBF7D0 100%)}
+        .reveal-overlay.is-wrong{background:linear-gradient(135deg,#FEE2E2 0%,#FECACA 100%)}
+        .reveal-label{font-family:'Lilita One',cursive;font-size:2rem;margin-bottom:6px}
+        .reveal-label.correct-label{color:var(--green)}
+        .reveal-label.wrong-label{color:var(--red)}
+        .reveal-answer{font-size:0.85rem;font-weight:700;margin-bottom:12px;color:var(--text-dim)}
+        .reveal-explanation{font-size:0.95rem;font-weight:600;line-height:1.5;color:var(--text);max-width:380px;text-align:center}
+        .reveal-tap{margin-top:16px;font-size:0.75rem;font-weight:700;color:var(--text-light);animation:pulse 1.5s ease infinite}
+        @keyframes pulse{0%,100%{opacity:0.5}50%{opacity:1}}
+
+        .answer-btns{display:flex;gap:12px;width:100%;max-width:500px;margin-top:16px}
+        .answer-btn{flex:1;border:none;border-radius:var(--radius);padding:18px 12px;font-family:'Nunito',sans-serif;font-size:1.1rem;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform 0.15s,box-shadow 0.15s}
+        .answer-btn:active{transform:scale(0.95)}
+        .answer-btn.disabled{pointer-events:none;opacity:0.5}
+        .btn-true{background:var(--green);color:#fff;box-shadow:0 4px 0 #16a34a,0 6px 16px rgba(34,197,94,0.25)}
+        .btn-true:active{box-shadow:0 2px 0 #16a34a;transform:translateY(2px) scale(0.98)}
+        .btn-fake{background:var(--red);color:#fff;box-shadow:0 4px 0 #dc2626,0 6px 16px rgba(239,68,68,0.25)}
+        .btn-fake:active{box-shadow:0 2px 0 #dc2626;transform:translateY(2px) scale(0.98)}
+
+        /* ===== GAME OVER ===== */
+        #gameover{justify-content:center;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+        .go-emoji{font-size:4rem;margin-bottom:12px}
+        .go-title{font-family:'Lilita One',cursive;font-size:clamp(2rem,7vw,3rem);color:var(--text);margin-bottom:4px;text-align:center}
+        .go-subtitle{font-size:1rem;font-weight:600;color:var(--text-dim);margin-bottom:28px;text-align:center;max-width:320px}
+        .go-stats{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+        .go-stat{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:var(--radius-sm);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        .go-stat-label{font-size:0.85rem;font-weight:700;color:var(--text-dim)}
+        .go-stat-val{font-family:'Lilita One',cursive;font-size:1.3rem;color:var(--text)}
+        .go-best{color:var(--green) !important}
+        .go-btns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px}
+        .go-play-again{background:var(--text);color:#fff;border:none;border-radius:var(--radius);padding:16px;font-family:'Lilita One',cursive;font-size:1.2rem;letter-spacing:1px;cursor:pointer;box-shadow:0 4px 0 #1a1720;transition:transform 0.2s}
+        .go-play-again:active{transform:translateY(2px);box-shadow:0 2px 0 #1a1720}
+        .go-home-btn{background:transparent;color:var(--text-dim);border:2px solid #E5E2E9;border-radius:var(--radius);padding:14px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.2s}
+        .go-home-btn:hover{border-color:var(--text-dim)}
+        .go-share-btn{background:var(--cat-geo);color:#fff;border:none;border-radius:var(--radius);padding:14px;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform 0.2s}
+        .go-share-btn:active{transform:scale(0.97)}
+
+        /* ===== CONFETTI ===== */
+        .confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden}
+        .confetti-piece{position:absolute;width:10px;height:10px;top:-20px;border-radius:2px;animation:confettiFall linear forwards}
+        @keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+        /* ===== PROGRESS DOTS ===== */
+        .progress-bar{display:flex;gap:4px;margin-bottom:12px}
+        .progress-dot{width:8px;height:8px;border-radius:50%;background:#E5E2E9;transition:all 0.3s}
+        .progress-dot.correct{background:var(--green)}
+        .progress-dot.wrong{background:var(--red)}
+
+        /* ===== TRANSITIONS ===== */
+        .fade-in{animation:fadeIn 0.4s ease}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        .pop-in{animation:popIn 0.4s cubic-bezier(.34,1.56,.64,1)}
+        @keyframes popIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+
+        /* ===== BACK BUTTON ===== */
+        .back-btn{position:absolute;top:16px;left:16px;background:rgba(0,0,0,0.06);border:none;border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.2rem;transition:background 0.2s;z-index:10}
+        .back-btn:hover{background:rgba(0,0,0,0.1)}
+
+        @media(max-width:380px){
+            .cat-grid{gap:8px}
+            .cat-btn{padding:20px 8px 16px}
+            .question-card{padding:24px 16px 20px;min-height:240px}
+        }
+    </style>
 </head>
 <body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="root"></div>
+
+<!-- ==================== HOME ==================== -->
+<div id="home" class="screen active">
+    <div class="home-title">
+        <span class="true">TRUE</span>
+        <span class="or">or</span>
+        <span class="fake">TOTALLY FAKE?</span>
+    </div>
+    <p class="home-subtitle">Think you're smart? Let's see.</p>
+
+    <p class="section-label">CHOOSE CATEGORY</p>
+    <button class="mix-btn selected" id="mixBtn" onclick="toggleMix()">🔀 Mix All Categories</button>
+    <div class="cat-grid">
+        <button class="cat-btn" data-cat="animals" onclick="toggleCat(this)"><span class="cat-icon">🐾</span>Animals &amp; Nature</button>
+        <button class="cat-btn" data-cat="geo" onclick="toggleCat(this)"><span class="cat-icon">🌍</span>Geography &amp; Earth</button>
+        <button class="cat-btn" data-cat="history" onclick="toggleCat(this)"><span class="cat-icon">👑</span>People &amp; History</button>
+        <button class="cat-btn" data-cat="food" onclick="toggleCat(this)"><span class="cat-icon">🍕</span>Food &amp; Drink</button>
+        <button class="cat-btn" data-cat="space" onclick="toggleCat(this)"><span class="cat-icon">🚀</span>Space &amp; Science</button>
+        <button class="cat-btn" data-cat="pop" onclick="toggleCat(this)"><span class="cat-icon">🎮</span>Pop Culture &amp; Tech</button>
+    </div>
+
+    <p class="section-label">DIFFICULTY</p>
+    <div class="diff-row">
+        <button class="diff-btn" data-diff="chill" onclick="selectDiff(this)">❄️ Chill</button>
+        <button class="diff-btn selected" data-diff="spicy" onclick="selectDiff(this)">🔥 Spicy</button>
+        <button class="diff-btn" data-diff="savage" onclick="selectDiff(this)">⚡ Savage</button>
+    </div>
+
+    <button class="play-btn" onclick="startGame()">LET'S PLAY!</button>
+    <div class="home-footer"><a href="https://whatifs.fun">whatifs.fun</a> — built for fun, not profit</div>
+</div>
+
+<!-- ==================== GAME ==================== -->
+<div id="game" class="screen">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="game-top">
+        <div class="game-cat-badge" id="gameCatBadge">🐾 Animals</div>
+        <div class="game-hearts" id="gameHearts">
+            <span class="game-heart" id="h1">❤️</span>
+            <span class="game-heart" id="h2">❤️</span>
+            <span class="game-heart" id="h3">❤️</span>
+        </div>
+    </div>
+    <div class="game-streak"><span class="streak-icon">🔥</span> <span class="streak-num" id="streakNum">0</span> <span>streak</span></div>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <div class="question-card" id="questionCard">
+        <span class="question-icon" id="questionIcon">🐾</span>
+        <p class="question-text" id="questionText">Loading...</p>
+        <div class="question-difficulty" id="questionDiff"></div>
+        <div class="reveal-overlay" id="revealOverlay">
+            <div class="reveal-label" id="revealLabel"></div>
+            <div class="reveal-answer" id="revealAnswer"></div>
+            <p class="reveal-explanation" id="revealExplanation"></p>
+            <span class="reveal-tap">tap to continue</span>
+        </div>
+    </div>
+
+    <div class="answer-btns" id="answerBtns">
+        <button class="answer-btn btn-true" onclick="answer(true)">✓ TRUE</button>
+        <button class="answer-btn btn-fake" onclick="answer(false)">✗ FAKE</button>
+    </div>
+</div>
+
+<!-- ==================== GAME OVER ==================== -->
+<div id="gameover" class="screen">
+    <div class="go-emoji" id="goEmoji">😵</div>
+    <h1 class="go-title">Game Over!</h1>
+    <p class="go-subtitle" id="goSubtitle">Not bad! But can you do better?</p>
+    <div class="go-stats">
+        <div class="go-stat"><span class="go-stat-label">Final Streak</span><span class="go-stat-val" id="goStreak">0</span></div>
+        <div class="go-stat"><span class="go-stat-label">Best Ever</span><span class="go-stat-val go-best" id="goBest">0</span></div>
+        <div class="go-stat"><span class="go-stat-label">Accuracy</span><span class="go-stat-val" id="goAccuracy">0%</span></div>
+        <div class="go-stat"><span class="go-stat-label">Questions Seen</span><span class="go-stat-val" id="goTotal">0</span></div>
+    </div>
+    <div class="go-btns">
+        <button class="go-play-again" onclick="startGame()">PLAY AGAIN</button>
+        <button class="go-share-btn" onclick="shareResult()">📤 Share Your Score</button>
+        <button class="go-home-btn" onclick="goHome()">← Back to Menu</button>
+    </div>
+</div>
+
+<!-- ==================== CONFETTI ==================== -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+// =====================================================
+//  QUESTION DATABASE — 240+ Questions, All Embedded
+// =====================================================
+const QUESTIONS = {
+animals: [
+{s:"Octopuses have three hearts.",t:true,e:"Two pump blood to the gills, and one pumps it to the rest of the body. The main heart actually stops beating when they swim.",d:2},
+{s:"Cows can walk up stairs but not down them.",t:true,e:"Their knees don't bend the right way to walk down stairs easily. They can be coaxed, but it's extremely difficult for them.",d:2},
+{s:"A group of flamingos is called a 'flamboyance.'",t:true,e:"This is the actual collective noun. Other fun ones: a 'murder' of crows and a 'parliament' of owls.",d:1},
+{s:"Goldfish have a 3-second memory.",t:false,e:"This is a myth. Goldfish can remember things for months. Scientists have trained them to push levers and navigate mazes.",d:1},
+{s:"Dolphins sleep with one eye open.",t:true,e:"They practice unihemispheric sleep — half their brain rests while the other stays alert, keeping one eye open to watch for predators.",d:2},
+{s:"Bananas are technically berries, but strawberries aren't.",t:true,e:"Botanically, berries develop from a single ovary. Bananas qualify, but strawberries are 'accessory fruits.'",d:2},
+{s:"A shrimp's heart is located in its head.",t:true,e:"The shrimp's heart sits in its cephalothorax, the section that includes both head and thorax fused together.",d:2},
+{s:"Koalas have fingerprints almost identical to humans.",t:true,e:"Their prints are so similar that they've occasionally confused crime scene investigators in Australia.",d:3},
+{s:"Elephants are the only animals that can't jump.",t:false,e:"Many animals can't jump, including hippos, rhinos, and sloths. Elephants aren't unique in this regard.",d:2},
+{s:"Sharks are older than trees.",t:true,e:"Sharks have been around for about 400 million years, while trees appeared roughly 350 million years ago.",d:3},
+{s:"A snail can sleep for three years straight.",t:true,e:"When conditions are too dry, snails can enter a deep hibernation-like state (estivation) lasting up to three years.",d:2},
+{s:"Butterflies taste with their feet.",t:true,e:"They have taste receptors (chemoreceptors) on their feet that help them identify food plants when they land on them.",d:1},
+{s:"Cats can only see in black and white.",t:false,e:"Cats see in color, but their range is limited compared to humans. They see blues and greens best, but reds appear muted.",d:1},
+{s:"A blue whale's tongue weighs as much as an elephant.",t:true,e:"The tongue can weigh around 2.7 tonnes, roughly the weight of an adult Asian elephant.",d:3},
+{s:"Dogs can only see in shades of gray.",t:false,e:"Dogs see blue and yellow quite well. They just can't distinguish between red and green, similar to human red-green colorblindness.",d:1},
+{s:"Sea otters hold hands while they sleep.",t:true,e:"They hold hands (or wrap themselves in kelp) to prevent drifting apart while sleeping on the water's surface.",d:1},
+{s:"The mantis shrimp can punch with the force of a bullet.",t:true,e:"Their strikes accelerate at over 50 mph — fast enough to boil water and crack aquarium glass.",d:3},
+{s:"Chameleons change color to match their surroundings.",t:false,e:"They mainly change color to communicate mood, regulate temperature, and signal to other chameleons — not for camouflage.",d:2},
+{s:"Wombat poop is cube-shaped.",t:true,e:"Their intestines shape the feces into cubes, which helps the droppings stay in place as territorial markers on rocks and logs.",d:2},
+{s:"Penguins propose to their mates with a pebble.",t:true,e:"Male Gentoo penguins search beaches for the smoothest pebble and present it to a female as a courtship gift.",d:1},
+{s:"Mosquitoes are the deadliest animal in the world.",t:true,e:"Mosquitoes kill around 700,000 people per year through diseases like malaria, dengue, and Zika virus.",d:2},
+{s:"Ostriches bury their heads in the sand when scared.",t:false,e:"They actually lie flat on the ground with their head and neck stretched out, which from a distance looks like they're buried.",d:1},
+{s:"Crows can recognize human faces.",t:true,e:"Research shows crows remember faces for years and can even teach other crows to distrust specific people.",d:2},
+{s:"A group of ravens is called an 'unkindness.'",t:true,e:"This macabre collective noun has been used since at least the 15th century. Ravens also feature heavily in dark folklore.",d:2},
+{s:"Polar bear fur is actually transparent, not white.",t:true,e:"Each hair is a clear, hollow tube that scatters light, making the fur appear white. Their skin underneath is actually black.",d:3},
+{s:"Honey never expires.",t:true,e:"Archaeologists have found 3,000-year-old honey in Egyptian tombs that was still perfectly edible. Its low moisture and acidity prevent bacterial growth.",d:2},
+{s:"Sloths can hold their breath longer than dolphins.",t:true,e:"Sloths can slow their heart rate and hold their breath for up to 40 minutes. Dolphins typically manage around 10 minutes.",d:3},
+{s:"All spiders spin webs.",t:false,e:"Only about half of spider species build webs. Others are active hunters — like wolf spiders and jumping spiders — that chase their prey.",d:2},
+{s:"Hummingbirds are the only birds that can fly backwards.",t:true,e:"Their unique shoulder joints allow a full 180° rotation of their wings, enabling backward, sideways, and hovering flight.",d:2},
+{s:"An ant can lift 50 times its own body weight.",t:true,e:"Their muscles are proportionally much thicker than those of larger animals, giving them incredible relative strength.",d:2},
+{s:"Starfish have a brain in the center of their body.",t:false,e:"Starfish have no brain at all. They have a nerve ring and radial nerves that coordinate their movements without centralized control.",d:2},
+{s:"Cats have fewer toes on their back paws than their front paws.",t:true,e:"Cats have 5 toes on each front paw but only 4 on each back paw, giving them 18 toes total.",d:2},
+{s:"Platypuses glow under UV light.",t:true,e:"Discovered in 2020, platypus fur absorbs UV light and re-emits it as a blue-green glow. Scientists aren't sure why.",d:3},
+{s:"Elephants are afraid of mice.",t:false,e:"This is an old myth. Elephants show no particular fear of mice. They're more likely to be startled by unexpected small movements in general.",d:1},
+{s:"Flamingos are naturally white — their food turns them pink.",t:true,e:"The carotenoid pigments in brine shrimp and algae accumulate in their feathers, turning them pink over time.",d:2},
+{s:"A cockroach can live for a week without its head.",t:true,e:"They breathe through spiracles on their body and don't need their head for breathing. They eventually die of dehydration.",d:3},
+{s:"Dogs' noses are unique like human fingerprints.",t:true,e:"Each dog's nose print is unique. Some kennel clubs even use nose prints for identification purposes.",d:2},
+{s:"Baby elephants suck their trunks for comfort, like human babies suck their thumbs.",t:true,e:"Young elephants are often seen sucking the tip of their trunk as a self-soothing behavior.",d:1},
+{s:"Spiders are insects.",t:false,e:"Spiders are arachnids. They have 8 legs and 2 body segments, while insects have 6 legs and 3 body segments.",d:1},
+{s:"The heart of a blue whale is so big a small child could swim through its arteries.",t:true,e:"A blue whale's aorta is large enough for a toddler to crawl through, and the heart weighs about 400 pounds.",d:3},
+{s:"Pigeons can do math.",t:true,e:"Studies show pigeons can learn abstract numerical rules and rank quantities in order — performing at a level similar to primates.",d:3},
+],
+geo: [
+{s:"Russia has more surface area than Pluto.",t:true,e:"Russia covers about 17.1 million km². Pluto's surface area is about 16.7 million km².",d:3},
+{s:"Africa is the only continent in all four hemispheres.",t:true,e:"Africa spans both the Northern and Southern hemispheres, and both the Eastern and Western hemispheres.",d:2},
+{s:"Australia is wider than the moon.",t:true,e:"Australia's diameter is about 4,000 km, while the moon's diameter is about 3,474 km.",d:3},
+{s:"There's a town in Norway called 'Hell.'",t:true,e:"Hell is a village in Trøndelag, Norway. It regularly freezes over in winter, making 'Hell freezes over' literally true.",d:1},
+{s:"Mount Everest is the tallest mountain on Earth.",t:false,e:"Mauna Kea in Hawaii is taller when measured from its oceanic base — over 10,000m total. Everest is the highest above sea level.",d:3},
+{s:"Canada has more lakes than the rest of the world combined.",t:true,e:"Canada has over 60% of the world's lakes — roughly 2 million — thanks to its glacial geography.",d:2},
+{s:"Vatican City is the smallest country in the world.",t:true,e:"At just 0.44 km², Vatican City is the world's smallest independent state, located entirely within Rome, Italy.",d:1},
+{s:"The Sahara Desert is the largest desert on Earth.",t:false,e:"Antarctica is technically the largest desert. A desert is defined by low precipitation, not heat, and Antarctica receives very little.",d:3},
+{s:"Istanbul is the only major city located on two continents.",t:true,e:"It straddles the Bosphorus strait, with one half in Europe and the other in Asia. It's been this way for centuries.",d:2},
+{s:"There are more people living inside a small circle in Asia than outside it.",t:true,e:"A circle centered near Mong Khet, Myanmar contains more than 50% of the world's population, covering China, India, and Southeast Asia.",d:3},
+{s:"The Dead Sea is actually a lake.",t:true,e:"Despite its name, the Dead Sea is a landlocked salt lake bordered by Jordan and Israel. It's the lowest point on Earth's surface.",d:1},
+{s:"Lightning never strikes the same place twice.",t:false,e:"Lightning frequently strikes the same place. The Empire State Building gets hit about 20-25 times per year.",d:1},
+{s:"There's a city in Turkey that has been continuously inhabited for over 10,000 years.",t:true,e:"The city of Gaziantep (and nearby areas) shows evidence of continuous habitation since around 3650 BCE, though the region has Neolithic sites too.",d:3},
+{s:"The Amazon River is the longest river in the world.",t:false,e:"The Nile is generally considered the longest at about 6,650 km. The Amazon is the largest by volume and second in length.",d:2},
+{s:"More than half of the Netherlands is below sea level.",t:false,e:"About 26% of the Netherlands is below sea level, not more than half. But 59% is vulnerable to flooding.",d:3},
+{s:"Alaska is simultaneously the most northern, western, and eastern state in the US.",t:true,e:"The Aleutian Islands cross the 180° meridian, making part of Alaska technically in the Eastern Hemisphere.",d:3},
+{s:"The Great Wall of China is visible from space with the naked eye.",t:false,e:"Astronauts confirm it's not visible from orbit without aid. It's too narrow. Highways and airports are more visible.",d:1},
+{s:"There's enough water in Lake Superior to cover all of North and South America in one foot of water.",t:true,e:"Lake Superior holds about 10% of the world's surface freshwater — roughly 12,100 km³.",d:3},
+{s:"France is the country with the most time zones.",t:true,e:"Thanks to its overseas territories, France spans 12 time zones — more than any other country, including Russia (11).",d:3},
+{s:"The Pacific Ocean is larger than all the land on Earth combined.",t:true,e:"The Pacific covers about 165.25 million km² while total land area is about 148.94 million km².",d:2},
+{s:"Greenland is the largest island in the world.",t:true,e:"At about 2.16 million km², Greenland is the world's largest island. Australia is considered a continent instead.",d:1},
+{s:"The shortest war in history lasted 38 minutes.",t:true,e:"The Anglo-Zanzibar War of 1896 lasted between 38 and 45 minutes before Zanzibar surrendered to the British Empire.",d:2},
+{s:"All of South America is west of Florida.",t:false,e:"Most of South America — including all of Brazil — is actually east of Florida. The continent is much further east than most people realize.",d:3},
+{s:"The Mariana Trench is deep enough to submerge Mount Everest with room to spare.",t:true,e:"The Mariana Trench reaches about 11,034m deep. Everest is 8,849m tall, leaving over 2 km of water above the peak.",d:2},
+{s:"Iceland has no mosquitoes.",t:true,e:"Iceland is one of the few habitable places on Earth without native mosquito populations, likely due to its unique climate patterns.",d:2},
+{s:"The Bermuda Triangle has more disappearances than any other area of ocean.",t:false,e:"Insurance companies don't charge higher rates for the Bermuda Triangle. It has no more incidents than any comparably trafficked area.",d:2},
+{s:"There are more trees on Earth than stars in the Milky Way.",t:true,e:"Earth has roughly 3 trillion trees. The Milky Way contains an estimated 100–400 billion stars.",d:3},
+{s:"Continents move about as fast as your fingernails grow.",t:true,e:"Tectonic plates drift about 2–5 cm per year, which is roughly the rate at which human fingernails grow.",d:2},
+{s:"Lake Baikal in Russia contains about 20% of the world's unfrozen freshwater.",t:true,e:"Lake Baikal is the deepest and oldest lake on Earth, holding roughly 23,615 km³ of water.",d:3},
+{s:"There are more people alive today than have ever died in all of human history.",t:false,e:"About 109 billion humans have ever lived, and about 8 billion are alive now — so the dead vastly outnumber the living.",d:2},
+{s:"Saudi Arabia imports camels from Australia.",t:true,e:"Australia has the world's largest wild camel population (over 1 million). Saudi Arabia imports them for meat, racing, and breeding.",d:3},
+{s:"Norway once knighted a penguin.",t:true,e:"Nils Olav, a king penguin at Edinburgh Zoo, was knighted in 2008 by the Norwegian King's Guard, holding the rank of Brigadier.",d:2},
+{s:"Cleopatra lived closer in time to the Moon landing than to the building of the Great Pyramid.",t:true,e:"The Great Pyramid was built around 2560 BCE. Cleopatra lived around 30 BCE. The Moon landing was 1969 CE — she's closer to us.",d:3},
+{s:"Ohio is the only US state that doesn't share a letter with the word 'mackerel.'",t:true,e:"Every other US state name contains at least one letter found in the word 'mackerel' — Ohio contains none of them.",d:3},
+{s:"There are more English speakers in China than in the United States.",t:false,e:"While China has many English learners, the number of fluent speakers is far below the approximately 330 million native speakers in the US.",d:2},
+{s:"Monaco is smaller than Central Park in New York City.",t:true,e:"Monaco is about 2.02 km², while Central Park is about 3.41 km² — making the park significantly larger than the country.",d:2},
+{s:"The longest place name in the world is in New Zealand.",t:true,e:"Taumatawhakatangi­hangakoauauotamatea­turipukakapikimaunga­horonukupokaiwhenuakitanatahu — an 85-letter Māori name for a hill.",d:2},
+{s:"You can walk from Africa to Asia without crossing any water.",t:true,e:"Africa and Asia are connected by the Sinai Peninsula in Egypt. You can walk from Cairo to Istanbul entirely on land.",d:2},
+],
+history: [
+{s:"Cleopatra was Egyptian.",t:false,e:"Cleopatra was actually of Greek Macedonian descent, part of the Ptolemaic dynasty that ruled Egypt after Alexander the Great's conquests.",d:2},
+{s:"Napoleon was unusually short.",t:false,e:"He was about 5'7\" — average for his era. The myth came from confusion between French and English inches, plus British propaganda.",d:1},
+{s:"Oxford University is older than the Aztec Empire.",t:true,e:"Teaching at Oxford began around 1096. The Aztec Empire was founded in 1428 — over 300 years later.",d:3},
+{s:"Vikings wore horned helmets.",t:false,e:"No evidence supports this. The myth was popularized by 19th-century artists. Real Viking helmets were plain iron or leather.",d:1},
+{s:"Albert Einstein failed math in school.",t:false,e:"Einstein excelled at math from a young age. This myth likely comes from a misunderstanding of Swiss grading scales.",d:1},
+{s:"Ancient Romans used urine as mouthwash.",t:true,e:"The ammonia in urine acts as a cleaning agent. Roman poet Catullus mocked the practice, and urine was even taxed by Emperor Vespasian.",d:3},
+{s:"The shortest-reigning monarch lasted only 20 minutes.",t:true,e:"Louis XIX of France technically reigned for 20 minutes in 1830 during the time between his father's abdication and his own.",d:3},
+{s:"Abraham Lincoln was a licensed bartender.",t:true,e:"Before entering politics, Lincoln co-owned a bar called Berry and Lincoln in New Salem, Illinois, in 1833.",d:2},
+{s:"The first computer programmer was a woman.",t:true,e:"Ada Lovelace wrote the first algorithm intended for a machine — Charles Babbage's Analytical Engine — in the 1840s.",d:2},
+{s:"Pirates really made people walk the plank.",t:false,e:"Walking the plank is mostly a fiction popularized by novels. Pirates typically just threw unwanted captives overboard directly.",d:2},
+{s:"Ancient Egyptians used slabs of stone as pillows.",t:true,e:"Egyptian headrests were carved from stone, wood, or ivory. They were designed to elevate the head and preserve elaborate hairstyles.",d:2},
+{s:"Ninjas wore all black.",t:false,e:"Ninjas typically wore ordinary clothing to blend in with civilians. The all-black outfit comes from Japanese theater conventions.",d:2},
+{s:"Genghis Khan killed so many people that it cooled the climate.",t:true,e:"His invasions killed roughly 40 million people, causing forests to regrow on abandoned farmland, absorbing about 700 million tons of carbon.",d:3},
+{s:"The Great Fire of London in 1666 killed thousands of people.",t:false,e:"Despite destroying over 13,000 houses, the verified death toll was only 6 people, though the actual number was likely higher.",d:3},
+{s:"Roman gladiator fights always ended in death.",t:false,e:"Most gladiator fights were not to the death. Gladiators were expensive investments, and promoters preferred to keep them alive.",d:2},
+{s:"Humans and dinosaurs coexisted at the same time.",t:false,e:"Non-avian dinosaurs went extinct about 66 million years ago. Modern humans appeared roughly 300,000 years ago.",d:1},
+{s:"The Titanic's swimming pool is still filled with water.",t:true,e:"Technically true — the Titanic sits at the bottom of the Atlantic, so its swimming pool is indeed full of (sea)water.",d:1},
+{s:"Julius Caesar was born by cesarean section.",t:false,e:"The procedure was almost always fatal for mothers in ancient times. Caesar's mother, Aurelia, lived long after his birth.",d:2},
+{s:"In medieval England, animals could be put on trial and sentenced.",t:true,e:"Courts regularly tried animals for crimes. In 1386, a pig in France was executed for murdering a child, dressed in human clothes for the trial.",d:3},
+{s:"The longest war in history lasted over 300 years with zero casualties.",t:true,e:"The 335 Year War between the Netherlands and the Isles of Scilly (1651–1986) had no battles or deaths. Peace was simply forgotten.",d:3},
+{s:"Christopher Columbus proved the Earth was round.",t:false,e:"Educated Europeans already knew the Earth was round. The ancient Greeks had proven it over 1,500 years before Columbus sailed.",d:1},
+{s:"Ketchup was once sold as medicine.",t:true,e:"In the 1830s, tomato ketchup was marketed as a cure for diarrhea, jaundice, and other ailments by Dr. John Cook Bennett.",d:2},
+{s:"Marie Curie's notebooks are still radioactive and stored in lead boxes.",t:true,e:"Her personal belongings are so contaminated they'll remain radioactive for another 1,500 years. Visitors must sign a liability waiver.",d:3},
+{s:"The ancient Greeks had a word for the color blue.",t:false,e:"Ancient Greek had no single word for blue. Homer described the sea as 'wine-dark.' Some scholars believe they perceived color differently.",d:3},
+{s:"President Andrew Jackson's parrot had to be removed from his funeral for swearing.",t:true,e:"Jackson's African Grey parrot, Poll, reportedly started cursing loudly during the funeral and was escorted out.",d:2},
+{s:"The Leaning Tower of Pisa was always intended to be straight.",t:true,e:"Construction began in 1173, and it started tilting by 1178 because of soft ground on one side. Engineers tried to correct it for centuries.",d:1},
+{s:"Ancient Rome had shopping malls.",t:true,e:"Trajan's Market, built around 100-110 AD, had over 150 shops and offices on multiple levels — essentially an ancient strip mall.",d:2},
+{s:"The oldest known joke is about farts.",t:true,e:"A Sumerian joke from 1900 BCE goes: 'Something which has never occurred since time immemorial; a young woman did not fart in her husband's lap.'",d:2},
+{s:"Harriet Tubman led a military raid during the Civil War.",t:true,e:"She led the Combahee River Raid in 1863, freeing over 700 enslaved people — the first woman to lead an armed assault in the war.",d:3},
+{s:"The shortest presidency in US history lasted 32 days.",t:true,e:"William Henry Harrison died of pneumonia 32 days after his inauguration in 1841, giving the longest inaugural address in the rain.",d:2},
+{s:"Salem witch trials burned witches at the stake.",t:false,e:"No one was burned in Salem. Most were hanged, and one man, Giles Corey, was pressed to death with heavy stones.",d:2},
+{s:"Woolly mammoths were still alive when the pyramids were being built.",t:true,e:"The last woolly mammoths survived on Wrangel Island until about 1700 BCE. The Great Pyramid was completed around 2560 BCE.",d:3},
+],
+food: [
+{s:"Peanuts aren't actually nuts — they're legumes.",t:true,e:"Peanuts grow underground in pods, like beans and lentils. Botanically, they're classified as legumes, not tree nuts.",d:1},
+{s:"White chocolate isn't technically chocolate.",t:true,e:"It contains cocoa butter but no cocoa solids, which is what gives chocolate its brown color and distinctive flavor.",d:1},
+{s:"Honey is basically bee vomit.",t:true,e:"Bees collect nectar, partially digest it, then regurgitate it into honeycomb cells. It's enzymatically processed vomit, technically.",d:2},
+{s:"Ketchup was once sold as medicine.",t:true,e:"In the 1830s, Dr. John Cook Bennett marketed concentrated tomato extract (early ketchup) as a cure for diarrhea and indigestion.",d:2},
+{s:"Carrots were originally purple, not orange.",t:true,e:"The orange carrot was developed in the 17th century by Dutch growers. Wild carrots were purple, white, or yellow.",d:2},
+{s:"Chocolate can be lethal to dogs even in small amounts.",t:false,e:"While toxic to dogs, a lethal dose requires a significant amount relative to body weight. A small nibble usually isn't fatal, but should still be avoided.",d:2},
+{s:"Apples float in water because they're 25% air.",t:true,e:"The air pockets inside apples make them buoyant — which is exactly why bobbing for apples works as a game.",d:2},
+{s:"Strawberries have more vitamin C than oranges.",t:true,e:"Cup for cup, strawberries contain about 89mg of vitamin C versus 70mg in oranges.",d:2},
+{s:"Crackers are worse for your teeth than sugar.",t:true,e:"Crackers stick to teeth and break down into sugars slowly, giving bacteria more time to produce acid than a quick sugar hit.",d:3},
+{s:"Spam is short for 'spiced ham.'",t:true,e:"The name was chosen in a 1937 naming contest. Hormel confirms it stands for a combination of 'spice' and 'ham.'",d:1},
+{s:"Bananas are radioactive.",t:true,e:"Bananas contain potassium-40, a radioactive isotope. You'd need to eat about 10 million at once for a fatal dose, though.",d:2},
+{s:"Fortune cookies were invented in China.",t:false,e:"They were invented in California, likely by Japanese-American immigrants in the early 1900s. They're virtually unknown in China.",d:2},
+{s:"Grapes explode in the microwave.",t:true,e:"Cut grapes in the microwave create plasma — the trapped electrolytes ionize and produce sparks and glowing plasma arcs.",d:3},
+{s:"Pineapple contains an enzyme that digests your mouth back.",t:true,e:"Bromelain in pineapple breaks down proteins, which is why your mouth gets sore — the fruit is literally digesting your tissue.",d:2},
+{s:"Almonds are technically peach family members.",t:true,e:"Almonds belong to the Prunus genus, making them close relatives of peaches, cherries, and plums.",d:2},
+{s:"Capsaicin in hot peppers actually causes physical burns.",t:false,e:"It triggers pain receptors that sense heat, but it doesn't cause real tissue damage. The burning sensation is a neurological trick.",d:2},
+{s:"The most expensive spice in the world is saffron.",t:true,e:"Saffron costs $5,000–$10,000 per pound because each crocus flower produces only three tiny stigmas, all harvested by hand.",d:1},
+{s:"A ripe cranberry will bounce like a rubber ball.",t:true,e:"Fresh, ripe cranberries bounce because of tiny air pockets inside. Cranberry farmers actually use the bounce test for quality.",d:2},
+{s:"Kopi luwak coffee is made from beans eaten and excreted by a cat-like animal.",t:true,e:"The Asian palm civet eats coffee cherries, and the beans pass through its digestive system, supposedly improving the flavor. It's one of the world's most expensive coffees.",d:2},
+{s:"Eating celery burns more calories than it contains.",t:false,e:"While celery is very low in calories (about 6 per stalk), your body doesn't burn more than that digesting it. The deficit is tiny if any.",d:2},
+{s:"Nutmeg is a hallucinogen in large doses.",t:true,e:"Myristicin in nutmeg can cause hallucinations, nausea, and even organ failure in large amounts. Don't try it.",d:3},
+{s:"Hawaiian pizza was invented in Hawaii.",t:false,e:"It was invented in 1962 by Sam Panopoulos, a Greek-Canadian, at his restaurant in Chatham, Ontario, Canada.",d:2},
+{s:"Potatoes can absorb and emit Wi-Fi signals similarly to humans.",t:true,e:"Boeing used potatoes to test Wi-Fi signal strength on planes because their water content and chemistry interact with signals like human bodies do.",d:3},
+{s:"Cucumber is technically a fruit.",t:true,e:"Botanically, cucumbers develop from flowers and contain seeds, making them fruits — like tomatoes and peppers.",d:1},
+{s:"Water has a taste.",t:true,e:"Scientists discovered in 2017 that our tongues have specific taste receptors for water, registering it as a sour-like sensation.",d:3},
+{s:"Ripe bananas glow blue under UV light.",t:true,e:"As chlorophyll breaks down in ripening bananas, it produces a compound that fluoresces bright blue under black light.",d:3},
+{s:"Figs contain dead wasps.",t:true,e:"Many fig varieties are pollinated by wasps that enter the fig and die inside. The fruit's enzymes digest the wasp completely.",d:2},
+{s:"Avocados are toxic to most birds.",t:true,e:"Persin, a fungicidal toxin in avocados, is harmless to humans but can cause cardiac failure in birds and some other animals.",d:3},
+{s:"Cashews come from a fruit.",t:true,e:"The cashew nut hangs below the cashew apple, a pear-shaped fruit. Each apple produces only one nut.",d:2},
+{s:"Lobsters were once considered prison food for the poor.",t:true,e:"In colonial America, lobsters were so abundant they were fed to prisoners, indentured servants, and even used as fertilizer.",d:2},
+{s:"MSG (monosodium glutamate) is scientifically proven to be harmful.",t:false,e:"Decades of research have found no consistent evidence that MSG causes adverse effects. The 'MSG headache' hasn't been replicated in controlled studies.",d:2},
+{s:"Cheese is the most shoplifted food item in the world.",t:true,e:"About 4% of cheese produced globally is stolen. Its high price, universal appeal, and easy resale make it a prime target.",d:2},
+],
+space: [
+{s:"There are more stars in the universe than grains of sand on Earth.",t:true,e:"Estimates suggest roughly 70 sextillion stars (7 × 10²²) in the observable universe versus about 7.5 × 10¹⁸ grains of sand.",d:2},
+{s:"A day on Venus is longer than a year on Venus.",t:true,e:"Venus takes 243 Earth days to rotate once, but only 225 Earth days to orbit the Sun. Its day is longer than its year.",d:3},
+{s:"The Sun is yellow.",t:false,e:"The Sun is actually white. It appears yellow from Earth because our atmosphere scatters blue light. From space, it looks white.",d:2},
+{s:"You can hear explosions in space.",t:false,e:"Sound requires a medium like air to travel. Space is a near-perfect vacuum, so no sound can propagate — explosions are silent.",d:1},
+{s:"Neutron stars are so dense that a teaspoon would weigh about 6 billion tons.",t:true,e:"Neutron star matter is incredibly compressed — the mass of a mountain packed into a sugar-cube-sized volume.",d:3},
+{s:"Astronauts grow taller in space.",t:true,e:"Without gravity compressing the spine, astronauts can grow up to 2 inches taller. They shrink back after returning to Earth.",d:2},
+{s:"There's a giant cloud of alcohol floating in space.",t:true,e:"Sagittarius B2, a gas cloud near the center of the Milky Way, contains enough ethyl alcohol to fill 400 trillion trillion pints.",d:3},
+{s:"It rains diamonds on Jupiter and Saturn.",t:true,e:"Extreme pressure converts methane in the atmosphere into carbon, which then hardens into chunks of diamond as it falls.",d:2},
+{s:"Mars has the tallest volcano in the solar system.",t:true,e:"Olympus Mons on Mars is about 22 km high — nearly three times the height of Mount Everest.",d:2},
+{s:"The Earth is the only planet not named after a god.",t:true,e:"Earth comes from Germanic and Old English words meaning 'ground.' Every other planet is named after a Roman or Greek deity.",d:1},
+{s:"GPS satellites have to account for Einstein's theory of relativity.",t:true,e:"Clocks on GPS satellites run slightly faster due to weaker gravity. Without relativistic corrections, GPS would drift by ~10 km per day.",d:3},
+{s:"The moon has moonquakes.",t:true,e:"Seismometers left by Apollo missions detected moonquakes. Some are caused by tidal forces from Earth pulling on the Moon's interior.",d:2},
+{s:"Space smells like burnt steak and gunpowder.",t:true,e:"Astronauts report a metallic, burnt smell on spacesuits after spacewalks. It's caused by dying stars releasing polycyclic aromatic hydrocarbons.",d:2},
+{s:"Light from the Sun takes about 8 minutes to reach Earth.",t:true,e:"The Sun is about 93 million miles away. At light speed (186,000 miles/sec), photons take roughly 8 minutes and 20 seconds.",d:1},
+{s:"There's a planet made almost entirely of diamond.",t:true,e:"55 Cancri e, a super-Earth exoplanet, is believed to have a surface largely composed of graphite and diamond.",d:3},
+{s:"The footprints on the Moon will last for millions of years.",t:true,e:"With no wind, water, or atmosphere to erode them, bootprints on the Moon's surface could persist for tens of millions of years.",d:2},
+{s:"Saturn would float if you could find a bathtub big enough.",t:true,e:"Saturn's density (0.687 g/cm³) is less than water (1 g/cm³), making it the only planet that would theoretically float.",d:2},
+{s:"Black holes are black.",t:false,e:"Black holes themselves aren't visible, but the superheated matter spiraling into them glows intensely. The event horizon isn't really a color.",d:3},
+{s:"One million Earths could fit inside the Sun.",t:true,e:"The Sun's volume is about 1.3 million times that of Earth. It contains 99.86% of all mass in our solar system.",d:2},
+{s:"Venus spins in the opposite direction to most planets.",t:true,e:"Venus rotates clockwise (retrograde), while most planets spin counter-clockwise. On Venus, the Sun rises in the west.",d:2},
+{s:"There's a planet where it rains glass sideways.",t:true,e:"HD 189733b has winds over 5,400 mph carrying silicate particles, creating sideways glass rain in its blue atmosphere.",d:3},
+{s:"The universe has a color, and it's beige.",t:true,e:"Scientists call it 'Cosmic Latte' — the average color of all light in the universe is a warm beige-white.",d:2},
+{s:"The Voyager 1 spacecraft is the farthest human-made object from Earth.",t:true,e:"Launched in 1977, Voyager 1 is over 15 billion miles from Earth and has entered interstellar space.",d:1},
+{s:"Pluto is smaller than Russia.",t:true,e:"Pluto's surface area is about 16.7 million km², while Russia covers about 17.1 million km².",d:3},
+{s:"A year on Mercury is shorter than a day on Mercury.",t:false,e:"A Mercury year (88 Earth days) is actually shorter than a Mercury solar day (176 Earth days), but the statement says the year is shorter than the day, which is true! Actually — the year IS shorter than the day. Let me correct: this is TRUE, not false.",d:3},
+{s:"Sunsets on Mars are blue.",t:true,e:"Fine dust in Mars' atmosphere scatters red light and allows blue wavelengths through, creating blue-tinted sunsets.",d:2},
+{s:"The International Space Station travels faster than a bullet.",t:true,e:"The ISS orbits at about 17,500 mph (28,000 km/h), while a rifle bullet travels around 1,700 mph.",d:2},
+{s:"If two pieces of the same metal touch in space, they permanently bond.",t:true,e:"Cold welding occurs in vacuum because there's no oxide layer or air between the atoms. They fuse on contact.",d:3},
+{s:"The Moon is slowly moving away from Earth.",t:true,e:"The Moon recedes about 3.8 cm per year due to tidal interactions. It was much closer billions of years ago.",d:2},
+{s:"Time passes faster on top of a mountain than at sea level.",t:true,e:"Due to general relativity, clocks at higher elevations tick slightly faster because they experience weaker gravitational pull.",d:3},
+],
+pop: [
+{s:"The inventor of the Pringles can is buried in one.",t:true,e:"Fredric Baur, who designed the iconic tube, had part of his ashes buried in a Pringles can after he died in 2008.",d:2},
+{s:"The first iPhone was released in 2005.",t:false,e:"The original iPhone was announced in January 2007 and went on sale June 29, 2007.",d:1},
+{s:"Nintendo was founded in the 1800s.",t:true,e:"Nintendo was founded in 1889 in Kyoto, Japan. They originally made handmade playing cards (hanafuda).",d:3},
+{s:"The hashtag symbol is technically called an 'octothorpe.'",t:true,e:"Bell Labs engineers named it in the 1960s. The origin of 'thorpe' is debated, but 'octo' refers to its eight points.",d:2},
+{s:"Google was originally called 'Backrub.'",t:true,e:"Larry Page and Sergey Brin named their search engine Backrub in 1996 because it analyzed 'back links.' They renamed it Google in 1997.",d:2},
+{s:"The average person swallows 8 spiders a year while sleeping.",t:false,e:"This 'fact' was deliberately made up in 1993 by Lisa Holst to show how easily fake facts spread. Spiders avoid sleeping humans.",d:1},
+{s:"LEGO is the world's largest tire manufacturer.",t:true,e:"LEGO produces over 300 million tiny tires per year — more than any other company, including Bridgestone and Goodyear.",d:2},
+{s:"The name 'Wi-Fi' stands for 'Wireless Fidelity.'",t:false,e:"Wi-Fi doesn't stand for anything. The Wi-Fi Alliance hired a branding firm that created it as a catchy, meaningless name.",d:2},
+{s:"More people have been to the moon than have scored a perfect game in bowling on TV.",t:false,e:"12 people have walked on the moon, but there have been multiple televised perfect 300 games in professional bowling.",d:2},
+{s:"The Mona Lisa has no eyebrows.",t:true,e:"Some historians believe Leonardo painted them originally, but they were accidentally removed during over-aggressive cleaning centuries ago.",d:1},
+{s:"Samsung is older than South Korea.",t:true,e:"Samsung was founded in 1938, while South Korea was established as a republic in 1948 — making Samsung 10 years older.",d:3},
+{s:"The average lead pencil can draw a line 35 miles long.",t:true,e:"A standard No. 2 pencil contains enough graphite to draw a continuous line about 35–40 miles (56–64 km) long.",d:2},
+{s:"Bubble wrap was originally invented as wallpaper.",t:true,e:"In 1957, engineers Al Fielding and Marc Chavannes sealed two shower curtains together to create textured wallpaper. It didn't sell until IBM used it for packaging.",d:2},
+{s:"The first webcam was invented to watch a coffee pot.",t:true,e:"In 1991, Cambridge University researchers set up a camera pointed at their coffee pot so they could check if coffee was ready without walking to the break room.",d:2},
+{s:"Facebook was originally called 'Thefacebook.'",t:true,e:"Mark Zuckerberg launched it as 'thefacebook.com' in February 2004. The 'the' was dropped in 2005 after buying the domain facebook.com.",d:1},
+{s:"Treadmills were originally created as torture devices.",t:true,e:"In 1818, British engineer William Cubitt designed treadmills as punishment for prisoners. They'd walk for hours powering grain mills.",d:2},
+{s:"The typewriter was invented before the ballpoint pen.",t:true,e:"The first practical typewriter was patented in 1868. The modern ballpoint pen wasn't successfully commercialized until 1943.",d:2},
+{s:"Netflix is older than Google.",t:true,e:"Netflix was founded in August 1997. Google was founded in September 1998 — making Netflix about a year older.",d:2},
+{s:"The original Star Wars movie was expected to be a massive flop.",t:true,e:"Even George Lucas expected it to fail. Fox gave away merchandising rights cheaply, not expecting the film to succeed. It made $775 million.",d:2},
+{s:"M&M's were created so soldiers could eat chocolate without it melting.",t:true,e:"Forrest Mars saw soldiers eating British Smarties during the Spanish Civil War and developed M&M's with a hard candy shell for the US military in 1941.",d:2},
+{s:"The computer mouse was invented at Apple.",t:true,e:"Douglas Engelbart invented the mouse in 1964 at Stanford Research Institute, not at Apple. Apple later popularized it commercially with the Macintosh.",d:2},
+{s:"Vending machines kill more people per year than sharks.",t:true,e:"Vending machines cause about 13 deaths per year (from tipping), while sharks kill about 5 people per year on average.",d:2},
+{s:"The first email ever sent was 'QWERTYUIOP.'",t:true,e:"Ray Tomlinson, who invented email in 1971, said the first test messages were meaningless, likely something typed along the keyboard.",d:2},
+{s:"Alaska is the US state with the most registered pilots per capita.",t:true,e:"About 1 in 58 Alaskans is a registered pilot — six times the national average — because much of the state is only accessible by air.",d:3},
+{s:"Barbie's full name is Barbara Millicent Roberts.",t:true,e:"Barbie was named after the creator Ruth Handler's daughter, Barbara, and has had an extensive fictional biography since 1959.",d:1},
+{s:"'E.T.' was originally meant to be a horror movie.",t:true,e:"Steven Spielberg initially developed the concept as a dark horror film called 'Night Skies' about aliens terrorizing a family, before reworking it into E.T.",d:3},
+{s:"The average smartphone has more computing power than NASA used for the Moon landing.",t:true,e:"The Apollo Guidance Computer had 64KB of memory. A modern smartphone has millions of times more processing power.",d:1},
+{s:"Comic Sans was designed for Microsoft Bob, a cartoon dog interface.",t:true,e:"Vincent Connare created Comic Sans in 1994 because he thought Times New Roman looked wrong in speech bubbles for the Microsoft Bob program.",d:2},
+{s:"The first YouTube video ever uploaded is about elephants at a zoo.",t:true,e:"'Me at the zoo' was uploaded by co-founder Jawed Karim on April 23, 2005, filmed at the San Diego Zoo.",d:1},
+{s:"Amazon started as an online bookstore.",t:true,e:"Jeff Bezos launched Amazon in 1994 selling only books. He chose books because of their universal demand and low price point.",d:1},
+{s:"The @ symbol was nearly eliminated from keyboards before email was invented.",t:false,e:"While the @ symbol was underused, it was retained on typewriter and computer keyboards. Ray Tomlinson specifically chose it for email addresses in 1971.",d:2},
+{s:"The shortest commercial flight in the world lasts about 57 seconds.",t:true,e:"The flight between Westray and Papa Westray in Scotland covers just 1.7 miles and takes under 2 minutes.",d:2},
+]
+};
+
+// Fix the Mercury question
+QUESTIONS.space[24] = {s:"On Mercury, a single solar day lasts longer than a single year.",t:true,e:"A Mercury solar day (176 Earth days) is longer than its year (88 Earth days), meaning the Sun rises only once every two orbits.",d:3};
+
+// =====================================================
+//  CATEGORY CONFIG
+// =====================================================
+const CAT_CONFIG = {
+    animals:{label:"Animals & Nature",icon:"🐾",color:"var(--cat-animals)",bg:"var(--cat-animals-bg)"},
+    geo:{label:"Geography & Earth",icon:"🌍",color:"var(--cat-geo)",bg:"var(--cat-geo-bg)"},
+    history:{label:"People & History",icon:"👑",color:"var(--cat-history)",bg:"var(--cat-history-bg)"},
+    food:{label:"Food & Drink",icon:"🍕",color:"var(--cat-food)",bg:"var(--cat-food-bg)"},
+    space:{label:"Space & Science",icon:"🚀",color:"var(--cat-space)",bg:"var(--cat-space-bg)"},
+    pop:{label:"Pop Culture & Tech",icon:"🎮",color:"var(--cat-pop)",bg:"var(--cat-pop-bg)"}
+};
+
+const ICONS_PER_CAT = {
+    animals:["🐾","🐙","🐝","🦊","🐬","🦋","🐘","🐧","🦈","🐢"],
+    geo:["🌍","🏔️","🌊","🏝️","🗺️","🌋","🏜️","❄️","🌏","🧭"],
+    history:["👑","⚔️","🏛️","📜","🎭","🗿","🏰","⚖️","🎖️","🕰️"],
+    food:["🍕","🍌","🧀","🍫","🌶️","🍯","🥑","☕","🍎","🥜"],
+    space:["🚀","🌙","⭐","🪐","☀️","🔭","💫","🌌","🛸","🌠"],
+    pop:["🎮","💻","📱","🎬","🎵","🕹️","📺","🤖","💡","🎧"]
+};
+
+// =====================================================
+//  GAME STATE
+// =====================================================
+let selectedCats = [];
+let mixAll = true;
+let difficulty = "spicy";
+let lives = 3;
+let streak = 0;
+let totalQ = 0;
+let correctQ = 0;
+let currentQuestion = null;
+let answering = false;
+let recentIds = new Set();
+let progressHistory = [];
+
+// =====================================================
+//  SCREEN MANAGEMENT
+// =====================================================
+function showScreen(id){
+    document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+function goHome(){showScreen('home')}
+
+// =====================================================
+//  HOME SCREEN LOGIC
+// =====================================================
+function toggleMix(){
+    mixAll=!mixAll;
+    document.getElementById('mixBtn').classList.toggle('selected',mixAll);
+    if(mixAll){selectedCats=[];document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('selected'))}
+    updatePlayBtn();
+}
+function toggleCat(btn){
+    const cat=btn.dataset.cat;
+    if(mixAll){mixAll=false;document.getElementById('mixBtn').classList.remove('selected')}
+    btn.classList.toggle('selected');
+    if(btn.classList.contains('selected')){selectedCats.push(cat)}else{selectedCats=selectedCats.filter(c=>c!==cat)}
+    if(selectedCats.length===0){mixAll=true;document.getElementById('mixBtn').classList.add('selected')}
+    updatePlayBtn();
+}
+function selectDiff(btn){
+    document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('selected'));
+    btn.classList.add('selected');
+    difficulty=btn.dataset.diff;
+}
+function updatePlayBtn(){document.querySelector('.play-btn').disabled=false}
+
+// =====================================================
+//  GAME LOGIC
+// =====================================================
+function startGame(){
+    lives=3;streak=0;totalQ=0;correctQ=0;progressHistory=[];recentIds.clear();
+    updateHearts();updateStreak();updateProgress();
+    showScreen('game');
+    nextQuestion();
+}
+
+function getActiveCats(){
+    return mixAll ? Object.keys(QUESTIONS) : selectedCats;
+}
+
+function getDiffRange(){
+    if(difficulty==='chill') return [1,2];
+    if(difficulty==='savage') return [3,4];
+    // Spicy: start medium, scale up with streak
+    const minD = streak < 5 ? 1 : 2;
+    const maxD = streak < 3 ? 2 : streak < 8 ? 3 : 4;
+    return [minD, maxD];
+}
+
+function pickQuestion(){
+    const cats = getActiveCats();
+    const [minD, maxD] = getDiffRange();
+    let pool = [];
+    cats.forEach(cat => {
+        QUESTIONS[cat].forEach((q, i) => {
+            const id = cat+'_'+i;
+            if(q.d >= minD && q.d <= maxD && !recentIds.has(id)){
+                pool.push({...q, id, cat});
+            }
+        });
+    });
+    // If pool is too small, relax recent filter
+    if(pool.length < 3){
+        recentIds.clear();
+        cats.forEach(cat => {
+            QUESTIONS[cat].forEach((q, i) => {
+                const id = cat+'_'+i;
+                if(q.d >= minD && q.d <= maxD){pool.push({...q, id, cat})}
+            });
+        });
+    }
+    // If still empty, ignore difficulty
+    if(pool.length === 0){
+        cats.forEach(cat => {
+            QUESTIONS[cat].forEach((q, i) => {
+                pool.push({...q, id:cat+'_'+i, cat});
+            });
+        });
+    }
+    // Shuffle and pick
+    const q = pool[Math.floor(Math.random()*pool.length)];
+    recentIds.add(q.id);
+    if(recentIds.size > 80) recentIds.clear();
+    return q;
+}
+
+function nextQuestion(){
+    answering = false;
+    currentQuestion = pickQuestion();
+    const q = currentQuestion;
+    const conf = CAT_CONFIG[q.cat];
+    const icons = ICONS_PER_CAT[q.cat];
+
+    // Update badge
+    const badge = document.getElementById('gameCatBadge');
+    badge.textContent = conf.icon + ' ' + conf.label;
+    badge.style.background = conf.bg;
+    badge.style.color = conf.color;
+
+    // Update card
+    document.getElementById('questionIcon').textContent = icons[Math.floor(Math.random()*icons.length)];
+    document.getElementById('questionText').textContent = q.s;
+    const diffStars = '●'.repeat(q.d) + '○'.repeat(4-q.d);
+    document.getElementById('questionDiff').textContent = 'Difficulty: ' + diffStars;
+
+    // Reset card state
+    const card = document.getElementById('questionCard');
+    card.classList.remove('correct','wrong','shake');
+    card.className = 'question-card fade-in';
+
+    // Hide reveal
+    const overlay = document.getElementById('revealOverlay');
+    overlay.classList.remove('show','is-correct','is-wrong');
+
+    // Enable buttons
+    document.querySelectorAll('.answer-btn').forEach(b=>b.classList.remove('disabled'));
+}
+
+function answer(userSaidTrue){
+    if(answering) return;
+    answering = true;
+    const q = currentQuestion;
+    const isCorrect = (userSaidTrue === q.t);
+
+    // Disable buttons
+    document.querySelectorAll('.answer-btn').forEach(b=>b.classList.add('disabled'));
+
+    const card = document.getElementById('questionCard');
+    const overlay = document.getElementById('revealOverlay');
+    const label = document.getElementById('revealLabel');
+    const ans = document.getElementById('revealAnswer');
+    const expl = document.getElementById('revealExplanation');
+
+    totalQ++;
+
+    if(isCorrect){
+        correctQ++;
+        streak++;
+        updateStreak();
+        progressHistory.push('correct');
+        card.classList.add('correct');
+        overlay.classList.add('is-correct');
+        label.textContent = '✓ Correct!';
+        label.className = 'reveal-label correct-label pop-in';
+        ans.textContent = q.t ? 'That\'s TRUE!' : 'That\'s TOTALLY FAKE!';
+        fireConfetti();
+    } else {
+        lives--;
+        updateHearts();
+        progressHistory.push('wrong');
+        card.classList.add('wrong','shake');
+        overlay.classList.add('is-wrong');
+        label.textContent = '✗ Nope!';
+        label.className = 'reveal-label wrong-label pop-in';
+        ans.textContent = q.t ? 'Actually, it\'s TRUE!' : 'Actually, it\'s TOTALLY FAKE!';
+    }
+
+    expl.textContent = q.e;
+    overlay.classList.add('show');
+    updateProgress();
+
+    // Tap to continue
+    const handler = () => {
+        overlay.removeEventListener('click', handler);
+        card.removeEventListener('click', handler);
+        if(lives <= 0){
+            gameOver();
+        } else {
+            nextQuestion();
+        }
+    };
+    setTimeout(()=>{
+        overlay.addEventListener('click', handler);
+        card.addEventListener('click', handler);
+    }, 400);
+}
+
+function updateHearts(){
+    for(let i=1;i<=3;i++){
+        document.getElementById('h'+i).classList.toggle('lost', i > lives);
+    }
+}
+
+function updateStreak(){
+    document.getElementById('streakNum').textContent = streak;
+}
+
+function updateProgress(){
+    const bar = document.getElementById('progressBar');
+    bar.innerHTML = '';
+    const show = progressHistory.slice(-15);
+    show.forEach(r=>{
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot ' + r;
+        bar.appendChild(dot);
+    });
+}
+
+// =====================================================
+//  GAME OVER
+// =====================================================
+function gameOver(){
+    const best = parseInt(localStorage.getItem('tof_best')||'0');
+    const newBest = streak > best;
+    if(newBest) localStorage.setItem('tof_best', streak);
+
+    document.getElementById('goStreak').textContent = streak;
+    document.getElementById('goBest').textContent = Math.max(streak, best);
+    document.getElementById('goAccuracy').textContent = totalQ>0 ? Math.round((correctQ/totalQ)*100)+'%' : '0%';
+    document.getElementById('goTotal').textContent = totalQ;
+
+    const emoji = streak >= 15 ? '🏆' : streak >= 10 ? '🔥' : streak >= 5 ? '💪' : streak >= 2 ? '😅' : '😵';
+    document.getElementById('goEmoji').textContent = emoji;
+
+    const msgs = [
+        streak >= 15 ? 'Legendary! Your brain is terrifyingly good.' : '',
+        streak >= 10 ? 'Seriously impressive. You know your stuff!' : '',
+        streak >= 5 ? 'Not bad at all! Can you push it further?' : '',
+        streak >= 2 ? 'Decent run! You\'re warming up.' : '',
+        'Don\'t worry — everyone starts somewhere!'
+    ];
+    document.getElementById('goSubtitle').textContent = msgs.find(m=>m) || msgs[4];
+
+    if(newBest && streak > 0) fireConfetti();
+    showScreen('gameover');
+}
+
+function shareResult(){
+    const cats = getActiveCats();
+    const catName = mixAll ? 'Mix' : cats.map(c=>CAT_CONFIG[c].label).join(', ');
+    const text = `🧠 I got a ${streak} streak in True or Totally Fake? (${catName}) on whatifs.fun/true-or-false/ — Can you beat me?`;
+    if(navigator.share){
+        navigator.share({text}).catch(()=>{});
+    } else {
+        navigator.clipboard.writeText(text).then(()=>{
+            const btn = document.querySelector('.go-share-btn');
+            btn.textContent = '✓ Copied!';
+            setTimeout(()=>{btn.innerHTML='📤 Share Your Score'},2000);
+        });
+    }
+}
+
+// =====================================================
+//  CONFETTI
+// =====================================================
+function fireConfetti(){
+    const container = document.getElementById('confettiContainer');
+    const colors = ['#22C55E','#3B82F6','#EAB308','#EF4444','#EC4899','#8B5CF6','#F97316','#00F0FF'];
+    for(let i=0;i<40;i++){
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random()*100+'%';
+        piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+        piece.style.width = (Math.random()*8+6)+'px';
+        piece.style.height = (Math.random()*8+6)+'px';
+        piece.style.borderRadius = Math.random()>0.5?'50%':'2px';
+        piece.style.animationDuration = (Math.random()*2+1.5)+'s';
+        piece.style.animationDelay = (Math.random()*0.5)+'s';
+        container.appendChild(piece);
+        setTimeout(()=>piece.remove(), 4000);
+    }
+}
+</script>
 </body>
 </html>
