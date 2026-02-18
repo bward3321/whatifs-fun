@@ -432,7 +432,6 @@
 
     window.addEventListener('resize', () => { resize(); updateScale(); });
     resize();
-    updateScale();
 
     // --- Audio Engine ---
     let audioCtx = null;
@@ -568,6 +567,9 @@
     function MIN_GAP()    { return 105 * s; }
     function BASE_SPACING(){ return 280 * Math.max(sx, 0.6); }
     function PLAYER_RADIUS(){ return Math.max(5, Math.round(7 * s)); }
+
+    // Initialize scale
+    updateScale();
 
     // Obstacles
     let obstacles = [];
