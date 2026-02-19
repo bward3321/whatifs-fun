@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Gravity Playground: Place Gravity Wells and Watch Particles Flow | whatifs.fun</title>
+<meta name="description" content="Play Gravity Playground — a free interactive physics sandbox. Place gravity wells, drag them around, and watch particles orbit, spiral, and stream. Explore gravitational forces in a beautiful visual simulation.">
+<meta property="og:title" content="Gravity Playground: Place Gravity Wells and Watch Particles Flow">
+<meta property="og:description" content="Play Gravity Playground — a free interactive physics sandbox. Place gravity wells, drag them around, and watch particles orbit, spiral, and stream.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://whatifs.fun/blog/gravity-playground/">
+<link rel="canonical" href="https://whatifs.fun/blog/gravity-playground/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Gravity Playground: Place Gravity Wells and Watch Particles Flow","description":"Play Gravity Playground — a free interactive physics sandbox. Place gravity wells, drag them around, and watch particles orbit, spiral, and stream.","url":"https://whatifs.fun/blog/gravity-playground/","publisher":{"@type":"Organization","name":"whatifs.fun"},"isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does gravity actually work in space?","acceptedAnswer":{"@type":"Answer","text":"Gravity follows the inverse-square law: double the distance, one-quarter the force. Every object with mass attracts every other object. In Gravity Playground, wells use a hybrid model — inverse-distance for long-range pull plus inverse-square for close-range acceleration — to create satisfying, visible particle behavior."}},{"@type":"Question","name":"What are gravity wells?","acceptedAnswer":{"@type":"Answer","text":"A gravity well is a conceptual model of the gravitational field surrounding a body in space. The deeper the well, the more energy needed to escape. In real physics, Earth sits in the Sun's gravity well, and the Moon sits in Earth's. Our simulation lets you place virtual gravity wells and see their effect on nearby particles."}},{"@type":"Question","name":"Why do particles orbit instead of falling straight in?","acceptedAnswer":{"@type":"Answer","text":"Orbits happen when an object has enough sideways velocity to keep missing the center. It's constantly falling toward the gravity source but moving fast enough laterally that it curves around instead of hitting it. This is exactly how the Moon orbits Earth and how satellites stay in space."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#e8e7e2;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c;--link:#6cb4ff}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;line-height:1.75;font-size:17px}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.home-btn{position:fixed;top:20px;left:20px;z-index:100;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(20,20,22,0.85);border:1px solid var(--card-border);border-radius:100px;color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .2s}
+.home-btn:hover{background:rgba(0,240,255,0.08);border-color:var(--accent-cyan);transform:translateY(-1px)}
+.home-btn svg{width:16px;height:16px;fill:currentColor}
+article{max-width:680px;margin:0 auto;padding:100px 24px 80px}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-bottom:24px;color:#fff}
+h2{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:700;letter-spacing:-0.5px;margin:40px 0 16px;color:#fff}
+p{margin-bottom:18px;color:var(--text)}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid rgba(108,180,255,0.2);transition:border-color .2s}
+a:hover{border-color:var(--link)}
+.cta-box{display:block;text-align:center;padding:20px 32px;background:linear-gradient(135deg,rgba(0,240,255,0.08),rgba(57,255,127,0.06));border:1px solid rgba(0,240,255,0.15);border-radius:14px;margin:40px 0;font-weight:700;font-size:1.05rem;color:var(--accent-cyan);text-decoration:none;border-bottom:none;transition:all .2s}
+.cta-box:hover{background:linear-gradient(135deg,rgba(0,240,255,0.14),rgba(57,255,127,0.1));border-color:rgba(0,240,255,0.3);transform:translateY(-2px)}
+.faq{margin-top:48px;padding-top:32px;border-top:1px solid var(--card-border)}
+.faq h2{margin-top:0}
+.faq-item{margin-bottom:24px}
+.faq-q{font-weight:700;color:#fff;margin-bottom:6px}
+.faq-a{color:var(--text-dim);line-height:1.7}
+.footer{text-align:center;padding:40px 24px;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--text-dim)}
+.footer a{color:var(--text-dim);border-bottom-color:transparent}
+@media(max-width:600px){article{padding:80px 18px 60px}.home-btn{top:14px;left:14px;padding:8px 16px;font-size:.72rem}}
+</style>
+</head>
+<body>
+<a href="/" class="home-btn"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> ALL GAMES</a>
+<article>
+<h1>Gravity Playground: Place Gravity Wells and Watch Particles Flow</h1>
+
+<p>Gravity is the weakest of the four fundamental forces, yet it shapes everything we can see. It holds galaxies together, keeps planets in orbit, bends light around black holes, and sticks you to your chair. Despite its importance, gravity is surprisingly difficult to <em>feel</em> intuitively beyond the obvious "things fall down."</p>
+
+<p>Gravity Playground lets you create and manipulate gravitational fields in real time. Tap to place a gravity well, watch particles stream toward it, drag it across the screen and see matter follow your finger like a cosmic current. It turns an abstract force into something you can touch.</p>
+
+<a href="/gravity-playground/" class="cta-box">▶ Play Gravity Playground</a>
+
+<h2>The Inverse-Square Law: Why Distance Matters So Much</h2>
+
+<p>Newton figured out that gravitational force decreases with the square of distance. Move twice as far from a mass and you feel one-quarter the pull. Three times farther, one-ninth. This dramatic falloff explains why the Sun, despite being 333,000 times Earth's mass, only pulls on you about 0.06% as hard as Earth does — it's just too far away.</p>
+
+<p>In Gravity Playground, this effect is visible. Particles far from a well drift slowly, almost lazily. But as they approach, the acceleration becomes dramatic. The last 20% of the journey happens fastest, producing those satisfying streaking trails as particles rush toward the center.</p>
+
+<h2>Orbits: Falling and Missing</h2>
+
+<p>The most counterintuitive thing about orbits is that orbiting objects are in constant free fall. The International Space Station falls toward Earth at the same rate as a dropped ball — it just moves sideways fast enough (17,500 mph) that Earth's surface curves away beneath it. It keeps falling, keeps missing, and that perpetual near-miss is what we call an orbit.</p>
+
+<p>When you place two wells in Gravity Playground and watch particles trace figure-eight paths between them, you're seeing the same three-body dynamics that make astrophysics so complex. Henri Poincaré proved in 1887 that there's no general solution to the three-body problem — meaning even with perfect knowledge of positions and velocities, you can't predict the long-term behavior. Small changes cascade into wildly different outcomes.</p>
+
+<p>Try it: place three wells in a triangle and switch to Chaos mode. The particle paths become genuinely unpredictable, not because the simulation is random, but because deterministic chaos means microscopic differences in starting position lead to completely different trajectories.</p>
+
+<h2>Why Things Spiral Inward</h2>
+
+<p>In a perfect vacuum with no energy loss, an orbiting body stays in orbit forever. But real systems have friction, tidal forces, and gravitational radiation. These slowly drain orbital energy, causing objects to spiral inward. This is how black holes grow — matter doesn't fall straight in, it spirals through an accretion disk, heating to millions of degrees along the way.</p>
+
+<p>Gravity Playground includes a tiny velocity damping effect that mimics this energy loss. Without it, particles would orbit indefinitely. With it, they gradually spiral toward the well center, get absorbed, and respawn — creating that continuous flowing-water effect where matter streams in from the edges.</p>
+
+<h2>The Entrainment Effect</h2>
+
+<p>When you drag a gravity well across the screen, nearby particles get swept along in its wake. This is similar to a real phenomenon called <a href="/blog/nuclear-simulation/">gravitational entrainment</a>, where a massive moving body drags the fabric of spacetime with it. Einstein's general relativity predicts this "frame-dragging" effect, and it was confirmed by NASA's Gravity Probe B satellite in 2011.</p>
+
+<p>The effect is tiny in reality — Earth's rotation drags nearby spacetime by about 0.000011 degrees per year. But in the playground, we amplify it dramatically so you can feel what it's like to move a gravitational source and watch the universe respond. It's one of those physics concepts that makes more sense when you can physically interact with it.</p>
+
+<h2>Three Modes, Three Perspectives</h2>
+
+<p>Particles mode gives you many small bodies with gentle motion — it's closest to watching dust interact with a star's gravity. Orbit mode uses fewer, larger bodies that settle into stable or chaotic orbital patterns, like a miniature <a href="/blog/balance-point/">solar system</a>. Chaos mode cranks everything up — more particles, stronger forces, faster speeds — and produces dense, tangled trajectories that look remarkably like the magnetic field visualizations NASA produces of the Sun's corona.</p>
+
+<p>Each mode reveals different aspects of gravitational dynamics. Particles mode shows the beauty of flow. Orbit mode demonstrates stability and resonance. Chaos mode reveals sensitive dependence on initial conditions — the hallmark of chaotic systems that appear everywhere from weather to <a href="/blog/how-many-decisions-you-make-today/">stock markets</a>.</p>
+
+<a href="/gravity-playground/" class="cta-box">▶ Play Gravity Playground Now — It's Free</a>
+
+<div class="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><p class="faq-q">How does gravity actually work in space?</p><p class="faq-a">Gravity follows the inverse-square law: double the distance, one-quarter the force. Every object with mass attracts every other object. In Gravity Playground, wells use a hybrid model — inverse-distance for long-range pull plus inverse-square for close-range acceleration — to create satisfying, visible particle behavior.</p></div>
+<div class="faq-item"><p class="faq-q">What are gravity wells?</p><p class="faq-a">A gravity well is a conceptual model of the gravitational field surrounding a body in space. The deeper the well, the more energy needed to escape. In real physics, Earth sits in the Sun's gravity well, and the Moon sits in Earth's. Our simulation lets you place virtual gravity wells and see their effect on nearby particles.</p></div>
+<div class="faq-item"><p class="faq-q">Why do particles orbit instead of falling straight in?</p><p class="faq-a">Orbits happen when an object has enough sideways velocity to keep missing the center. It's constantly falling toward the gravity source but moving fast enough laterally that it curves around instead of hitting it. This is exactly how the Moon orbits Earth and how satellites stay in space.</p></div>
+</div>
+</article>
+<footer class="footer"><a href="/">whatifs.fun</a> — built for fun, not profit</footer>
+</body>
+</html>
