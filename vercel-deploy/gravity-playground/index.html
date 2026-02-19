@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Gravity Playground — Place Gravity. Watch Motion. | whatifs.fun</title>
+<meta name="description" content="An interactive physics sandbox. Place gravity wells, watch particles orbit and flow. A calm, beautiful exploration of gravitational forces.">
+<meta property="og:title" content="Gravity Playground — Place Gravity. Watch Motion.">
+<meta property="og:description" content="An interactive physics sandbox. Place gravity wells and watch particles flow.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://whatifs.fun/gravity-playground/">
+<link rel="canonical" href="https://whatifs.fun/gravity-playground/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Gravity Playground","description":"An interactive physics sandbox. Place gravity wells and watch particles flow.","url":"https://whatifs.fun/gravity-playground/","applicationCategory":"EntertainmentApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap');
+:root{--bg1:#0B0F1A;--bg2:#111827;--cyan:#67E8F9;--violet:#A78BFA;--text:#E2E8F0;--text-dim:#64748B;--text-faint:#334155}
+html{-webkit-tap-highlight-color:transparent}
+body{background:var(--bg1);color:var(--text);font-family:'Outfit',system-ui,sans-serif;font-weight:300;min-height:100vh;min-height:100dvh;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:none}
+
+#intro{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--bg1),var(--bg2));transition:opacity .8s,visibility .8s}
+#intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.intro-title{font-size:clamp(2.4rem,7vw,4rem);font-weight:200;letter-spacing:-2px;text-align:center;margin-bottom:8px;opacity:0;animation:iu .9s ease .2s forwards}
+.intro-sub{font-size:clamp(1rem,3vw,1.3rem);color:var(--text-dim);font-weight:300;text-align:center;margin-bottom:48px;letter-spacing:1px;opacity:0;animation:iu .9s ease .4s forwards}
+.intro-enter{padding:14px 52px;background:transparent;border:1px solid rgba(103,232,249,0.25);color:var(--cyan);border-radius:100px;font-family:inherit;font-size:1rem;font-weight:400;letter-spacing:2px;cursor:pointer;transition:all .3s;opacity:0;animation:iu .9s ease .6s forwards}
+.intro-enter:hover{background:rgba(103,232,249,0.06);border-color:var(--cyan)}
+.intro-hint{position:absolute;bottom:40px;font-size:.82rem;color:var(--text-faint);letter-spacing:1px;opacity:0;animation:iu .9s ease .9s forwards}
+.intro-footer{position:absolute;bottom:16px;font-size:.72rem;color:var(--text-faint);opacity:0;animation:iu .9s ease 1s forwards}
+.intro-footer a{color:var(--text-faint);text-decoration:none}
+@keyframes iu{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+canvas{position:fixed;inset:0;width:100%;height:100%}
+#trailCanvas{z-index:1}
+#mainCanvas{z-index:2}
+
+.mode-bar{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:10;display:none;gap:2px;background:rgba(11,15,26,0.75);border:1px solid rgba(255,255,255,0.06);border-radius:100px;padding:3px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.mode-btn{padding:7px 18px;border:none;background:transparent;color:var(--text-dim);font-family:inherit;font-size:.78rem;font-weight:400;letter-spacing:.5px;cursor:pointer;border-radius:100px;transition:all .25s}
+.mode-btn.active{background:rgba(103,232,249,0.1);color:var(--cyan)}
+.mode-btn:hover:not(.active){color:var(--text)}
+
+.controls{position:fixed;bottom:20px;left:20px;z-index:10;display:none;flex-direction:column;gap:14px;background:rgba(11,15,26,0.7);border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:16px 18px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);min-width:150px}
+.ctrl-row{display:flex;flex-direction:column;gap:4px}
+.ctrl-label{font-size:.68rem;color:var(--text-dim);letter-spacing:.8px;text-transform:uppercase;font-weight:400}
+.ctrl-slider{-webkit-appearance:none;appearance:none;width:100%;height:3px;background:rgba(255,255,255,0.08);border-radius:4px;outline:none}
+.ctrl-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--cyan);border-radius:50%;cursor:pointer;border:none}
+.ctrl-slider::-moz-range-thumb{width:14px;height:14px;background:var(--cyan);border-radius:50%;cursor:pointer;border:none}
+
+.btns{position:fixed;bottom:20px;right:20px;z-index:10;display:none;gap:8px}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:rgba(11,15,26,0.7);border:1px solid rgba(255,255,255,0.06);color:var(--text-dim);display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .2s;font-size:.85rem}
+.icon-btn:hover{border-color:rgba(255,255,255,0.15);color:var(--text)}
+.icon-btn svg{width:18px;height:18px;fill:currentColor}
+
+.hint{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:10;font-size:.82rem;color:var(--text-faint);letter-spacing:.5px;opacity:0;transition:opacity .6s;pointer-events:none;text-align:center;white-space:nowrap}
+.hint.show{opacity:1}
+
+/* Tutorial overlay */
+.tut{position:fixed;bottom:0;left:0;right:0;z-index:15;display:flex;flex-direction:column;align-items:center;padding:30px 24px 48px;pointer-events:none;transition:opacity .5s;background:linear-gradient(to top,rgba(11,15,26,0.7) 0%,rgba(11,15,26,0.3) 60%,transparent 100%)}
+.tut.hidden{opacity:0}
+.tut-step{font-size:clamp(1.1rem,3vw,1.4rem);color:rgba(255,255,255,0.85);font-weight:400;letter-spacing:.5px;text-align:center;line-height:1.5;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s;margin-bottom:8px}
+.tut-step.active{opacity:1;transform:translateY(0)}
+.tut-sub{font-size:clamp(.78rem,2vw,.88rem);color:rgba(255,255,255,0.35);letter-spacing:.5px;text-align:center;opacity:0;transition:opacity .4s .15s}
+.tut-step.active+.tut-sub{opacity:1}
+.tut-progress{display:flex;gap:6px;margin-top:16px}
+.tut-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);transition:background .3s}
+.tut-dot.done{background:rgba(103,232,249,0.5)}
+.tut-dot.current{background:rgba(103,232,249,0.9)}
+.tut-skip{font-size:.72rem;color:rgba(255,255,255,0.25);margin-top:12px;cursor:pointer;pointer-events:auto;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.tut-skip:hover{color:rgba(255,255,255,0.5)}
+@media(max-width:600px){.tut{padding:0 18px 28px}}
+
+@media(max-width:600px){
+.mode-bar{top:10px}.mode-btn{padding:6px 14px;font-size:.72rem}
+.controls{bottom:14px;left:14px;padding:12px 14px;min-width:130px}
+.btns{bottom:14px;right:14px}.icon-btn{width:36px;height:36px}
+}
+</style>
+</head>
+<body>
+
+<div id="intro">
+<h1 class="intro-title">Gravity Playground</h1>
+<p class="intro-sub">Place gravity. Watch motion.</p>
+<button class="intro-enter" onclick="enterSim()">Enter</button>
+<div class="intro-hint">Tap anywhere to place gravity.</div>
+<div class="intro-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+
+<canvas id="trailCanvas"></canvas>
+<canvas id="mainCanvas"></canvas>
+
+<div class="mode-bar" id="modeBar">
+<button class="mode-btn active" data-mode="particles">Particles</button>
+<button class="mode-btn" data-mode="orbit">Orbit</button>
+<button class="mode-btn" data-mode="chaos">Chaos</button>
+</div>
+
+<div class="controls" id="controls">
+<div class="ctrl-row"><span class="ctrl-label">Strength</span><input type="range" class="ctrl-slider" id="strengthSlider" min="5" max="100" value="65"></div>
+<div class="ctrl-row"><span class="ctrl-label">Trail Length</span><input type="range" class="ctrl-slider" id="trailSlider" min="1" max="100" value="40"></div>
+</div>
+
+<div class="btns" id="btns">
+<button class="icon-btn" id="resetBtn" title="Reset"><svg viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0012 4C7.58 4 4.01 7.58 4.01 12S7.58 20 12 20c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button>
+<button class="icon-btn" id="soundBtn" title="Sound"><svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0014 8.77v6.46A4.49 4.49 0 0016.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></button>
+</div>
+
+<div class="hint" id="hint"></div>
+
+<!-- Tutorial -->
+<div class="tut" id="tut">
+    <div class="tut-step" id="tutStep"></div>
+    <div class="tut-sub" id="tutSub"></div>
+    <div class="tut-progress" id="tutDots"></div>
+    <div class="tut-skip" id="tutSkip" onclick="skipTutorial()">skip</div>
+</div>
+
+<script>
+const TC=document.getElementById('trailCanvas'),MC=document.getElementById('mainCanvas');
+const tCtx=TC.getContext('2d'),mCtx=MC.getContext('2d');
+let W,H,dpr;
+function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);W=window.innerWidth;H=window.innerHeight;
+    TC.width=MC.width=W*dpr;TC.height=MC.height=H*dpr;
+    TC.style.width=MC.style.width=W+'px';TC.style.height=MC.style.height=H+'px';
+    tCtx.setTransform(dpr,0,0,dpr,0,0);mCtx.setTransform(dpr,0,0,dpr,0,0);
+}
+window.addEventListener('resize',resize);resize();
+
+// STATE
+let simActive=false,mode='particles';
+let wells=[],particles=[],ripples=[];
+let selectedWell=null,draggingWell=null,dragOffset={x:0,y:0};
+let lastTap=0,strengthVal=65,trailFade=40;
+let soundOn=false;
+let bgStars=[];
+
+const MODES={
+    particles:{count:140,size:2,speed:0.15,gMult:3.2,trail:true,spawnRate:3},
+    orbit:{count:18,size:4.5,speed:0.5,gMult:2.0,trail:true,spawnRate:0.08},
+    chaos:{count:220,size:1.4,speed:0.8,gMult:5.0,trail:true,spawnRate:5}
+};
+
+// AUDIO
+let audioCtx,droneOsc1,droneOsc2,droneGain;
+function initAudio(){
+    if(audioCtx)return;audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    droneOsc1=audioCtx.createOscillator();droneOsc2=audioCtx.createOscillator();
+    droneGain=audioCtx.createGain();
+    const f=audioCtx.createBiquadFilter();f.type='lowpass';f.frequency.value=180;
+    droneOsc1.type='sine';droneOsc1.frequency.value=55;
+    droneOsc2.type='sine';droneOsc2.frequency.value=82.5;
+    droneGain.gain.value=0;
+    droneOsc1.connect(f);droneOsc2.connect(f);f.connect(droneGain);droneGain.connect(audioCtx.destination);
+    droneOsc1.start();droneOsc2.start();
+}
+function setDrone(v){if(!droneGain||!soundOn)return;droneGain.gain.linearRampToValueAtTime(Math.min(v,0.05),audioCtx.currentTime+0.3)}
+function playPlace(str){
+    if(!audioCtx||!soundOn)return;
+    // Deep satisfying thump
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(80+str*0.5,audioCtx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(40,audioCtx.currentTime+0.3);
+    g.gain.setValueAtTime(0.12,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.5);
+    o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.5);
+    // Harmonic shimmer
+    const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
+    o2.type='sine';o2.frequency.value=220+str*3;
+    g2.gain.setValueAtTime(0.03,audioCtx.currentTime);
+    g2.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.8);
+    o2.connect(g2);g2.connect(audioCtx.destination);o2.start();o2.stop(audioCtx.currentTime+0.8);
+}
+function playRemove(){
+    if(!audioCtx||!soundOn)return;
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(200,audioCtx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(60,audioCtx.currentTime+0.4);
+    g.gain.setValueAtTime(0.06,audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.4);
+    o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+0.4);
+}
+function toggleSound(){
+    soundOn=!soundOn;
+    if(soundOn){initAudio();setDrone(0.02)}
+    else if(droneGain)droneGain.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.3);
+    document.getElementById('soundBtn').style.color=soundOn?'var(--cyan)':'var(--text-dim)';
+}
+
+// STARS
+function initStars(){bgStars=[];for(let i=0;i<60;i++)bgStars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1+0.3,a:Math.random()*0.2+0.03,sp:Math.random()*0.06+0.01})}
+
+// PARTICLES
+function spawnP(){
+    const c=MODES[mode],edge=Math.floor(Math.random()*4);
+    let x,y,vx,vy;const sp=c.speed*(0.15+Math.random()*0.25);
+    if(edge===0){x=Math.random()*W;y=-10;vx=(Math.random()-0.5)*sp*0.2;vy=sp}
+    else if(edge===1){x=W+10;y=Math.random()*H;vx=-sp;vy=(Math.random()-0.5)*sp*0.2}
+    else if(edge===2){x=Math.random()*W;y=H+10;vx=(Math.random()-0.5)*sp*0.2;vy=-sp}
+    else{x=-10;y=Math.random()*H;vx=sp;vy=(Math.random()-0.5)*sp*0.2}
+    const hue=mode==='chaos'?[280,320,340,38][Math.floor(Math.random()*4)]:
+        [175,195,210,38,270][Math.floor(Math.random()*5)];
+    return{x,y,vx,vy,size:c.size*(0.7+Math.random()*0.6),hue,baseHue:hue,bright:0.5+Math.random()*0.3,spd:0};
+}
+function initP(){particles=[];const c=MODES[mode];for(let i=0;i<c.count;i++){const p=spawnP();p.x=Math.random()*W;p.y=Math.random()*H;p.vx=(Math.random()-0.5)*0.1;p.vy=(Math.random()-0.5)*0.1;particles.push(p)}}
+
+// WELLS
+const WELL_HUES=[190,270,38,320]; // cyan, violet, gold, magenta
+function addWell(x,y){
+    const s=strengthVal;
+    const hue=WELL_HUES[wells.length%WELL_HUES.length];
+    const w={x,y,strength:s,hue,pulse:1,birth:performance.now(),id:Date.now()+Math.random(),vx:0,vy:0,prevX:x,prevY:y,dragging:false};
+    wells.push(w);selectedWell=w;
+    document.getElementById('strengthSlider').value=s;
+    // Placement ripple
+    ripples.push({x,y,r:0,maxR:140+s*3,alpha:0.65,hue,speed:350+s*4});
+    // Immediate gravitational impulse — pull EVERYTHING toward you
+    for(const p of particles){
+        const dx=x-p.x,dy=y-p.y;
+        const dist=Math.sqrt(dx*dx+dy*dy)+1;
+        const pull=s*0.6/Math.max(dist,20);
+        p.vx+=dx/dist*pull;
+        p.vy+=dy/dist*pull;
+    }
+    playPlace(s);
+    // Tutorial triggers
+    if(wells.length===1)advanceTutorial('wellPlaced');
+    if(wells.length===2)advanceTutorial('secondWell');
+    return w;
+}
+function removeWell(w){
+    // Scatter particles away — explosive feel
+    for(const p of particles){
+        const dx=p.x-w.x,dy=p.y-w.y;
+        const dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<350){
+            const push=(1-dist/350)*w.strength*0.12;
+            p.vx+=dx/(dist+1)*push;p.vy+=dy/(dist+1)*push;
+        }
+    }
+    ripples.push({x:w.x,y:w.y,r:0,maxR:100+w.strength,alpha:0.3,hue:w.hue,speed:250});
+    wells=wells.filter(ww=>ww!==w);
+    if(selectedWell===w)selectedWell=null;
+    playRemove();
+    advanceTutorial('wellRemoved');
+}
+
+// PHYSICS
+function updatePhysics(dt){
+    const c=MODES[mode];
+    // Spawn
+    const sc=c.spawnRate*dt*60;
+    for(let i=0;i<sc&&particles.length<c.count*1.3;i++)particles.push(spawnP());
+    
+    for(let i=particles.length-1;i>=0;i--){
+        const p=particles[i];
+        let totalF=0;
+        let absorbed=false;
+        for(const w of wells){
+            const dx=w.x-p.x,dy=w.y-p.y;
+            const distSq=dx*dx+dy*dy;
+            const dist=Math.sqrt(distSq)+0.1;
+            const nx=dx/dist,ny=dy/dist;
+            
+            const isDragging=w.dragging;
+            const dragMult=isDragging?2.5:1;
+            const str=w.strength*c.gMult*dragMult;
+            
+            // HYBRID GRAVITY — tight and powerful
+            const longRange=str*0.045/Math.max(dist,12);
+            const closeRange=str*8.0/(distSq+120);
+            const force=longRange+closeRange;
+            
+            p.vx+=nx*force*dt*60;
+            p.vy+=ny*force*dt*60;
+            totalF+=force;
+            
+            // ENTRAINMENT — dragged wells sweep particles along
+            if(isDragging&&dist<200+w.strength*2){
+                const wellSpd=Math.sqrt(w.vx*w.vx+w.vy*w.vy);
+                if(wellSpd>0.5){
+                    // Blend particle velocity toward well's movement
+                    // Stronger when closer, falls off with distance
+                    const proximity=1-dist/(200+w.strength*2);
+                    const entrainStrength=proximity*proximity*0.35;
+                    p.vx+=(w.vx-p.vx)*entrainStrength;
+                    p.vy+=(w.vy-p.vy)*entrainStrength;
+                }
+                // Also directly pull close particles toward well center
+                if(dist<80+w.strength*0.8){
+                    const snapStrength=(1-dist/(80+w.strength*0.8))*0.15;
+                    p.vx+=nx*snapStrength*w.strength*0.3;
+                    p.vy+=ny*snapStrength*w.strength*0.3;
+                }
+            }
+            
+            // Absorb at well center — but NOT when dragging (let them swarm)
+            if(!isDragging&&dist<8+w.strength*0.04){
+                absorbed=true;
+                if(wells.length>0){
+                    const rw=wells[Math.floor(Math.random()*wells.length)];
+                    const a=Math.random()*Math.PI*2;
+                    const sd=300+Math.random()*400;
+                    p.x=rw.x+Math.cos(a)*sd;
+                    p.y=rw.y+Math.sin(a)*sd;
+                    p.vx=(Math.random()-0.5)*0.08;
+                    p.vy=(Math.random()-0.5)*0.08;
+                }
+                break;
+            }
+        }
+        if(absorbed)continue;
+        // Hue shift toward nearest well color
+        let nearestDist=Infinity,nearestHue=p.baseHue;
+        for(const w of wells){
+            const dd=(w.x-p.x)**2+(w.y-p.y)**2;
+            if(dd<nearestDist){nearestDist=dd;nearestHue=w.hue}
+        }
+        const hueDist=Math.sqrt(nearestDist);
+        if(hueDist<300){
+            const blend=(1-hueDist/300)*0.6;
+            // Simple hue lerp (handles wrap)
+            let diff=nearestHue-p.hue;
+            if(diff>180)diff-=360;if(diff<-180)diff+=360;
+            p.hue+=diff*blend*0.1;
+            if(p.hue<0)p.hue+=360;if(p.hue>360)p.hue-=360;
+        } else {
+            // Drift back to base hue
+            let diff=p.baseHue-p.hue;
+            if(diff>180)diff-=360;if(diff<-180)diff+=360;
+            p.hue+=diff*0.02;
+        }
+        p.bright=Math.min(0.25+totalF*3.5,1);
+        const spd=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
+        p.spd=spd;
+        const mx=mode==='chaos'?50:40;
+        if(spd>mx){p.vx*=mx/spd;p.vy*=mx/spd}
+        // Gentle drag — spiral inward
+        p.vx*=0.996;p.vy*=0.996;
+        p.x+=p.vx*dt*60;p.y+=p.vy*dt*60;
+        
+        const m=80;
+        if(p.x<-m||p.x>W+m||p.y<-m||p.y>H+m){
+            if(wells.length>0&&Math.random()<0.85){
+                const ww=wells[Math.floor(Math.random()*wells.length)];
+                const a=Math.random()*Math.PI*2,sd=300+Math.random()*400;
+                p.x=ww.x+Math.cos(a)*sd;p.y=ww.y+Math.sin(a)*sd;
+                p.vx=(Math.random()-0.5)*0.08;p.vy=(Math.random()-0.5)*0.08;
+            }else particles.splice(i,1);
+        }
+    }
+    // Well pulses + velocity decay
+    const t=performance.now()/1000;
+    for(const w of wells){
+        const age=(performance.now()-w.birth)/1000;
+        const birthPulse=age<0.5?1+Math.sin(age*Math.PI)*0.4:1;
+        const dragPulse=w.dragging?1.15+Math.sin(t*4)*0.08:1;
+        w.pulse=(Math.sin(t*1.2+w.id)*0.08+0.92)*birthPulse*dragPulse;
+        if(!w.dragging){w.vx*=0.9;w.vy*=0.9}
+    }
+    // Ripples
+    for(let i=ripples.length-1;i>=0;i--){
+        const r=ripples[i];
+        r.r+=r.speed*dt;
+        r.alpha*=0.96;
+        if(r.r>r.maxR||r.alpha<0.01)ripples.splice(i,1);
+    }
+    const ts=wells.reduce((s,w)=>s+w.strength,0);
+    setDrone(Math.min(0.01+ts*0.0004,0.05));
+}
+
+// DRAW
+function drawTrails(dt){
+    const fade=(101-trailFade)*0.002+0.01;
+    tCtx.fillStyle=`rgba(11,15,26,${fade})`;
+    tCtx.fillRect(0,0,W,H);
+    for(const p of particles){
+        const spdBoost=Math.min((p.spd||0)/6,1);
+        const alpha=p.bright*0.3+spdBoost*0.25;
+        tCtx.beginPath();tCtx.arc(p.x,p.y,p.size*(0.5+spdBoost*0.5),0,Math.PI*2);
+        tCtx.fillStyle=`hsla(${p.hue},70%,70%,${alpha})`;tCtx.fill();
+    }
+}
+
+function drawMain(){
+    mCtx.clearRect(0,0,W,H);
+    // Vignette
+    const vg=mCtx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.7);
+    vg.addColorStop(0,'transparent');vg.addColorStop(1,'rgba(5,5,12,0.5)');
+    mCtx.fillStyle=vg;mCtx.fillRect(0,0,W,H);
+    
+    // Stars
+    const t=performance.now()/1000;
+    for(const s of bgStars){
+        const px=s.x+Math.sin(t*s.sp)*2,py=s.y+Math.cos(t*s.sp*0.7)*1.5;
+        mCtx.beginPath();mCtx.arc(px,py,s.r,0,Math.PI*2);
+        mCtx.fillStyle=`rgba(180,190,210,${s.a*(0.5+Math.sin(t*0.6+s.x)*0.5)})`;mCtx.fill();
+    }
+    
+    // Ripples
+    for(const r of ripples){
+        mCtx.beginPath();mCtx.arc(r.x,r.y,r.r,0,Math.PI*2);
+        mCtx.strokeStyle=`hsla(${r.hue},70%,70%,${r.alpha})`;
+        mCtx.lineWidth=2;mCtx.stroke();
+    }
+    
+    // Wells
+    for(const w of wells){
+        const isDragging=w.dragging||false;
+        const rad=18+w.strength*0.4;
+        const pr=rad*w.pulse*(isDragging?1.5:1);
+        const sel=w===selectedWell;
+        const glowBoost=isDragging?2.5:1;
+        
+        // Attraction field - wider glow that shows reach
+        const g1=mCtx.createRadialGradient(w.x,w.y,0,w.x,w.y,pr*4*glowBoost);
+        g1.addColorStop(0,`hsla(${w.hue},65%,60%,${0.09*glowBoost})`);
+        g1.addColorStop(0.4,`hsla(${w.hue},65%,60%,${0.03*glowBoost})`);
+        g1.addColorStop(1,'transparent');
+        mCtx.beginPath();mCtx.arc(w.x,w.y,pr*4*glowBoost,0,Math.PI*2);mCtx.fillStyle=g1;mCtx.fill();
+        
+        // Inner glow
+        const g2=mCtx.createRadialGradient(w.x,w.y,0,w.x,w.y,pr);
+        g2.addColorStop(0,`hsla(${w.hue},75%,75%,${0.3*glowBoost})`);
+        g2.addColorStop(0.5,`hsla(${w.hue},70%,65%,${0.1*glowBoost})`);
+        g2.addColorStop(1,'transparent');
+        mCtx.beginPath();mCtx.arc(w.x,w.y,pr,0,Math.PI*2);mCtx.fillStyle=g2;mCtx.fill();
+        
+        // Core dot
+        const coreR=3.5+w.strength*0.025+(isDragging?2:0);
+        mCtx.beginPath();mCtx.arc(w.x,w.y,coreR,0,Math.PI*2);
+        mCtx.fillStyle=`hsla(${w.hue},80%,${isDragging?95:85}%,${isDragging?0.9:0.7})`;mCtx.fill();
+        
+        // Selection ring
+        if(sel){
+            mCtx.beginPath();mCtx.arc(w.x,w.y,pr+8,0,Math.PI*2);
+            mCtx.strokeStyle=`hsla(${w.hue},60%,70%,0.25)`;mCtx.lineWidth=1;mCtx.setLineDash([4,4]);mCtx.stroke();mCtx.setLineDash([]);
+        }
+        
+        // Strength label
+        mCtx.font='500 9px Outfit,sans-serif';mCtx.textAlign='center';
+        mCtx.fillStyle=`hsla(${w.hue},50%,70%,0.4)`;
+        mCtx.fillText(Math.round(w.strength),w.x,w.y+pr+14);
+    }
+    
+    // Particles — streak when fast
+    for(const p of particles){
+        const spd=p.spd||0;
+        const streak=Math.min(spd/4,6); // elongation length
+        if(streak>1.5&&spd>2){
+            // Draw as a streaked line
+            const nx=p.vx/spd,ny=p.vy/spd;
+            mCtx.beginPath();
+            mCtx.moveTo(p.x-nx*streak,p.y-ny*streak);
+            mCtx.lineTo(p.x+nx*streak*0.3,p.y+ny*streak*0.3);
+            mCtx.strokeStyle=`hsla(${p.hue},85%,80%,${p.bright*0.7})`;
+            mCtx.lineWidth=p.size*1.5;mCtx.lineCap='round';mCtx.stroke();
+        } else {
+            mCtx.beginPath();mCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+            mCtx.fillStyle=`hsla(${p.hue},80%,80%,${p.bright*0.75})`;mCtx.fill();
+        }
+        if(p.bright>0.75){
+            mCtx.beginPath();mCtx.arc(p.x,p.y,p.size*2.5,0,Math.PI*2);
+            mCtx.fillStyle=`hsla(${p.hue},70%,70%,${(p.bright-0.75)*0.5})`;mCtx.fill();
+        }
+    }
+}
+
+// LOOP
+let lastTime=0;
+function loop(ts){
+    if(!simActive){requestAnimationFrame(loop);return}
+    const dt=Math.min((ts-lastTime)/1000,0.05);lastTime=ts;
+    updatePhysics(dt);drawTrails(dt);drawMain();
+    requestAnimationFrame(loop);
+}
+
+// TUTORIAL SYSTEM
+const TUT_STEPS=[
+    {text:'Tap anywhere to place gravity.',sub:'Go ahead — tap the screen.',trigger:'wellPlaced'},
+    {text:'Nice! Now hold and drag it around.',sub:'Particles will follow.',trigger:'wellDragged'},
+    {text:'Tap somewhere else to add another.',sub:'Watch how they interact.',trigger:'secondWell'},
+    {text:'Double-tap a well to remove it.',sub:'Try it now.',trigger:'wellRemoved'},
+    {text:'Try switching modes up top.',sub:'Particles · Orbit · Chaos',trigger:'auto',delay:4000},
+    {text:'Use the sliders to adjust strength and trails.',sub:'Now go play.',trigger:'auto',delay:4000}
+];
+let tutStep=0,tutActive=true,tutTimeout=null;
+
+function initTutorial(){
+    tutStep=0;tutActive=true;
+    const dots=document.getElementById('tutDots');
+    dots.innerHTML='';
+    for(let i=0;i<TUT_STEPS.length;i++){
+        const d=document.createElement('div');d.className='tut-dot';dots.appendChild(d);
+    }
+    showTutStep(0);
+}
+function showTutStep(idx){
+    if(!tutActive||idx>=TUT_STEPS.length){endTutorial();return}
+    tutStep=idx;
+    const step=TUT_STEPS[idx];
+    const el=document.getElementById('tutStep');
+    const sub=document.getElementById('tutSub');
+    // Fade out then in
+    el.classList.remove('active');
+    setTimeout(()=>{
+        el.textContent=step.text;
+        sub.textContent=step.sub||'';
+        el.classList.add('active');
+        // Update dots
+        document.querySelectorAll('.tut-dot').forEach((d,i)=>{
+            d.className='tut-dot'+(i<idx?' done':'')+(i===idx?' current':'');
+        });
+    },300);
+    // Auto-advance steps
+    if(step.trigger==='auto'){
+        if(tutTimeout)clearTimeout(tutTimeout);
+        tutTimeout=setTimeout(()=>showTutStep(idx+1),step.delay||4000);
+    }
+}
+function advanceTutorial(trigger){
+    if(!tutActive)return;
+    if(tutStep<TUT_STEPS.length&&TUT_STEPS[tutStep].trigger===trigger){
+        if(tutTimeout)clearTimeout(tutTimeout);
+        setTimeout(()=>showTutStep(tutStep+1),600);
+    }
+}
+function skipTutorial(){endTutorial()}
+function endTutorial(){
+    tutActive=false;
+    if(tutTimeout)clearTimeout(tutTimeout);
+    const tut=document.getElementById('tut');
+    tut.classList.add('hidden');
+    // Mark all dots done
+    document.querySelectorAll('.tut-dot').forEach(d=>d.className='tut-dot done');
+}
+
+function showHint(text){const el=document.getElementById('hint');el.textContent=text;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500)}
+
+// INPUT
+function findWellAt(x,y){for(let i=wells.length-1;i>=0;i--){const w=wells[i],dx=w.x-x,dy=w.y-y;if(dx*dx+dy*dy<(25+w.strength*0.3)**2)return w}return null}
+
+let pDown=false,pStart={x:0,y:0},didDrag=false;
+MC.addEventListener('pointerdown',e=>{
+    e.preventDefault();const x=e.clientX,y=e.clientY;
+    pDown=true;pStart={x,y};didDrag=false;
+    const now=performance.now(),dt=now-lastTap;lastTap=now;
+    const hit=findWellAt(x,y);
+    if(dt<350&&hit){removeWell(hit);draggingWell=null;pDown=false;return}
+    if(hit){draggingWell=hit;hit.dragging=true;selectedWell=hit;document.getElementById('strengthSlider').value=hit.strength;dragOffset.x=hit.x-x;dragOffset.y=hit.y-y}
+    else draggingWell=null;
+});
+MC.addEventListener('pointermove',e=>{
+    if(!pDown)return;e.preventDefault();
+    const dx=e.clientX-pStart.x,dy=e.clientY-pStart.y;
+    if(dx*dx+dy*dy>64)didDrag=true;
+    if(draggingWell){
+        const newX=e.clientX+dragOffset.x,newY=e.clientY+dragOffset.y;
+        draggingWell.vx=newX-draggingWell.x;
+        draggingWell.vy=newY-draggingWell.y;
+        draggingWell.x=newX;draggingWell.y=newY;
+        advanceTutorial('wellDragged');
+    }
+});
+MC.addEventListener('pointerup',e=>{
+    if(!pDown)return;
+    if(!didDrag&&!draggingWell){const hit=findWellAt(e.clientX,e.clientY);if(!hit)addWell(e.clientX,e.clientY)}
+    else if(!didDrag&&draggingWell){selectedWell=draggingWell;document.getElementById('strengthSlider').value=draggingWell.strength}
+    pDown=false;if(draggingWell)draggingWell.dragging=false;draggingWell=null;
+});
+MC.addEventListener('pointercancel',()=>{pDown=false;if(draggingWell)draggingWell.dragging=false;draggingWell=null});
+MC.addEventListener('contextmenu',e=>e.preventDefault());
+
+// UI
+document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.mode-btn').forEach(bb=>bb.classList.remove('active'));
+    b.classList.add('active');mode=b.dataset.mode;resetSim(false);
+}));
+document.getElementById('strengthSlider').addEventListener('input',e=>{
+    strengthVal=parseInt(e.target.value);
+    if(selectedWell){selectedWell.strength=strengthVal;playPlace(strengthVal)}
+});
+document.getElementById('trailSlider').addEventListener('input',e=>{trailFade=parseInt(e.target.value)});
+document.getElementById('resetBtn').addEventListener('click',()=>resetSim(true));
+document.getElementById('soundBtn').addEventListener('click',toggleSound);
+
+function resetSim(clearWells){
+    if(clearWells){wells=[];selectedWell=null;ripples=[]}
+    tCtx.fillStyle='rgba(11,15,26,1)';tCtx.fillRect(0,0,W,H);
+    initP();hintIdx=clearWells?0:hintIdx;hintTimer=0;
+}
+function enterSim(){
+    document.getElementById('intro').classList.add('hidden');
+    document.getElementById('modeBar').style.display='flex';
+    document.getElementById('controls').style.display='flex';
+    document.getElementById('btns').style.display='flex';
+    simActive=true;initStars();
+    tCtx.fillStyle='rgba(11,15,26,1)';tCtx.fillRect(0,0,W,H);
+    initP();initTutorial();
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
