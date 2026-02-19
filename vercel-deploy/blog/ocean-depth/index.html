@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>How Deep Is the Ocean? An Interactive Journey to the Bottom | whatifs.fun</title>
+<meta name="description" content="Scroll through the entire ocean depth from surface to the deepest point on Earth — the Mariana Trench. Discover what lives at each level in this interactive visualization.">
+<meta property="og:title" content="How Deep Is the Ocean? An Interactive Journey to the Bottom">
+<meta property="og:description" content="Scroll through the entire ocean depth from surface to the deepest point on Earth — the Mariana Trench. Discover what lives at each level in this interactive visualization.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://whatifs.fun/blog/ocean-depth/">
+<link rel="canonical" href="https://whatifs.fun/blog/ocean-depth/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How Deep Is the Ocean? An Interactive Journey to the Bottom","description":"Scroll through the entire ocean depth from surface to the deepest point on Earth — the Mariana Trench. Discover what lives at each level in this interactive visualization.","url":"https://whatifs.fun/blog/ocean-depth/","publisher":{"@type":"Organization","name":"whatifs.fun"},"isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How deep is the deepest point in the ocean?","acceptedAnswer":{"@type":"Answer","text":"The Challenger Deep in the Mariana Trench reaches approximately 10,935 meters (35,876 feet) — deep enough that Mount Everest would be fully submerged with over 2,000 meters to spare."}},{"@type":"Question","name":"What lives at the bottom of the ocean?","acceptedAnswer":{"@type":"Answer","text":"Even at the deepest points, researchers have found amphipods, xenophyophores, and microbial life. About 90% of ocean species remain unclassified, with new species discovered on nearly every deep-sea expedition."}},{"@type":"Question","name":"How much of the ocean has been explored?","acceptedAnswer":{"@type":"Answer","text":"Less than 5% of the ocean has been explored. We have more detailed maps of the surface of Mars than of Earth's ocean floor."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#e8e7e2;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c;--link:#6cb4ff}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;line-height:1.75;font-size:17px}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.home-btn{position:fixed;top:20px;left:20px;z-index:100;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(20,20,22,0.85);border:1px solid var(--card-border);border-radius:100px;color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .2s}
+.home-btn:hover{background:rgba(0,240,255,0.08);border-color:var(--accent-cyan);transform:translateY(-1px)}
+.home-btn svg{width:16px;height:16px;fill:currentColor}
+article{max-width:680px;margin:0 auto;padding:100px 24px 80px}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-bottom:24px;color:#fff}
+h2{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:700;letter-spacing:-0.5px;margin:40px 0 16px;color:#fff}
+p{margin-bottom:18px;color:var(--text)}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid rgba(108,180,255,0.2);transition:border-color .2s}
+a:hover{border-color:var(--link)}
+.cta-box{display:block;text-align:center;padding:20px 32px;background:linear-gradient(135deg,rgba(0,240,255,0.08),rgba(57,255,127,0.06));border:1px solid rgba(0,240,255,0.15);border-radius:14px;margin:40px 0;font-weight:700;font-size:1.05rem;color:var(--accent-cyan);text-decoration:none;border-bottom:none;transition:all .2s}
+.cta-box:hover{background:linear-gradient(135deg,rgba(0,240,255,0.14),rgba(57,255,127,0.1));border-color:rgba(0,240,255,0.3);transform:translateY(-2px)}
+.faq{margin-top:48px;padding-top:32px;border-top:1px solid var(--card-border)}
+.faq h2{margin-top:0}
+.faq-item{margin-bottom:24px}
+.faq-q{font-weight:700;color:#fff;margin-bottom:6px}
+.faq-a{color:var(--text-dim);line-height:1.7}
+.footer{text-align:center;padding:40px 24px;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--text-dim)}
+.footer a{color:var(--text-dim);border-bottom-color:transparent}
+@media(max-width:600px){article{padding:80px 18px 60px}.home-btn{top:14px;left:14px;padding:8px 16px;font-size:.72rem}}
+</style>
+</head>
+<body>
+<a href="/" class="home-btn"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> ALL GAMES</a>
+<article>
+<h1>How Deep Is the Ocean? An Interactive Journey to the Bottom</h1>
+
+<p>The ocean covers 71% of Earth's surface, but we've explored less than 5% of it. The average depth is about 3,688 meters (12,100 feet) — deep enough to submerge most mountains. Our <a href="/ocean-depth/">Ocean Depth Explorer</a> takes you on a scrolling journey from the surface to the very bottom, revealing what exists at each layer.</p>
+
+<h2>The Layers of the Ocean</h2>
+
+<p>The ocean is divided into five major depth zones, each with radically different conditions for life. The sunlight zone (0-200m) is where nearly all marine life we're familiar with exists — coral reefs, fish, dolphins, sea turtles. Sunlight penetrates this layer, enabling photosynthesis, which supports the entire marine food web.</p>
+
+<p>The twilight zone (200-1,000m) receives faint blue light but not enough for photosynthesis. This is the realm of bioluminescence — an estimated 90% of creatures at this depth produce their own light. The lanternfish, one of the most abundant vertebrates on Earth with an estimated population of 660 trillion, lives primarily in this zone.</p>
+
+<p>The midnight zone (1,000-4,000m) is in permanent darkness. Pressure reaches 400 atmospheres — enough to crush a submarine not specifically designed for deep diving. Yet life thrives here: giant squid, bizarre anglerfish, and chemosynthetic organisms that derive energy from chemicals rather than sunlight.</p>
+
+<p>The abyssal zone (4,000-6,000m) covers most of the ocean floor. Temperatures hover just above freezing, pressure is immense, and food is scarce — mostly "marine snow," a constant gentle rain of dead organic material drifting down from above. Despite these conditions, the abyssal plains support a surprising diversity of life.</p>
+
+<p>The hadal zone (6,000-11,000m) exists only in deep oceanic trenches. Named after Hades, the Greek god of the underworld, this zone includes the deepest point on Earth: the Challenger Deep in the Mariana Trench, at approximately 10,935 meters (35,876 feet) below sea level.</p>
+
+<h2>The Mariana Trench</h2>
+
+<p>The Mariana Trench is located in the western Pacific Ocean, east of the Mariana Islands. If you placed Mount Everest at the bottom of the Challenger Deep, its peak would still be over 2,000 meters underwater. The pressure at the bottom is about 1,086 bars — roughly equivalent to having 50 jumbo jets stacked on top of you.</p>
+
+<p>Only three manned expeditions have reached the bottom. Jacques Piccard and Don Walsh made the first descent in 1960 in the bathyscaphe Trieste. James Cameron made a solo dive in 2012 in the Deepsea Challenger. Victor Vescovo reached the bottom in 2019 and found, disturbingly, a plastic bag and candy wrappers.</p>
+
+<p>Despite the extreme conditions, life exists even at the deepest point. Researchers have found amphipods (small shrimp-like creatures), xenophyophores (giant single-celled organisms), and microbial life. These organisms have evolved extraordinary adaptations to withstand pressures that would destroy most biological structures.</p>
+
+<h2>What We Don't Know</h2>
+
+<p>More people have walked on the moon (12) than have visited the deepest parts of the ocean (3 by manned vessel at the time of writing). We have better maps of Mars than of our own ocean floor. An estimated 91% of ocean species remain unclassified. Every deep-sea expedition discovers new species — sometimes dozens per trip.</p>
+
+<p>The deep ocean may hold answers to some of science's biggest questions, from the origins of life (hydrothermal vents may have been the cradle of early life on Earth) to climate regulation (the deep ocean absorbs vast quantities of CO2 and heat) to novel medicines (deep-sea organisms produce unique biochemical compounds).</p>
+
+<h2>Experience It Yourself</h2>
+
+<p>Our <a href="/ocean-depth/">Ocean Depth Explorer</a> lets you scroll through the entire water column, encountering creatures and landmarks at each depth. It's designed to make the incomprehensible scale of the ocean feel tangible. How far down can you go before the depth starts to feel unsettling?</p>
+
+<p>If massive scales fascinate you, try our <a href="/nuclear-simulation/">Nuclear Explosion Simulator</a> for another perspective on hard-to-grasp magnitudes, or test your knowledge with <a href="/higher-or-lower/">Higher or Lower</a>.</p>
+<a href="/ocean-depth/" class="cta-box">▶ Explore the Ocean Depths</a>
+<div class="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><div class="faq-q">How deep is the deepest point in the ocean?</div><div class="faq-a">The Challenger Deep in the Mariana Trench reaches approximately 10,935 meters (35,876 feet) — deep enough that Mount Everest would be fully submerged with over 2,000 meters to spare.</div></div>
+<div class="faq-item"><div class="faq-q">What lives at the bottom of the ocean?</div><div class="faq-a">Even at the deepest points, researchers have found amphipods, xenophyophores, and microbial life. About 90% of ocean species remain unclassified, with new species discovered on nearly every deep-sea expedition.</div></div>
+<div class="faq-item"><div class="faq-q">How much of the ocean has been explored?</div><div class="faq-a">Less than 5% of the ocean has been explored. We have more detailed maps of the surface of Mars than of Earth's ocean floor.</div></div>
+</div>
+</article>
+<footer class="footer"><a href="/">whatifs.fun</a> — games, experiments & simulations</footer>
+</body>
+</html>
