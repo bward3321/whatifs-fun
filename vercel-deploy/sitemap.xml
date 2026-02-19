@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://whatifs.fun/</loc>
-    <lastmod>2026-02-18</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
@@ -56,5 +56,69 @@
   <url>
     <loc>https://whatifs.fun/balance-point/</loc>
     <lastmod>2026-02-18</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/gravity-playground/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/how-average-are-you/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/perfect-circle/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/reflex-test/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/nuclear-simulation/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/memory-test/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/higher-or-lower/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/ocean-depth/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/true-or-false/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/speed-click-test/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/one-button-survival/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/if-you-were-born-in/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/how-many-decisions-you-make-today/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/balance-point/</loc>
+    <lastmod>2026-02-19</lastmod>
+  </url>
+  <url>
+    <loc>https://whatifs.fun/blog/gravity-playground/</loc>
+    <lastmod>2026-02-19</lastmod>
   </url>
 </urlset>
