@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Balance Point — Hold Steady | whatifs.fun</title>
+<meta name="description" content="A physics balancing experiment. The platform never stops moving. How long can you hold steady?">
+<meta property="og:title" content="Balance Point — Hold Steady | whatifs.fun">
+<meta property="og:description" content="The platform never stops moving. How long can you hold steady?">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://whatifs.fun/balance-point/">
+<link rel="canonical" href="https://whatifs.fun/balance-point/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Balance Point","description":"A physics balancing experiment. Hold steady as long as you can.","url":"https://whatifs.fun/balance-point/","applicationCategory":"GameApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en","isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#111318;--bg2:#161A22;--bg3:#1C2029;--text:#F0F1F4;--text2:#B0B3BC;--text3:#6E7180;--accent:#4A9EF5;--green:#4AE08C;--green-dim:rgba(74,224,140,0.15);--red:#E05A5A;--red-dim:rgba(224,90,90,0.15)}
+html{-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Inter',Helvetica,Arial,sans-serif;font-weight:400;font-size:17px;line-height:1.6;min-height:100vh;min-height:100dvh;overflow:hidden;user-select:none;-webkit-user-select:none}
+.screen{display:none;position:fixed;inset:0;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;z-index:1}
+.screen.active{display:flex}
+body::before{content:'';position:fixed;top:45%;left:50%;transform:translate(-50%,-50%);width:500px;height:400px;background:radial-gradient(ellipse,rgba(74,158,245,0.035) 0%,transparent 70%);pointer-events:none;z-index:0}
+.intro-title{font-size:clamp(2.2rem,6vw,3.2rem);font-weight:700;letter-spacing:-1.5px;text-align:center;margin-bottom:8px;opacity:0;animation:fadeUp .6s ease .1s forwards}
+.intro-sub{font-size:clamp(1.05rem,3vw,1.25rem);color:var(--text2);font-weight:400;text-align:center;margin-bottom:32px;opacity:0;animation:fadeUp .6s ease .25s forwards}
+.intro-desc{font-size:1rem;color:var(--text3);text-align:center;max-width:360px;margin-bottom:16px;line-height:1.7;opacity:0;animation:fadeUp .6s ease .4s forwards}
+.intro-controls{font-size:.88rem;color:var(--text3);text-align:center;max-width:340px;margin-bottom:40px;line-height:1.7;opacity:0;animation:fadeUp .6s ease .48s forwards}
+.intro-controls strong{color:var(--text2);font-weight:600}
+.start-btn{padding:16px 56px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:1.05rem;font-weight:600;cursor:pointer;transition:all .2s;opacity:0;animation:fadeUp .6s ease .55s forwards;font-family:inherit}
+.start-btn:hover{background:#5BAAF7;transform:translateY(-1px)}
+.start-btn:active{transform:scale(.97)}
+.intro-footer{position:absolute;bottom:28px;font-size:.8rem;color:var(--text3)}
+.intro-footer a{color:var(--text3);text-decoration:none}
+#game{cursor:default;touch-action:manipulation}
+.game-hud{position:absolute;top:0;left:0;right:0;padding:24px 28px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none;z-index:5}
+.hud-time{font-size:clamp(2rem,6vw,3rem);font-weight:700;letter-spacing:-1px;font-variant-numeric:tabular-nums;color:var(--text);line-height:1}
+.hud-time-label{font-size:.8rem;color:var(--text3);font-weight:500;margin-top:2px;letter-spacing:.5px}
+.hud-best{font-size:.9rem;color:var(--text3);font-weight:500;text-align:right;pointer-events:auto;cursor:pointer}
+.hud-best strong{color:var(--text2);font-weight:600}
+canvas{position:fixed;inset:0;width:100%;height:100%;z-index:2}
+.touch-zone{position:fixed;top:0;bottom:0;width:50%;z-index:3;cursor:pointer}
+.touch-zone-left{left:0}
+.touch-zone-right{right:0}
+.touch-indicator{position:fixed;bottom:28px;left:0;right:0;display:flex;justify-content:space-between;padding:0 32px;pointer-events:none;z-index:5;opacity:0;transition:opacity .5s}
+.touch-indicator.show{opacity:1}
+.touch-indicator span{font-size:.85rem;color:var(--text2);font-weight:500;letter-spacing:.5px}
+.overlay{display:none;position:fixed;inset:0;background:rgba(17,19,24,0.88);z-index:10;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.overlay.active{display:flex}
+.over-time{font-size:clamp(3.5rem,12vw,5.5rem);font-weight:700;letter-spacing:-3px;line-height:1;margin-bottom:4px;opacity:0;animation:fadeUp .5s ease .15s forwards}
+.over-unit{font-size:1.05rem;color:var(--text2);margin-bottom:8px;opacity:0;animation:fadeUp .5s ease .25s forwards}
+.over-label{font-size:1.1rem;color:var(--text3);margin-bottom:28px;opacity:0;animation:fadeUp .5s ease .35s forwards}
+.over-best{font-size:.95rem;color:var(--text2);margin-bottom:36px;opacity:0;animation:fadeUp .5s ease .45s forwards}
+.over-best strong{color:var(--green);font-weight:600}
+.over-btns{display:flex;gap:12px;opacity:0;animation:fadeUp .5s ease .55s forwards}
+.over-btn{padding:14px 40px;border-radius:10px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .2s;border:none;font-family:inherit}
+.over-btn-primary{background:var(--accent);color:#fff}
+.over-btn-primary:hover{background:#5BAAF7}
+.over-btn-secondary{background:var(--bg3);color:var(--text2);border:1.5px solid rgba(255,255,255,0.08)}
+.over-btn-secondary:hover{background:var(--bg2);color:var(--text)}
+.over-btn:active{transform:scale(.97)}
+.new-best-tag{display:inline-block;background:var(--green-dim);color:var(--green);font-size:.75rem;font-weight:600;padding:3px 12px;border-radius:100px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;opacity:0;animation:fadeUp .5s ease .05s forwards}
+.share-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;padding:24px}
+.share-overlay.show{display:flex}
+.share-card{background:var(--bg2);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:36px 32px;max-width:320px;width:100%;text-align:center}
+.share-card-title{font-size:1.2rem;font-weight:600;margin-bottom:4px}
+.share-card-sub{font-size:.85rem;color:var(--text3);margin-bottom:20px}
+.share-card-num{font-size:3.5rem;font-weight:700;color:var(--accent);letter-spacing:-2px;margin-bottom:4px}
+.share-card-unit{font-size:.85rem;color:var(--text2);margin-bottom:20px}
+.share-card-footer{font-size:.75rem;color:var(--text3);margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)}
+.share-btns-row{display:flex;gap:8px;justify-content:center}
+.share-btn{flex:1;padding:11px;background:var(--bg3);border:1px solid rgba(255,255,255,0.06);border-radius:8px;color:var(--text2);font-size:.88rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:inherit}
+.share-btn:hover{background:rgba(255,255,255,0.06);color:var(--text)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.screen{padding:24px 20px}.game-hud{padding:18px 20px}.touch-indicator{padding:0 20px}.over-btns{flex-direction:column;width:100%;max-width:280px}.over-btn{width:100%;text-align:center}.share-card{padding:28px 24px}}
+</style>
+</head>
+<body>
+<div id="intro" class="screen active">
+    <h1 class="intro-title">Balance Point</h1>
+    <p class="intro-sub">Hold steady.</p>
+    <p class="intro-desc">A dot on a beam. Gravity pulls it. Wind pushes it. The beam never stays level. Keep it from falling off.</p>
+    <p class="intro-controls"><strong>Desktop:</strong> A/D or arrow keys<br><strong>Mobile:</strong> Tap left or right half</p>
+    <button class="start-btn" onclick="init()">Start</button>
+    <div class="intro-footer"><a href="https://whatifs.fun">whatifs.fun</a></div>
+</div>
+<div id="game" class="screen">
+    <canvas id="c"></canvas>
+    <div class="game-hud"><div><div class="hud-time" id="hudTime">0.0</div><div class="hud-time-label">seconds</div></div><div class="hud-best" id="hudBest" onclick="openShare()">Best: —</div></div>
+    <div class="touch-zone touch-zone-left" id="tzLeft"></div>
+    <div class="touch-zone touch-zone-right" id="tzRight"></div>
+    <div class="touch-indicator" id="touchInd"><span>← push left</span><span>push right →</span></div>
+</div>
+<div class="overlay" id="overScreen">
+    <div class="new-best-tag" id="newBestTag" style="display:none">NEW BEST</div>
+    <div class="over-time" id="overTime">0.0</div>
+    <div class="over-unit">seconds</div>
+    <div class="over-label">You held steady.</div>
+    <div class="over-best" id="overBest">Best: —</div>
+    <div class="over-btns"><button class="over-btn over-btn-primary" onclick="restart()">Try again</button><button class="over-btn over-btn-secondary" onclick="openShare()">Share</button></div>
+</div>
+<div class="share-overlay" id="shareOverlay" onclick="if(event.target===this)closeShare()">
+    <div class="share-card"><div class="share-card-title">Balance Point</div><div class="share-card-sub">Hold steady.</div><div class="share-card-num" id="shareNum">0.0</div><div class="share-card-unit">seconds — personal best</div><div class="share-btns-row"><button class="share-btn" onclick="copyShare()">Copy result</button><button class="share-btn" onclick="closeShare()">Close</button></div><div class="share-card-footer">whatifs.fun/balance-point</div></div>
+</div>
+<script>
+// AUDIO
+let audioCtx;
+function initAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)()}
+function playTone(f,d,v,t){if(!audioCtx)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||0.06,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+d);o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d)}
+function playDrop(){playTone(220,0.4,0.08);setTimeout(()=>playTone(160,0.5,0.06),100)}
+function playTick(){playTone(600,0.03,0.04,'square')}
+let droneOsc,droneGain;
+function startDrone(){if(!audioCtx)return;droneOsc=audioCtx.createOscillator();droneGain=audioCtx.createGain();droneOsc.type='sine';droneOsc.frequency.value=80;droneGain.gain.value=0;droneOsc.connect(droneGain);droneGain.connect(audioCtx.destination);droneOsc.start();droneGain.gain.linearRampToValueAtTime(0.025,audioCtx.currentTime+1)}
+function updateDrone(d){if(!droneGain)return;droneGain.gain.linearRampToValueAtTime(0.025+d*0.04,audioCtx.currentTime+0.1);if(droneOsc)droneOsc.frequency.linearRampToValueAtTime(80+d*40,audioCtx.currentTime+0.1)}
+function stopDrone(){if(droneGain)droneGain.gain.linearRampToValueAtTime(0,audioCtx.currentTime+0.3);setTimeout(()=>{try{if(droneOsc)droneOsc.stop()}catch(e){}droneOsc=null;droneGain=null},400)}
+
+// CANVAS
+const canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
+let W,H,dpr;
+function resize(){dpr=window.devicePixelRatio||1;W=window.innerWidth;H=window.innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+window.addEventListener('resize',resize);resize();
+
+// STATE
+const DOT_R=10;
+let running=false,gameTime=0,bestTime=0,isNewBest=false;
+let dotX,dotVx,platformAngle,platformLen,platformY;
+let pushLeft=false,pushRight=false;
+let dangerLevel=0,particles=[],gameStartTime=0;
+let driftAccel=0,driftTarget=0,driftTimer=0;
+let gustAccel=0,tiltAngle=0;
+
+// INIT
+function init(){
+    initAudio();
+    document.getElementById('intro').classList.remove('active');
+    document.getElementById('game').classList.add('active');
+    document.getElementById('overScreen').classList.remove('active');
+    if('ontouchstart' in window){const ti=document.getElementById('touchInd');ti.classList.add('show');setTimeout(()=>ti.classList.remove('show'),3500)}
+    startRound();
+}
+function startRound(){
+    platformLen=W*0.40;platformY=H*0.55;
+    dotX=(Math.random()>0.5?1:-1)*(15+Math.random()*20);
+    dotVx=(Math.random()-0.5)*60;
+    platformAngle=0;gameTime=0;running=true;isNewBest=false;dangerLevel=0;particles=[];
+    driftAccel=0;driftTarget=(Math.random()-0.5)*400;driftTimer=0;gustAccel=0;tiltAngle=0;
+    gameStartTime=performance.now();lastFrame=0;
+    startDrone();requestAnimationFrame(loop);
+}
+function restart(){document.getElementById('overScreen').classList.remove('active');startRound()}
+
+// INPUT
+const tzL=document.getElementById('tzLeft'),tzR=document.getElementById('tzRight');
+tzL.addEventListener('touchstart',e=>{e.preventDefault();pushLeft=true;playTick()},{passive:false});
+tzL.addEventListener('touchend',()=>{pushLeft=false});tzL.addEventListener('touchcancel',()=>{pushLeft=false});
+tzR.addEventListener('touchstart',e=>{e.preventDefault();pushRight=true;playTick()},{passive:false});
+tzR.addEventListener('touchend',()=>{pushRight=false});tzR.addEventListener('touchcancel',()=>{pushRight=false});
+tzL.addEventListener('mousedown',()=>{pushLeft=true;playTick()});
+tzR.addEventListener('mousedown',()=>{pushRight=true;playTick()});
+document.addEventListener('mouseup',()=>{pushLeft=false;pushRight=false});
+const keys={};
+document.addEventListener('keydown',e=>{
+    if(e.code==='ArrowLeft'||e.code==='KeyA'){if(!keys.left)playTick();keys.left=true;pushLeft=true}
+    if(e.code==='ArrowRight'||e.code==='KeyD'){if(!keys.right)playTick();keys.right=true;pushRight=true}
+    if(e.code==='Space'){e.preventDefault();if(document.getElementById('intro').classList.contains('active'))init();else if(document.getElementById('overScreen').classList.contains('active'))restart()}
+});
+document.addEventListener('keyup',e=>{
+    if(e.code==='ArrowLeft'||e.code==='KeyA'){keys.left=false;pushLeft=false}
+    if(e.code==='ArrowRight'||e.code==='KeyD'){keys.right=false;pushRight=false}
+});
+
+// PHYSICS — FUNDAMENTALLY UNSTABLE
+// The dot is on an inverted pendulum. Position away from center = exponential growth.
+// Combined with random drift forces, this is impossible to idle through.
+function updatePhysics(dt){
+    const t=gameTime;
+    const halfP=platformLen/2;
+    
+    // Difficulty ramps continuously
+    const diff=1+t*0.12; // 12% harder per second (was 6%)
+    
+    // 1) INVERTED PENDULUM: force proportional to displacement FROM center
+    // Softened at extremes — uses sqrt scaling past 60% so it doesn't become unbeatable
+    const pctFromCenter=Math.abs(dotX)/halfP; // 0-1
+    let pendulumMag;
+    if(pctFromCenter<0.6){
+        pendulumMag=dotX*4.5*diff; // was 3.2
+    } else {
+        // Past 60%: grows slower (sqrt curve) — still dangerous but recoverable
+        const base=halfP*0.6*4.5*diff*Math.sign(dotX);
+        const extra=(pctFromCenter-0.6)/0.4; // 0-1 in the danger zone
+        pendulumMag=base+Math.sqrt(extra)*halfP*0.4*2.0*diff*Math.sign(dotX);
+    }
+    const pendulumForce=pendulumMag;
+    
+    // 2) RANDOM DRIFT: changes direction unpredictably
+    driftTimer-=dt;
+    if(driftTimer<=0){
+        driftTimer=0.5+Math.random()*0.8; // switches faster
+        const str=300+t*55; // stronger base drift
+        // Bias toward pushing dot further from center (evil)
+        const bias=Math.sign(dotX)*80*Math.min(diff,4);
+        driftTarget=(Math.random()-0.5)*2*str+bias;
+    }
+    driftAccel+=(driftTarget-driftAccel)*dt*5;
+    
+    // 3) GUSTS: sharp sudden pushes, more frequent over time
+    if(Math.random()<dt*(2.0+t*0.5)){
+        gustAccel=(Math.random()-0.5)*2*(300+t*40);
+    }
+    gustAccel*=0.90;
+    
+    // 4) PLAYER INPUT — with recovery boost near edges
+    const basePush=1600+t*20;
+    let input=0;
+    if(pushLeft||pushRight){
+        const pushDir=pushLeft?-1:1;
+        const dotDir=dotX>0?1:-1;
+        const pushingCorrectWay=(pushDir!==-dotDir)?false:true; // pushing toward center?
+        // If near edge AND pushing correct direction: boost up to 2.5x
+        let pushMult=1;
+        if(pushingCorrectWay&&pctFromCenter>0.5){
+            pushMult=1+(pctFromCenter-0.5)*3; // up to 2.5x at the edge
+        }
+        input=pushDir*basePush*pushMult;
+    }
+    
+    // 5) VELOCITY DAMPING — slightly more damping when pressing (rewards active play)
+    const isPressingAny=pushLeft||pushRight;
+    
+    // 6) APPLY ALL FORCES
+    dotVx+=(pendulumForce+driftAccel+gustAccel+input)*dt;
+    
+    // Damping — more when actively correcting
+    const dampFactor=isPressingAny?0.08:0.12;
+    dotVx*=Math.pow(dampFactor,dt);
+    
+    dotX+=dotVx*dt;
+    
+    // Platform tilt follows dot (visual feedback)
+    const targetTilt=(dotX/halfP)*0.22+Math.sin(t*1.8)*0.02*diff;
+    tiltAngle+=(targetTilt-tiltAngle)*dt*6;
+    platformAngle=tiltAngle;
+    
+    // Danger
+    dangerLevel=Math.min(Math.abs(dotX)/(halfP-DOT_R),1);
+    updateDrone(dangerLevel);
+    
+    // Particles near edge
+    if(dangerLevel>0.55&&Math.random()<0.4){
+        const s=dotX>0?1:-1;
+        particles.push({x:W/2+dotX,y:platformY-DOT_R,vx:s*(Math.random()*40+15),vy:-(Math.random()*50+20),life:1,decay:1.8+Math.random()});
+    }
+    
+    // Death check
+    return Math.abs(dotX)<=halfP+DOT_R;
+}
+
+// LOOP
+let lastFrame=0;
+function loop(ts){
+    if(!running)return;
+    if(!lastFrame)lastFrame=ts||performance.now();
+    const dt=Math.min(((ts||performance.now())-lastFrame)/1000,0.033);
+    lastFrame=ts||performance.now();
+    gameTime=(performance.now()-gameStartTime)/1000;
+    for(let i=particles.length-1;i>=0;i--){const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=200*dt;p.life-=p.decay*dt;if(p.life<=0)particles.splice(i,1)}
+    if(!updatePhysics(dt)){endGame();return}
+    draw();
+    document.getElementById('hudTime').textContent=gameTime.toFixed(1);
+    requestAnimationFrame(loop);
+}
+
+// DRAW
+function draw(){
+    ctx.clearRect(0,0,W,H);
+    const cx=W/2,cy=platformY,halfP=platformLen/2;
+    ctx.save();ctx.translate(cx,cy+8);ctx.rotate(platformAngle);
+    ctx.beginPath();ctx.moveTo(-halfP,0);ctx.lineTo(halfP,0);
+    ctx.strokeStyle='rgba(74,158,245,0.04)';ctx.lineWidth=12;ctx.lineCap='round';ctx.stroke();ctx.restore();
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(platformAngle);
+    ctx.beginPath();ctx.moveTo(-halfP,0);ctx.lineTo(halfP,0);
+    ctx.strokeStyle='#2E3140';ctx.lineWidth=4;ctx.lineCap='round';ctx.stroke();
+    const eg=Math.max(0,dangerLevel-0.4)*1.7;
+    if(eg>0){const s=dotX>0?1:-1,ex=s*halfP,gr=ctx.createRadialGradient(ex,0,0,ex,0,50);gr.addColorStop(0,`rgba(224,90,90,${eg*0.3})`);gr.addColorStop(1,'transparent');ctx.beginPath();ctx.arc(ex,0,50,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill()}
+    ctx.beginPath();ctx.arc(-halfP,0,3,0,Math.PI*2);ctx.fillStyle=dangerLevel>0.6&&dotX<0?'rgba(224,90,90,0.6)':'#252830';ctx.fill();
+    ctx.beginPath();ctx.arc(halfP,0,3,0,Math.PI*2);ctx.fillStyle=dangerLevel>0.6&&dotX>0?'rgba(224,90,90,0.6)':'#252830';ctx.fill();
+    ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fillStyle='#3A3D46';ctx.fill();
+    const dy=-DOT_R-2;
+    const glR=DOT_R+10+dangerLevel*14,glA=0.1+dangerLevel*0.18;
+    const glC=dangerLevel>0.55?`rgba(224,90,90,${glA})`:`rgba(240,241,244,${glA})`;
+    const gd=ctx.createRadialGradient(dotX,dy,0,dotX,dy,glR);gd.addColorStop(0,glC);gd.addColorStop(1,'transparent');
+    ctx.beginPath();ctx.arc(dotX,dy,glR,0,Math.PI*2);ctx.fillStyle=gd;ctx.fill();
+    ctx.beginPath();ctx.arc(dotX,dy,DOT_R,0,Math.PI*2);
+    ctx.fillStyle=dangerLevel>0.65?`rgb(${240+dangerLevel*15|0},${241-dangerLevel*140|0},${244-dangerLevel*140|0})`:'#F0F1F4';ctx.fill();
+    ctx.beginPath();ctx.arc(dotX-2,dy-2,DOT_R*0.35,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.3)';ctx.fill();
+    ctx.restore();
+    for(const p of particles){ctx.beginPath();ctx.arc(p.x,p.y,1.5,0,Math.PI*2);ctx.fillStyle=`rgba(224,90,90,${p.life*0.5})`;ctx.fill()}
+    const t=performance.now()/1000;
+    for(let i=0;i<4;i++){const px=(Math.sin(t*0.3+i*47.3)*0.4+0.5)*W,py=(Math.sin(t*0.2+i*31.7)*0.3+0.35)*H,a=Math.sin(t*0.5+i*19.1)*0.015+0.015;ctx.beginPath();ctx.arc(px,py,1,0,Math.PI*2);ctx.fillStyle=`rgba(200,205,215,${Math.max(0,a)})`;ctx.fill()}
+}
+
+// END GAME
+function endGame(){
+    running=false;lastFrame=0;stopDrone();playDrop();
+    if(navigator.vibrate)navigator.vibrate([30,50,30]);
+    const ft=parseFloat(gameTime.toFixed(1));
+    isNewBest=ft>bestTime;if(isNewBest)bestTime=ft;
+    document.getElementById('hudBest').innerHTML=bestTime>0?'Best: <strong>'+bestTime.toFixed(1)+'s</strong>':'Best: —';
+    setTimeout(()=>{
+        const o=document.getElementById('overScreen');
+        document.getElementById('overTime').textContent=ft.toFixed(1);
+        document.getElementById('overBest').innerHTML='Best: <strong>'+bestTime.toFixed(1)+' seconds</strong>';
+        document.getElementById('newBestTag').style.display=isNewBest?'inline-block':'none';
+        o.classList.add('active');
+        o.querySelectorAll('.over-time,.over-unit,.over-label,.over-best,.over-btns,.new-best-tag').forEach(el=>{el.style.animation='none';el.offsetHeight;el.style.animation=''});
+    },400);
+}
+
+// SHARE
+function openShare(){if(bestTime<=0)return;document.getElementById('shareNum').textContent=bestTime.toFixed(1);document.getElementById('shareOverlay').classList.add('show')}
+function closeShare(){document.getElementById('shareOverlay').classList.remove('show')}
+function copyShare(){
+    const text=`Balance Point — I held steady for ${bestTime.toFixed(1)} seconds.\nCan you beat it? whatifs.fun/balance-point/`;
+    if(navigator.share)navigator.share({text}).catch(()=>{});
+    else navigator.clipboard.writeText(text).then(()=>{const b=document.querySelector('.share-btns-row .share-btn');b.textContent='Copied!';setTimeout(()=>b.textContent='Copy result',1500)});
+}
+</script>
+</body>
+</html>
