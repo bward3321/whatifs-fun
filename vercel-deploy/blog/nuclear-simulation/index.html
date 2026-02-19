@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>What Would a Nuclear Bomb Do to Your City? Understanding Blast Radius and Effects | whatifs.fun</title>
+<meta name="description" content="Simulate a nuclear explosion on any city and see the blast radius, thermal effects, and fallout zone. Understand the real physics of nuclear weapons and their impact.">
+<meta property="og:title" content="What Would a Nuclear Bomb Do to Your City? Understanding Blast Radius and Effects">
+<meta property="og:description" content="Simulate a nuclear explosion on any city and see the blast radius, thermal effects, and fallout zone. Understand the real physics of nuclear weapons and their impact.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://whatifs.fun/blog/nuclear-simulation/">
+<link rel="canonical" href="https://whatifs.fun/blog/nuclear-simulation/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"What Would a Nuclear Bomb Do to Your City? Understanding Blast Radius and Effects","description":"Simulate a nuclear explosion on any city and see the blast radius, thermal effects, and fallout zone. Understand the real physics of nuclear weapons and their impact.","url":"https://whatifs.fun/blog/nuclear-simulation/","publisher":{"@type":"Organization","name":"whatifs.fun"},"isPartOf":{"@type":"WebSite","name":"whatifs.fun","url":"https://whatifs.fun/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How far does a nuclear blast reach?","acceptedAnswer":{"@type":"Answer","text":"It depends on the yield. A Hiroshima-sized bomb (15 kilotons) has a severe blast radius of about 1.6 km. A 1-megaton weapon extends to about 6.2 km. Thermal burns can occur much farther away."}},{"@type":"Question","name":"How many nuclear weapons exist today?","acceptedAnswer":{"@type":"Answer","text":"As of 2025, there are approximately 12,100 nuclear warheads globally, with about 88% held by the United States and Russia."}},{"@type":"Question","name":"What was the largest nuclear bomb ever detonated?","acceptedAnswer":{"@type":"Answer","text":"The Soviet Tsar Bomba, detonated in 1961, had a yield of 50 megatons — roughly 3,300 times more powerful than the Hiroshima bomb."}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#e8e7e2;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c;--link:#6cb4ff}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;line-height:1.75;font-size:17px}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.home-btn{position:fixed;top:20px;left:20px;z-index:100;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(20,20,22,0.85);border:1px solid var(--card-border);border-radius:100px;color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:all .2s}
+.home-btn:hover{background:rgba(0,240,255,0.08);border-color:var(--accent-cyan);transform:translateY(-1px)}
+.home-btn svg{width:16px;height:16px;fill:currentColor}
+article{max-width:680px;margin:0 auto;padding:100px 24px 80px}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-bottom:24px;color:#fff}
+h2{font-size:clamp(1.2rem,3vw,1.5rem);font-weight:700;letter-spacing:-0.5px;margin:40px 0 16px;color:#fff}
+p{margin-bottom:18px;color:var(--text)}
+a{color:var(--link);text-decoration:none;border-bottom:1px solid rgba(108,180,255,0.2);transition:border-color .2s}
+a:hover{border-color:var(--link)}
+.cta-box{display:block;text-align:center;padding:20px 32px;background:linear-gradient(135deg,rgba(0,240,255,0.08),rgba(57,255,127,0.06));border:1px solid rgba(0,240,255,0.15);border-radius:14px;margin:40px 0;font-weight:700;font-size:1.05rem;color:var(--accent-cyan);text-decoration:none;border-bottom:none;transition:all .2s}
+.cta-box:hover{background:linear-gradient(135deg,rgba(0,240,255,0.14),rgba(57,255,127,0.1));border-color:rgba(0,240,255,0.3);transform:translateY(-2px)}
+.faq{margin-top:48px;padding-top:32px;border-top:1px solid var(--card-border)}
+.faq h2{margin-top:0}
+.faq-item{margin-bottom:24px}
+.faq-q{font-weight:700;color:#fff;margin-bottom:6px}
+.faq-a{color:var(--text-dim);line-height:1.7}
+.footer{text-align:center;padding:40px 24px;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--text-dim)}
+.footer a{color:var(--text-dim);border-bottom-color:transparent}
+@media(max-width:600px){article{padding:80px 18px 60px}.home-btn{top:14px;left:14px;padding:8px 16px;font-size:.72rem}}
+</style>
+</head>
+<body>
+<a href="/" class="home-btn"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> ALL GAMES</a>
+<article>
+<h1>What Would a Nuclear Bomb Do to Your City? Understanding Blast Radius and Effects</h1>
+
+<p>Nuclear weapons are discussed in the abstract — kilotons, megatons, deterrence theory. But what would actually happen if one detonated near you? Our <a href="/nuclear-simulation/">Nuclear Explosion Simulator</a> lets you visualize the real physics on a map, and the scale is sobering.</p>
+
+<h2>How Nuclear Explosions Work</h2>
+
+<p>A nuclear detonation releases energy in several distinct phases. The initial flash — thermal radiation — travels at the speed of light and can cause third-degree burns miles from ground zero. A fraction of a second later, the blast wave arrives: a wall of compressed air moving faster than the speed of sound, crushing buildings and generating winds exceeding 300 mph near the epicenter.</p>
+
+<p>The fireball itself reaches temperatures of roughly 100 million degrees Celsius at its core — several times hotter than the center of the sun. Everything within the fireball is vaporized instantly. The mushroom cloud forms as the superheated air rises rapidly, pulling debris and radioactive material into the upper atmosphere.</p>
+
+<h2>Understanding Blast Radius</h2>
+
+<p>The destructive radius of a nuclear weapon scales with the cube root of its yield. This means that a bomb 10 times more powerful doesn't destroy 10 times the area — it destroys about 2.15 times the area. A 15-kiloton weapon (similar to the Hiroshima bomb) produces a severe blast damage radius of about 1.6 km. A 1-megaton weapon extends that to about 6.2 km.</p>
+
+<p>The largest nuclear weapon ever detonated was the Soviet Tsar Bomba in 1961, at 50 megatons. Its fireball was 8 km in diameter, the mushroom cloud rose 67 km into the atmosphere, and windows were shattered 900 km away. Despite this extraordinary power, the severe blast radius was "only" about 35 km — cube root scaling means that even enormous yield increases produce diminishing returns in area destroyed.</p>
+
+<h2>The Zones of Destruction</h2>
+
+<p>Nuclear effects are typically described in concentric zones. The fireball zone is total annihilation — everything is vaporized. The severe blast zone sees complete destruction of reinforced concrete buildings. The moderate blast zone collapses most residential structures. The light blast zone shatters windows and causes structural damage.</p>
+
+<p>Beyond the blast, thermal radiation can cause flash burns at remarkable distances. A 1-megaton weapon can cause second-degree burns at 11 km from detonation on a clear day. The thermal pulse lasts several seconds, long enough to ignite fires over an enormous area, potentially causing a firestorm — a self-sustaining inferno that generates its own wind system.</p>
+
+<p>Radioactive fallout, carried by wind, can contaminate areas hundreds of kilometers downwind. The intensity of fallout depends heavily on whether the weapon detonates at ground level (producing more local fallout) or at altitude (reducing local fallout but increasing the area affected by blast and thermal effects).</p>
+
+<h2>Modern Nuclear Arsenals</h2>
+
+<p>Today's global nuclear arsenal contains roughly 12,100 warheads across nine countries. The United States and Russia hold about 88% of all nuclear weapons. Modern strategic warheads typically range from 100 kilotons to 1 megaton — smaller than Cold War-era weapons but more accurate, making them more militarily effective despite lower yields.</p>
+
+<p>A single modern nuclear submarine carries approximately 20 missiles, each with multiple warheads, giving one submarine the capacity to destroy dozens of cities. The total explosive power of the world's nuclear arsenal is roughly equivalent to 1.4 billion tons of TNT.</p>
+
+<h2>Visualize It Yourself</h2>
+
+<p>Numbers and descriptions only go so far. Our <a href="/nuclear-simulation/">Nuclear Explosion Simulator</a> lets you place a detonation on a real map, choose the weapon yield, and see exactly what each zone of destruction would look like overlaid on streets and neighborhoods you recognize. It's designed to make an abstract threat concrete.</p>
+
+<p>For more thought-provoking simulations, explore <a href="/ocean-depth/">Ocean Depth Explorer</a> to visualize another incomprehensible scale, or test your knowledge with <a href="/true-or-false/">True or False</a>.</p>
+<a href="/nuclear-simulation/" class="cta-box">▶ Run the Nuclear Simulation</a>
+<div class="faq">
+<h2>Frequently Asked Questions</h2>
+<div class="faq-item"><div class="faq-q">How far does a nuclear blast reach?</div><div class="faq-a">It depends on the yield. A Hiroshima-sized bomb (15 kilotons) has a severe blast radius of about 1.6 km. A 1-megaton weapon extends to about 6.2 km. Thermal burns can occur much farther away.</div></div>
+<div class="faq-item"><div class="faq-q">How many nuclear weapons exist today?</div><div class="faq-a">As of 2025, there are approximately 12,100 nuclear warheads globally, with about 88% held by the United States and Russia.</div></div>
+<div class="faq-item"><div class="faq-q">What was the largest nuclear bomb ever detonated?</div><div class="faq-a">The Soviet Tsar Bomba, detonated in 1961, had a yield of 50 megatons — roughly 3,300 times more powerful than the Hiroshima bomb.</div></div>
+</div>
+</article>
+<footer class="footer"><a href="/">whatifs.fun</a> — games, experiments & simulations</footer>
+</body>
+</html>
