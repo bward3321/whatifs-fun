@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blog — whatifs.fun | Games, Experiments & Simulations</title>
+<meta name="description" content="Articles about the science, psychology, and data behind whatifs.fun games and experiments. Reaction time, memory, nuclear physics, ocean depths, and more.">
+<meta property="og:title" content="whatifs.fun Blog">
+<meta property="og:description" content="The science behind our games and experiments.">
+<link rel="canonical" href="https://whatifs.fun/blog/">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13KHBC5TPS"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-13KHBC5TPS');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0b;--card-bg:#141416;--card-border:#222226;--text:#e8e7e2;--text-dim:#8a8a8e;--accent-green:#39ff7f;--accent-cyan:#00f0ff;--accent-red:#ff3c3c;--link:#6cb4ff}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;line-height:1.75;font-size:17px}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+.home-btn{position:fixed;top:20px;left:20px;z-index:100;display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:rgba(20,20,22,0.85);border:1px solid var(--card-border);border-radius:100px;color:var(--accent-cyan);font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;text-decoration:none;letter-spacing:1px;backdrop-filter:blur(10px);transition:all .2s}
+.home-btn:hover{background:rgba(0,240,255,0.08);border-color:var(--accent-cyan);transform:translateY(-1px)}
+.home-btn svg{width:16px;height:16px;fill:currentColor}
+.container{max-width:680px;margin:0 auto;padding:100px 24px 80px}
+h1{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-1.5px;line-height:1.2;margin-bottom:12px;color:#fff}
+.subtitle{color:var(--text-dim);margin-bottom:48px;font-size:1.05rem}
+.post-list{display:flex;flex-direction:column;gap:16px}
+.post-link{display:block;padding:20px 24px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;text-decoration:none;transition:all .2s}
+.post-link:hover{border-color:rgba(255,255,255,0.15);transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,0.3)}
+.post-link h2{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:6px;letter-spacing:-0.3px}
+.post-link p{color:var(--text-dim);font-size:.9rem;line-height:1.5;margin:0}
+.footer{text-align:center;padding:40px 24px;font-family:'Space Mono',monospace;font-size:.78rem;color:var(--text-dim)}
+.footer a{color:var(--text-dim);text-decoration:none}
+@media(max-width:600px){.container{padding:80px 18px 60px}.home-btn{top:14px;left:14px;padding:8px 16px;font-size:.72rem}}
+</style>
+</head>
+<body>
+<a href="/" class="home-btn"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> ALL GAMES</a>
+<div class="container">
+<h1>Blog</h1>
+<p class="subtitle">The science, psychology, and data behind our games.</p>
+<div class="post-list">
+<a href="/blog/how-average-are-you/" class="post-link"><h2>How Average Are You? 10 Surprising Statistics About Being "Normal"</h2><p>Think you're average? Take our interactive quiz and compare yourself to real global statistics on height, sleep, screen time, and more. The results may surprise you.</p></a>
+<a href="/blog/perfect-circle/" class="post-link"><h2>Can You Draw a Perfect Circle? The Science of Human Motor Control</h2><p>Try drawing a perfect circle freehand and get scored instantly. Learn why it's nearly impossible and what your circle reveals about motor control and coordination.</p></a>
+<a href="/blog/reflex-test/" class="post-link"><h2>Human Reaction Time Test: How Fast Are Your Reflexes Really?</h2><p>Test your reaction time instantly with our free online reflex test. Compare your speed to human averages, athletes, and gamers. The average is 250ms — can you beat it?</p></a>
+<a href="/blog/nuclear-simulation/" class="post-link"><h2>What Would a Nuclear Bomb Do to Your City? Understanding Blast Radius and Effects</h2><p>Simulate a nuclear explosion on any city and see the blast radius, thermal effects, and fallout zone. Understand the real physics of nuclear weapons and their impact.</p></a>
+<a href="/blog/memory-test/" class="post-link"><h2>How Good Is Your Memory? Free Short-Term Memory Test</h2><p>Test your short-term memory for free. Remember sequences and patterns, then compare your score to human averages. Most people remember 7 items — where do you stand?</p></a>
+<a href="/blog/higher-or-lower/" class="post-link"><h2>Higher or Lower Game: Can You Guess Which Has More? Real-World Statistics</h2><p>Play our free Higher or Lower game — guess which real-world statistic is bigger. Compare countries, populations, distances, and more. How long can your streak last?</p></a>
+<a href="/blog/ocean-depth/" class="post-link"><h2>How Deep Is the Ocean? An Interactive Journey to the Bottom</h2><p>Scroll through the entire ocean depth from surface to the deepest point on Earth — the Mariana Trench. Discover what lives at each level in this interactive visualization.</p></a>
+<a href="/blog/true-or-false/" class="post-link"><h2>True or False Quiz: Can You Spot the Fake Facts? Test Your Knowledge</h2><p>Play our free True or False quiz — can you tell real facts from convincing lies? Test your knowledge across science, history, geography, and more.</p></a>
+<a href="/blog/speed-click-test/" class="post-link"><h2>Speed Click Test: How Many Clicks Per Second Can You Do? CPS Test</h2><p>Free clicks per second (CPS) test — measure your clicking speed over 5, 10, or 30 seconds. Compare your CPS to global averages and see where you rank.</p></a>
+<a href="/blog/one-button-survival/" class="post-link"><h2>One Button Survival Game: How Long Can You Last With Just One Click?</h2><p>Play One Button Survival — a free minimalist game where one click is all you have. Tap to flap, dodge obstacles, and survive as long as possible. How far can you go?</p></a>
+<a href="/blog/if-you-were-born-in/" class="post-link"><h2>If You Were Born in a Different Country or Era: How Would Your Life Change?</h2><p>Explore how your life would be different if you were born in another country or time period. See life expectancy, income, freedoms, and daily life across the world and history.</p></a>
+<a href="/blog/how-many-decisions-you-make-today/" class="post-link"><h2>How Many Decisions Do You Make Per Day? The Science of Decision Fatigue</h2><p>You make roughly 35,000 decisions daily — most without realizing it. Explore the psychology of decision-making, decision fatigue, and how your choices shape your day.</p></a>
+<a href="/blog/balance-point/" class="post-link"><h2>Balance Point Game: How Long Can You Hold Steady? A Physics Challenge</h2><p>Play Balance Point — a free physics-based balancing game. Keep the dot centered as forces push it off the beam. Tap left and right to survive. How long can you last?</p></a>
+<a href="/blog/gravity-playground/" class="post-link"><h2>Gravity Playground: Place Gravity Wells and Watch Particles Flow</h2><p>A free interactive physics sandbox. Place gravity wells, drag them around, and watch particles orbit, spiral, and stream. Explore gravitational forces in a beautiful visual simulation.</p></a>
+</div>
+</div>
+<footer class="footer"><a href="/">whatifs.fun</a> — games, experiments & simulations</footer>
+</body>
+</html>
